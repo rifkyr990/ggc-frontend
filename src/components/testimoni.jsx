@@ -61,7 +61,7 @@ const Testimoni = () => {
     };
 
     return (
-        <section className="w-full min-h-[80vh] flex flex-col md:flex-row items-center justify-center bg-white gap-0 md:gap-8 px-0 ">
+        <section className="w-full min-h-[80vh] flex flex-col md:flex-row items-center justify-center bg-white gap-0 md:gap-8 px-0">
             {/* Kiri: Testimoni */}
             <div className="w-full md:w-1/2 flex flex-col items-center justify-center">
                 {/* Judul */}
@@ -111,7 +111,7 @@ const Testimoni = () => {
                                     </p>
                                     <div
                                         className={`flex items-center ${isActive ? 'justify-center' : 'justify-start'}
-                                            ${isActive ? 'bg-black text-white py-4 w-full ' : ''} gap-4`}
+                                            ${isActive ? 'bg-gray-800 rounded-3xl pb-4 text-white py-4 w-full mb-4' : ''} gap-4`}
                                     >
                                         <img
                                             src={item.img}
@@ -160,16 +160,16 @@ const Testimoni = () => {
                 </div>
             </div>
             {/* Kanan: Foto dengan style seperti aboutSection */}
-            <div className="w-full md:w-1/2 h-80 md:h-[600px] flex-shrink-0 flex items-center justify-center relative mb-8 md:mb-0">
-                <div className="relative w-full h-80 md:h-[600px]">
+            <div className="hidden md:flex w-1/3 h-[600px] flex-shrink-0 items-end justify-end relative right-0 ml-10">
+                <div className="relative w-full h-full flex justify-end">
                     <img
                         src="/image/heros_test2.webp"
                         alt="Foto Testimoni"
-                        className="w-full h-80 md:h-[600px] object-cover rounded-tl-4xl relative z-1"
+                        className="w-full h-full object-cover rounded-tl-4xl rounded-br-4xl relative z-10"
                     />
                     {/* Overlay tekstur noise */}
                     <div
-                        className="absolute inset-0 rounded-tl-4xl pointer-events-none z-2"
+                        className="absolute inset-0 rounded-tl-4xl pointer-events-none z-20"
                         style={{
                             backgroundImage: "url('/image/noise.jpg')",
                             opacity: 0.5,
