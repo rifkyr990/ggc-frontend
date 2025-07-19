@@ -52,7 +52,7 @@ export default function FindPlace() {
             {/* Header */}
             <div className="mb-12 w-full max-w-7xl">
                 <div className="mb-4 h-1 w-30 bg-gradient-to-r from-orange-500 to-black rounded-full" />
-                <h1 className="text-3xl md:text-4xl font-bold text-gray-900">Find your next place to live</h1>
+                <h1 className="text-3xl md:text-4xl font-bold text-gray-700">Find your next place to live</h1>
             </div>
             {/* Filter Bar */}
             <div className="flex flex-col md:flex-row gap-6 mb-16 w-full max-w-7xl">

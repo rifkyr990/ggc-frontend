@@ -66,8 +66,8 @@ const Testimoni = () => {
             <div className="w-full md:w-1/2 flex flex-col items-center justify-center">
                 {/* Judul */}
                 <div className="mb-4 text-center z-10">
-                    <div className="h-1 w-20 bg-[#F9B233] mx-auto mb-4 rounded" />
-                    <h1 className="font-bold text-4xl md:text-5xl m-0">Testimoni Client</h1>
+                    <div className="h-1 w-20 bg-gradient-to-r from-orange-500 to-black mx-auto mb-4 rounded" />
+                    <h1 className="font-bold text-4xl md:text-5xl m-0 text-gray-700">Testimoni Client</h1>
                 </div>
                 {/* Carousel 3D Cylinder + Panah */}
                 <div className="relative w-full flex items-center justify-center min-h-[500px] z-10" style={{ perspective: 1200 }}>
@@ -91,7 +91,7 @@ const Testimoni = () => {
                                     key={idx}
                                     className={`absolute top-1/2 left-1/2 flex flex-col justify-between text-center min-h-[220px] w-[320px] max-w-[90vw] px-3 md:px-6 transition-all duration-500 select-none
                                         ${isActive ?
-                                            'bg-white shadow-md border-t-4 border-b-4 border-t-[#F9B233] border-b-black cursor-default' :
+                                            'bg-white shadow-md border-t-4 border-b-4 border-t-[#ffa200] border-b-black cursor-default' :
                                             'bg-white/60 border-t border-b border-gray-200'}
                                         ${zClass} ${isAnimating ? 'pointer-events-none' : pointerEvents}
                                     `}

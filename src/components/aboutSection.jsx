@@ -15,7 +15,7 @@ const AboutSection = () => {
             {/* Right Text */}
             <div className="w-full lg:w-1/2 lg:pl-16">
                 <div className="mb-4 h-1 w-30 bg-gradient-to-r from-orange-500 to-black rounded-full" />
-                <h2 className="text-3xl font-bold mb-4 text-black">About GGC</h2>
+                <h2 className="text-3xl font-bold mb-4 text-gray-700">About GGC</h2>
                 <p className="text-gray-600 mb-8">
                     Torquatos nostros? quos dolores eos, qui dolorem ipsum per se texit,
                     ne ferae quidem se repellere, idque instituit docere sic: omne
