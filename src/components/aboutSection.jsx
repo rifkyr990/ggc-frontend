@@ -27,9 +27,9 @@ const AboutSection = () => {
                     doloremque.
                 </p>
                 <div className="flex flex-wrap gap-4">
-                    <button
-                        className="bg-black text-white px-6 py-3 rounded-lg flex items-center gap-2 hover:bg-gray-800">
-                        Learn more <span className="text-orange-400">→</span>
+                <button className="flex items-center px-8 py-4 bg-black text-white font-semibold rounded-tl-2xl  rounded-br-2xl rounded-tr-lg rounded-bl-lg shadow hover:bg-gray-900 transition-all duration-200">
+                        Learn more
+                        <span className="ml-2 text-yellow-400 text-xl">→</span>
                     </button>
                 </div>
             </div>
