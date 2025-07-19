@@ -20,6 +20,7 @@ const AboutSection = () => {
                         className="w-full h-80 md:h-[600px] object-cover rounded-tr-4xl relative z-1"
                     />
                 </div>
+                <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 w-[98%] h-12 md:h-20 bg-black opacity-60 rounded-b-3xl blur-lg z-0" />
             </div>
 
             {/* Right Text */}
