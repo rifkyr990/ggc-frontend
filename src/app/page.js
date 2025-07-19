@@ -5,6 +5,7 @@ import CallOut from "@/components/callOut";
 import Testimoni from "@/components/testimoni";
 import Navbar from "@/components/ui/navbar";
 import React from "react";
+import Footer from "@/components/ui/footer";
 
 export default function Home() {
   return (
@@ -15,6 +16,7 @@ export default function Home() {
       <FindPlace />
       <CallOut />
       <Testimoni />
+      <Footer />
     </div>
   );
 }
