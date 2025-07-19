@@ -37,7 +37,7 @@ const HeroSection = () => {
             </div>
             {/* Button */}
             <div className="absolute left-1/2 bottom-0 -translate-x-1/2 z-[3] w-[80vw] max-w-[1200px]">
-                <div className="bg-white rounded p-8 px-10 flex items-center shadow-lg">
+                <div className="bg-white p-8 px-10 flex items-center">
                     <button
                         className="bg-transparent border-none text-gray-900 font-bold text-xl cursor-pointer flex items-center gap-2 focus:outline-none"
                     >
