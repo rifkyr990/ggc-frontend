@@ -9,9 +9,9 @@ export default function Footer() {
             {/* CTA */}
             <div className="flex flex-col md:flex-row justify-between items-center mb-12">
             <h2 className="text-3xl font-semibold mb-6 md:mb-0">
-                Make your dreams a <span className="text-orange-500 font-bold">reality</span>
+                Make your dreams a <span className="text-[#FFAC12] font-bold">reality</span>
             </h2>
-            <button className="bg-orange-500 hover:bg-orange-600 text-black font-semibold py-3 px-6 rounded-lg transition duration-300 flex items-center gap-2">
+            <button className="bg-[#FFAC12] hover:bg-orange-500 text-black font-semibold py-3 px-6 rounded-lg transition duration-300 flex items-center gap-2">
                 Contact with us
                 <span className="ml-2">→</span>
             </button>
