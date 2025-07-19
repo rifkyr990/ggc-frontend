@@ -3,7 +3,14 @@ import Image from "next/image";
 
 const AboutSection = () => {
     return (
-        <section className="flex flex-col lg:flex-row items-center justify-between py-30 bg-white">
+        <section className="w-screen min-h-screen flex flex-col md:flex-row items-center justify-center bg-white p-0 md:p-0 m-0 rounded-none relative">
+            <div
+                className="absolute left-0 bottom-0 w-full z-0"
+                style={{
+                    height: "30%",
+                    backgroundColor: "#f5f5f7"
+                }}
+            />
             {/* Left Image */}
             <div className="w-full md:w-1/2 h-80 md:h-[600px] flex-shrink-0 flex items-center justify-center relative">
                 <div className="relative w-full h-80 md:h-[600px]">
