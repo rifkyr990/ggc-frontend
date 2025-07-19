@@ -5,99 +5,208 @@ import Image from 'next/image'
 import Link from 'next/link'
 
 export default function Navbar() {
-  const [scrolled, setScrolled] = useState(false)
-  const [menuOpen, setMenuOpen] = useState(false)
+    const [scrolled, setScrolled] = useState(false)
+    const [menuOpen, setMenuOpen] = useState(false)
+    const [openProyek, setOpenProyek] = useState(false)
+    const [openLokasi, setOpenLokasi] = useState(false)
+    const [openInfo, setOpenInfo] = useState(false)
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 10)
-    }
-    window.addEventListener('scroll', handleScroll)
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
 
-const navTextColor = scrolled ? 'text-black' : 'text-white'
+    useEffect(() => {
+        const handleScroll = () => setScrolled(window.scrollY > 10)
+        window.addEventListener('scroll', handleScroll)
+        return () => window.removeEventListener('scroll', handleScroll)
+    }, [])
+
+    const navTextColor = scrolled ? 'text-black' : 'text-white'
 
     return (
-    <header
+        <header
         className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
-            scrolled ? 'bg-white shadow-md' : 'bg-transparent'
-    }`}
-    >
-    <nav className="flex items-center justify-between px-6 lg:px-40 py-4">
-        {/* Logo */}
-        <div className="flex items-center gap-2">
+            scrolled || menuOpen ? 'bg-white shadow-md' : 'bg-transparent'}`}
+        >
+        <nav className="flex items-center justify-between px-6 lg:px-40 py-4">
+            {/* Logo */}
+            <div className="flex items-center gap-2">
             <Image
-            src="/image/logo.svg"
-            alt="Logo"
-            width={100}
-            height={100}
+                src="/image/logo.svg"
+                alt="Logo"
+                width={100}
+                height={100}
             />
-        </div>
+            </div>
 
-        {/* Desktop Menu */}
-        <div className="hidden md:flex items-center gap-6">
-            <ul className={`flex items-center gap-6 text-sm font-medium ${navTextColor}`}>
-                <li><Link href="#tentang">Tentang Kami</Link></li>
-                <li><Link href="#proyek">Proyek</Link></li>
-                <li><Link href="#lokasi">Lokasi</Link></li>
-                <li><Link href="#info">Info</Link></li>
-                <li>
-                <Link
-                    href="#contact"
-                    className="bg-orange-400 hover:bg-orange-500 text-black font-semibold px-5 py-2 rounded-md flex items-center gap-2 transition"
-                >
-                    Contact Us <span className="text-white">→</span>
-                </Link>
-                </li>
-            </ul>
-        </div>
+            {/* Desktop Menu */}
+            <div className="hidden md:flex items-center gap-6 relative">
+                <ul className={`flex items-center gap-6 text-sm font-medium ${navTextColor}`}>
+                    <li>
+                        <Link href="#tentang">Tentang Kami</Link>
+                    </li>
 
-        {/* Hamburger */}
-        <div className="md:hidden">
-            <button
-                onClick={() => setMenuOpen(!menuOpen)}
-                className="text-2xl focus:outline-none"
-            >
-                <svg
-                className={`${navTextColor}`}
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                width={28}
-                height={28}
+                    {/* Dropdown - Proyek */}
+                    <li className="relative group cursor-pointer">
+                        <div className="flex items-center gap-1">
+                        <span>Proyek</span>
+                        <svg className="w-4 h-4 transform group-hover:rotate-180 transition duration-200" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                        </svg>
+                        </div>
+                        <ul className="absolute top-6 left-0 w-40 bg-white text-black rounded-md shadow-lg opacity-0 group-hover:opacity-100 invisible group-hover:visible transition-all duration-200 z-10">
+                            <li className="px-4 py-2 hover:bg-gray-100">
+                                <Link href="#proyek1">Proyek 1</Link>
+                            </li>
+                            <li className="px-4 py-2 hover:bg-gray-100">
+                                <Link href="#proyek2">Proyek 2</Link></li>
+                        </ul>
+                    </li>
+
+                    {/* Dropdown - Lokasi */}
+                    <li className="relative group cursor-pointer">
+                        <div className="flex items-center gap-1">
+                        <span>Lokasi</span>
+                        <svg className="w-4 h-4 transform group-hover:rotate-180 transition duration-200" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                        </svg>
+                        </div>
+                        <ul className="absolute top-6 left-0 w-40 bg-white text-black rounded-md shadow-lg opacity-0 group-hover:opacity-100 invisible group-hover:visible transition-all duration-200 z-10">
+                            <li className="px-4 py-2 hover:bg-gray-100">
+                                <Link href="#lokasi-jakarta">Jakarta</Link>
+                            </li>
+                            <li className="px-4 py-2 hover:bg-gray-100">
+                                <Link href="#lokasi-bandung">Bandung</Link>
+                            </li>
+                        </ul>
+                    </li>
+
+                    {/* Dropdown - Info */}
+                    <li className="relative group cursor-pointer">
+                        <div className="flex items-center gap-1">
+                        <span>Info</span>
+                        <svg className="w-4 h-4 transform group-hover:rotate-180 transition duration-200" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                        </svg>
+                        </div>
+                        <ul className="absolute top-6 left-0 w-40 bg-white text-black rounded-md shadow-lg opacity-0 group-hover:opacity-100 invisible group-hover:visible transition-all duration-200 z-10">
+                            <li className="px-4 py-2 hover:bg-gray-100">
+                                <Link href="#info-blog">Blog</Link>
+                            </li>
+                            <li className="px-4 py-2 hover:bg-gray-100">
+                                <Link href="#info-news">News</Link>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li>
+                        <Link
+                        href="#contact"
+                        className="bg-orange-400 hover:bg-orange-500 text-black font-semibold px-5 py-2 rounded-md flex items-center gap-2 transition"
+                        >
+                        Contact Us <span className="text-white">→</span>
+                        </Link>
+                    </li>
+                </ul>
+            </div>
+
+            {/* Hamburger (Mobile) */}
+            <div className="md:hidden">
+                <button
+                    onClick={() => setMenuOpen(!menuOpen)}
+                    className="text-2xl focus:outline-none transition-all duration-300 ease-in-out"
                 >
-                {menuOpen ? (
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                    <svg
+                    className={`${navTextColor}`}
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    width={28}
+                    height={28}
+                    >
+                    {menuOpen ? (
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                     ) : (
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-                )}
-                </svg>
-            </button>
-        </div>
-    </nav>
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                    )}
+                    </svg>
+                </button>
+            </div>
+        </nav>
 
-      {/* Mobile Menu */}
-    {menuOpen && (
-        <div className={`md:hidden px-6 pb-6 transition-all duration-300 ${scrolled ? 'bg-white shadow-md text-black' : 'bg-transparent'}`}>
-            <ul className="flex flex-col gap-4 text-sm font-medium justify-center items-end">
+        {menuOpen && (
+            <div className={`md:hidden overflow-hidden px-8 py-6 transition-all duration-300 ease-in-out ${menuOpen ? 'max-h-[1000px] opacity-100' : 'max-h-0 opacity-0'} ${scrolled || menuOpen ? 'bg-white shadow-md text-black' : 'bg-transparent text-white'}`}>
+                <ul className="flex flex-col gap-4 text-sm font-medium">
                 <li><Link href="#tentang" onClick={() => setMenuOpen(false)}>Tentang Kami</Link></li>
-                <li><Link href="#proyek" onClick={() => setMenuOpen(false)}>Proyek</Link></li>
-                <li><Link href="#lokasi" onClick={() => setMenuOpen(false)}>Lokasi</Link></li>
-                <li><Link href="#info" onClick={() => setMenuOpen(false)}>Info</Link></li>
+
+                {/* Proyek Dropdown */}
+                <li className="w-full">
+                    <button
+                    onClick={() => setOpenProyek(!openProyek)}
+                    className="flex justify-between items-center w-full"
+                    >
+                    <span>Proyek</span>
+                    <svg className={`w-4 h-4 ml-2 transition-transform ${openProyek ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                    </svg>
+                    </button>
+                    {openProyek && (
+                    <ul className="mt-2 ml-4 text-right text-sm flex flex-col gap-2">
+                        <li><Link href="#proyek1" onClick={() => setMenuOpen(false)}>Proyek 1</Link></li>
+                        <li><Link href="#proyek2" onClick={() => setMenuOpen(false)}>Proyek 2</Link></li>
+                    </ul>
+                    )}
+                </li>
+
+                {/* Lokasi Dropdown */}
+                <li className="w-full">
+                    <button
+                    onClick={() => setOpenLokasi(!openLokasi)}
+                    className="flex justify-between items-center w-full"
+                    >
+                    <span>Lokasi</span>
+                    <svg className={`w-4 h-4 ml-2 transition-transform ${openLokasi ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                    </svg>
+                    </button>
+                    {openLokasi && (
+                    <ul className="mt-2 ml-4 text-right text-sm flex flex-col gap-2">
+                        <li><Link href="#lokasi-jakarta" onClick={() => setMenuOpen(false)}>Jakarta</Link></li>
+                        <li><Link href="#lokasi-bandung" onClick={() => setMenuOpen(false)}>Bandung</Link></li>
+                    </ul>
+                    )}
+                </li>
+
+                {/* Info Dropdown */}
+                <li className="w-full">
+                    <button
+                    onClick={() => setOpenInfo(!openInfo)}
+                    className="flex justify-between items-center w-full"
+                    >
+                    <span>Info</span>
+                    <svg className={`w-4 h-4 ml-2 transition-transform ${openInfo ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                    </svg>
+                    </button>
+                    {openInfo && (
+                    <ul className="mt-2 ml-4 text-right text-sm flex flex-col gap-2">
+                        <li><Link href="#info-blog" onClick={() => setMenuOpen(false)}>Blog</Link></li>
+                        <li><Link href="#info-news" onClick={() => setMenuOpen(false)}>News</Link></li>
+                    </ul>
+                    )}
+                </li>
+
+                {/* Contact Button */}
                 <li>
                     <Link
-                        href="#contact"
-                        onClick={() => setMenuOpen(false)}
-                        className="bg-orange-400 hover:bg-orange-500 text-black font-semibold px-4 py-2 rounded-md flex items-center gap-2 transition w-fit"
+                    href="#contact"
+                    onClick={() => setMenuOpen(false)}
+                    className="bg-orange-400 hover:bg-orange-500 text-black font-semibold px-4 py-2 rounded-md flex items-center gap-2 transition w-fit"
                     >
                     Contact Us <span className="text-white">→</span>
                     </Link>
                 </li>
-          </ul>
-        </div>
-      )}
-    </header>
-  )
+                </ul>
+            </div>
+        )}
+        </header>
+    )
 }
