@@ -1,7 +1,7 @@
 import AboutSection from "@/components/aboutSection";
 import FindPlace from "@/components/findPlace";
 import HeroSection from "@/components/heroSection";
-import Image from "next/image";
+import CallOut from "@/components/callOut"; 
 
 export default function Home() {
   return (
@@ -9,6 +9,7 @@ export default function Home() {
       <HeroSection />
       <AboutSection />
       <FindPlace />
+      <CallOut />
     </div>
   );
 }
