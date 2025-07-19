@@ -51,7 +51,7 @@ export default function FindPlace() {
         <div className="bg-[#f5f5f7] min-h-[140vh] flex flex-col items-center justify-start py-16 px-6 md:px-32">
             {/* Header */}
             <div className="mb-12 w-full max-w-7xl">
-                <div className="h-1 w-16 bg-yellow-500 rounded mb-2" />
+                <div className="mb-4 h-1 w-30 bg-gradient-to-r from-orange-500 to-black rounded-full" />
                 <h1 className="text-3xl md:text-4xl font-bold text-gray-900">Find your next place to live</h1>
             </div>
             {/* Filter Bar */}
@@ -76,7 +76,7 @@ export default function FindPlace() {
             {/* Property Grid */}
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10 w-full max-w-5xl">
                 {properties.map((property, idx) => (
-                    <div key={idx} className="bg-white rounded-3xl shadow overflow-hidden flex flex-col min-h-[420px] max-w-xs mx-auto">
+                    <div key={idx} className="bg-white rounded-3xl shadow-2xl overflow-hidden flex flex-col min-h-[420px] max-w-xs mx-auto">
                         <div className="h-60 w-full overflow-hidden">
                             <img
                                 src={property.img.replace('/public', '')}
@@ -86,7 +86,7 @@ export default function FindPlace() {
                         </div>
                         <div className="p-6 flex-1 flex flex-col justify-between">
                             <div className="font-semibold text-lg text-gray-900 mb-2">{property.name}</div>
-                            <div className="flex justify-between text-gray-700 text-sm border-t pt-2 mt-2">
+                            <div className="flex justify-between text-gray-500 text-sm border-t pt-2 mt-2">
                                 <div className="flex items-center gap-1">
                                     <Bed className="w-5 h-5 text-gray-700" /> {property.beds}
                                 </div>
