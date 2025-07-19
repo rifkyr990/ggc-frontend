@@ -76,7 +76,7 @@ export default function FindPlace() {
             {/* Property Grid */}
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10 w-full max-w-5xl">
                 {properties.map((property, idx) => (
-                    <div key={idx} className="bg-white rounded-xl shadow overflow-hidden flex flex-col min-h-[420px] max-w-xs mx-auto">
+                    <div key={idx} className="bg-white rounded-3xl shadow overflow-hidden flex flex-col min-h-[420px] max-w-xs mx-auto">
                         <div className="h-60 w-full overflow-hidden">
                             <img
                                 src={property.img.replace('/public', '')}
