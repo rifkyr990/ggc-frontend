@@ -23,7 +23,7 @@ const CallOut = () => {
                 <p className="text-lg md:text-xl text-white max-w-2xl mb-10">
                     Torquatos nostros? quos dolores eos, qui dolorem ipsum per se texit, ne ferae quidem se repellere, idque instituit docere sic: omne animal, simul atque integre iudicante itaque aiunt hanc quasi involuta aperiri, altera occulta quaedam et voluptatem accusantium doloremque.
                 </p>
-                <button className="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold py-4 px-12 rounded-xl text-lg flex items-center gap-3 transition">
+                <button className="bg-[#FFAC12] hover:bg-orange-500 text-black font-semibold py-4 px-12 rounded-xl text-lg flex items-center gap-3 transition">
                     Learn more
                     <span className="text-xl">→</span>
                 </button>
