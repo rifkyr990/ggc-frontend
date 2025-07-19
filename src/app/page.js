@@ -1,4 +1,5 @@
 import AboutSection from "@/components/aboutSection";
+import FindPlace from "@/components/findPlace";
 import HeroSection from "@/components/heroSection";
 import Image from "next/image";
 
@@ -7,6 +8,7 @@ export default function Home() {
     <div>
       <HeroSection />
       <AboutSection />
+      <FindPlace />
     </div>
   );
 }

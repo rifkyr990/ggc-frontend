@@ -2,13 +2,12 @@ import React from "react";
 
 const AboutSection = () => {
     return (
-        <section className="w-screen min-h-screen flex flex-col md:flex-row items-center justify-center bg-white shadow-xl p-0 md:p-0 m-0 rounded-none relative">
+        <section className="w-screen min-h-screen flex flex-col md:flex-row items-center justify-center bg-white p-0 md:p-0 m-0 rounded-none relative">
             <div
                 className="absolute left-0 bottom-0 w-full z-0"
                 style={{
                     height: "30%",
-                    backgroundColor: "#979797",
-                    opacity: 0.15,
+                    backgroundColor: "#f5f5f7"
                 }}
             />
             {/* Gambar Kiri */}
