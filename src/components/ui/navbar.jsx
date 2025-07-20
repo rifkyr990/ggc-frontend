@@ -59,7 +59,7 @@ export default function Navbar() {
             {/* Logo */}
             <div className="flex items-center gap-2">
             <Image
-                src="/image/logo.png"
+                src={scrolled ? "/image/logo3.png" : "/image/logo_putih.png"}
                 alt="Logo"
                 width={150}
                 height={150}
