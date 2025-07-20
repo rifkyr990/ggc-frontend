@@ -29,12 +29,12 @@ const HeroSection = () => {
                 backgroundImage: `url('${images[current]}')`,
             }}
         >
-            <div className="absolute inset-0 bg-black/70 z-[1] transition-all duration-700" />
+            <div className="absolute inset-0 bg-gray-900/50 z-[1] transition-all duration-700" />
             <div className="relative z-[2] ml-[12vw] max-w-[600px]">
                 <h1 className="text-gray-200 text-6xl font-bold leading-tight mb-8">
                     Beautiful<br />homes made<br />for you
                 </h1>
-                <p className="text-gray-400 text-lg leading-relaxed mb-12 max-w-[520px]">
+                <p className="text-white text-lg leading-relaxed mb-12 max-w-[520px]">
                     In oculis quidem se esse admonere interesse enim maxime placeat, facere possimus, omnis. Et quidem faciunt, ut labore et accurate disserendum et harum quidem exercitus quid.
                 </p>
             </div>
