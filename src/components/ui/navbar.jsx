@@ -29,10 +29,10 @@ export default function Navbar() {
             {/* Logo */}
             <div className="flex items-center gap-2">
             <Image
-                src="/image/logo.svg"
+                src="/image/logo.png"
                 alt="Logo"
-                width={100}
-                height={100}
+                width={150}
+                height={150}
             />
             </div>
 
@@ -97,12 +97,23 @@ export default function Navbar() {
                     </li>
 
                     <li>
-                        <Link
-                        href="#contact"
-                        className="bg-[#FFAC12] hover:bg-orange-500 text-black font-semibold px-5 py-2 rounded-md flex items-center gap-2 transition"
-                        >
-                        Contact Us <span className="text-white">→</span>
-                        </Link>
+                        <div className="[perspective:800px] w-32 h-10">
+                            <Link
+                                href="#contact"
+                                className="group block w-full h-full"
+                            >
+                                <div className="relative w-full h-full [transform-style:preserve-3d] transition-transform duration-500 group-hover:rotate-y-180">
+                                    {/* Front Side */}
+                                    <div className="absolute inset-0 flex items-center justify-center bg-[#FFAC12] text-black font-semibold rounded-md transition-colors duration-300 group-hover:bg-orange-500 [backface-visibility:hidden]">
+                                        Contact Us <span className="text-white ml-2">→</span>
+                                    </div>
+                                    {/* Back Side */}
+                                    <div className="absolute inset-0 flex items-center justify-center bg-black text-white font-semibold rounded-md [transform:rotateY(180deg)] [backface-visibility:hidden]">
+                                        For More
+                                    </div>
+                                </div>
+                            </Link>
+                        </div>
                     </li>
                 </ul>
             </div>
@@ -196,13 +207,24 @@ export default function Navbar() {
 
                 {/* Contact Button */}
                 <li>
-                    <Link
-                    href="#contact"
-                    onClick={() => setMenuOpen(false)}
-                    className="bg-orange-400 hover:bg-orange-500 text-black font-semibold px-4 py-2 rounded-md flex items-center gap-2 transition w-fit"
-                    >
-                    Contact Us <span className="text-white">→</span>
-                    </Link>
+                    <div className="[perspective:800px] w-32 h-10">
+                        <Link
+                            href="#contact"
+                            onClick={() => setMenuOpen(false)}
+                            className="group block w-full h-full"
+                        >
+                            <div className="relative w-full h-full [transform-style:preserve-3d] transition-transform duration-500 group-hover:rotate-y-180">
+                                {/* Front Side */}
+                                <div className="absolute inset-0 flex items-center justify-center bg-[#FFAC12] text-black font-semibold rounded-md transition-colors duration-300 group-hover:bg-orange-500 [backface-visibility:hidden]">
+                                    Contact Us <span className="text-white ml-2">→</span>
+                                </div>
+                                {/* Back Side */}
+                                <div className="absolute inset-0 flex items-center justify-center bg-black text-white font-semibold rounded-md [transform:rotateY(180deg)] [backface-visibility:hidden]">
+                                    For More
+                                </div>
+                            </div>
+                        </Link>
+                    </div>
                 </li>
                 </ul>
             </div>
