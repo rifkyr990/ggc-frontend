@@ -99,7 +99,7 @@ export default function Navbar() {
                     <li>
                         <Link
                         href="#contact"
-                        className="bg-orange-400 hover:bg-orange-500 text-black font-semibold px-5 py-2 rounded-md flex items-center gap-2 transition"
+                        className="bg-[#FFAC12] hover:bg-orange-500 text-black font-semibold px-5 py-2 rounded-md flex items-center gap-2 transition"
                         >
                         Contact Us <span className="text-white">→</span>
                         </Link>
