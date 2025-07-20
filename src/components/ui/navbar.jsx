@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 
@@ -10,20 +10,50 @@ export default function Navbar() {
     const [openProyek, setOpenProyek] = useState(false)
     const [openLokasi, setOpenLokasi] = useState(false)
     const [openInfo, setOpenInfo] = useState(false)
-
+    // State untuk visibilitas navbar
+    const [showNavbar, setShowNavbar] = useState(true)
+    // Ref untuk menyimpan posisi scroll sebelumnya
+    const prevScrollY = useRef(0)
 
     useEffect(() => {
-        const handleScroll = () => setScrolled(window.scrollY > 10)
+        const handleScroll = () => {
+            const currentScrollY = window.scrollY
+            setScrolled(currentScrollY > 10)
+            // Deteksi arah scroll
+            if (currentScrollY > prevScrollY.current && currentScrollY > 50) {
+                // Scroll ke bawah
+                setShowNavbar(false)
+            } else {
+                // Scroll ke atas
+                setShowNavbar(true)
+            }
+            prevScrollY.current = currentScrollY
+        }
+        // Tambahkan event mousemove
+        const handleMouseMove = (e) => {
+            if (e.clientY < 40) {
+                setShowNavbar(true)
+            } else if (window.scrollY > 50 && prevScrollY.current < window.scrollY) {
+                // Jika scroll ke bawah dan kursor tidak di atas
+                setShowNavbar(false)
+            }
+        }
         window.addEventListener('scroll', handleScroll)
-        return () => window.removeEventListener('scroll', handleScroll)
+        window.addEventListener('mousemove', handleMouseMove)
+        return () => {
+            window.removeEventListener('scroll', handleScroll)
+            window.removeEventListener('mousemove', handleMouseMove)
+        }
     }, [])
 
     const navTextColor = scrolled ? 'text-black' : 'text-white'
 
     return (
+        <>
         <header
         className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
-            scrolled || menuOpen ? 'bg-white shadow-md' : 'bg-transparent'}`}
+            scrolled || menuOpen ? 'bg-white/90 backdrop-blur-sm shadow-md' : 'bg-transparent'} ${showNavbar ? 'translate-y-0' : '-translate-y-full'}`}
+        style={{ willChange: 'transform' }}
         >
         <nav className="flex items-center justify-between px-6 lg:px-40 py-4">
             {/* Logo */}
@@ -230,5 +260,27 @@ export default function Navbar() {
             </div>
         )}
         </header>
+        {/* Hamburger fixed saat navbar hilang */}
+        {(!showNavbar && !menuOpen) && (
+            (() => { console.log('Render hamburger fixed!'); return null })() ||
+            <button
+                onClick={() => { setMenuOpen(true); setShowNavbar(true); }}
+                className="fixed top-4 right-6 z-[100] bg-white shadow-lg border-2 border-black rounded-full p-2 transition-all duration-300" // md:hidden dihapus sementara
+                aria-label="Open menu"
+            >
+                <svg
+                    className="text-black"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    width={32}
+                    height={32}
+                >
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+            </button>
+        )}
+        </>
     )
 }

@@ -6,29 +6,35 @@ const slides = [
     {
         image: "/image/bg-hero/1.png",
         title: "Beautiful\nhomes made\nfor you",
-        desc: "In oculis quidem se esse admonere interesse enim maxime placeat, facere possimus, omnis. Et quidem faciunt, ut labore et accurate disserendum et harum quidem exercitus quid."
+        desc: "Find your dream home with us. Experience comfort, style, and a place to call your own."
     },
     {
         image: "/image/bg-hero/2.png",
-        title: "Hunian Nyaman\nuntuk Keluarga",
-        desc: "Temukan rumah impian yang nyaman dan aman untuk keluarga tercinta, dengan lingkungan yang asri dan fasilitas lengkap."
+        title: "Cozy Living\nfor Families",
+        desc: "Discover a safe and comfortable home for your beloved family, surrounded by green spaces and complete facilities."
     },
     {
         image: "/image/bg-hero/3.png",
-        title: "Investasi Properti\nMasa Depan",
-        desc: "Miliki properti bernilai tinggi sebagai investasi masa depan Anda, dengan lokasi strategis dan harga bersaing."
+        title: "Future-Proof\nProperty Investment",
+        desc: "Own a high-value property as your future investment, in a strategic location with competitive prices."
     },
     {
         image: "/image/bg-hero/4.png",
-        title: "Desain Modern\ndan Elegan",
-        desc: "Rumah dengan desain modern, elegan, dan fungsional, memberikan kenyamanan dan gaya hidup terbaik untuk Anda."
+        title: "Modern and\nElegant Design",
+        desc: "Homes with modern, elegant, and functional designs, offering the best comfort and lifestyle for you."
     },
 ];
 
 const HeroSection = () => {
     const [current, setCurrent] = useState(0);
     const [hasMounted, setHasMounted] = useState(false);
+    const [isTransitioning, setIsTransitioning] = useState(false); // Tambahan
+    const [disableTransition, setDisableTransition] = useState(false); // Tambahan
     const timeoutRef = useRef(null);
+    const slidesLength = slides.length;
+
+    // Untuk looping mulus, tambahkan slide duplikat di akhir
+    const extendedSlides = [...slides, slides[0]];
 
     useEffect(() => {
         setHasMounted(true);
@@ -48,26 +54,59 @@ const HeroSection = () => {
     };
 
     const handleNextSlide = () => {
-        setCurrent((prev) => (prev + 1) % slides.length);
+        setIsTransitioning(true);
+        setCurrent((prev) => prev + 1);
     };
 
     const handleDotClick = (idx) => {
-        if (idx === current) return;
+        if (idx === current % slidesLength) return;
+        setIsTransitioning(true);
         setCurrent(idx);
     };
+
+    // Setelah transisi ke slide duplikat (index == slides.length), reset ke 0 tanpa animasi
+    useEffect(() => {
+        if (!isTransitioning) return;
+        if (current === slidesLength) {
+            // Setelah animasi selesai, reset ke 0 tanpa animasi
+            const timer = setTimeout(() => {
+                setDisableTransition(true); // Nonaktifkan transisi
+                setCurrent(0);
+                setTimeout(() => {
+                    setDisableTransition(false); // Aktifkan lagi setelah satu tick
+                }, 20); // 20ms cukup
+                setIsTransitioning(false);
+            }, 700); // 700ms = durasi animasi transition
+            return () => clearTimeout(timer);
+        } else {
+            const timer = setTimeout(() => setIsTransitioning(false), 700);
+            return () => clearTimeout(timer);
+        }
+    }, [current, isTransitioning, slidesLength]);
 
     if (!hasMounted) return null;
 
     return (
-        <section className="relative w-full min-h-screen flex items-center justify-start bg-gray-900 overflow-hidden">
+        <section className="relative w-full min-h-screen flex items-center justify-start bg-black overflow-hidden">
             {/* Slides: 1 foto 1 main content */}
             <div
-                className="absolute inset-0 w-full h-full flex transition-transform duration-1500 ease-in-out"
+                className={`absolute inset-0 w-full h-full flex ${disableTransition ? '' : 'transition-transform duration-700 ease-in-out'}`}
                 style={{
                     transform: `translateX(-${current * 100}vw)`
                 }}
+                onTransitionEnd={() => {
+                    // Untuk menghindari bug jika user klik dot saat transisi looping
+                    if (current === slidesLength) {
+                        setIsTransitioning(false);
+                        setDisableTransition(true);
+                        setCurrent(0);
+                        setTimeout(() => {
+                            setDisableTransition(false);
+                        }, 20);
+                    }
+                }}
             >
-                {slides.map((slide, idx) => (
+                {extendedSlides.map((slide, idx) => (
                     <div
                         key={idx}
                         className="w-screen h-full flex-shrink-0 relative flex items-center"
@@ -76,7 +115,7 @@ const HeroSection = () => {
                         <img
                             src={slide.image}
                             alt={slide.title.replace(/\n/g, ' ')}
-                            className={`absolute inset-0 w-full h-full object-cover object-center min-h-screen z-0 transition-transform duration-3000 ease-in-out ${idx === current ? 'scale-115' : 'scale-100'}`}
+                            className={`absolute inset-0 w-full h-full object-cover object-center min-h-screen z-0 transition-transform duration-3000 ease-in-out ${idx === (current % slidesLength) ? 'scale-115' : 'scale-100'}`}
                             draggable="false"
                         />
                         <div className="absolute inset-0 bg-gray-900/50 z-10 transition-all duration-700" />
@@ -109,12 +148,12 @@ const HeroSection = () => {
                         type="button"
                         onClick={() => handleDotClick(idx)}
                         className={`transition-all duration-300 focus:outline-none
-                            ${idx === current
+                            ${(idx === (current % slidesLength))
                                 ? "w-8 h-2 bg-[#FFAC12] border-2 border-[#FFAC12] shadow-lg scale-110 rounded"
                                 : "w-5 h-1 bg-white/60 border border-gray-300 opacity-70 hover:opacity-100 hover:scale-105 rounded"}
                         `}
                         aria-label={`Pilih gambar ${idx + 1}`}
-                        style={{ cursor: 'pointer', padding: 0, margin: 0, boxShadow: idx === current ? '0 0 8px 2px #fde04788' : 'none' }}
+                        style={{ cursor: 'pointer', padding: 0, margin: 0, boxShadow: idx === (current % slidesLength) ? '0 0 8px 2px #fde04788' : 'none' }}
                     />
                 ))}
             </div>
