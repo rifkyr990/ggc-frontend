@@ -23,7 +23,6 @@ export default function Footer() {
             {/* Bottom Footer */}
             <div className="grid md:grid-cols-3 gap-8 text-sm">
             {/* Navigasi */}
-            {/* Navigasi */}
             <div>
                     <h3 className="font-bold text-lg mb-3">Navigasi</h3>
                     <ul className="space-y-2 text-gray-300">
@@ -79,7 +78,7 @@ export default function Footer() {
             <div className="flex flex-col items-center justify-center">
                 <div className="mb-4">
                 <div>
-                    <Image src="/image/logo.svg" alt="Logo" width={150} height={150} />
+                    <Image src="/image/logo.png" alt="Logo" width={150} height={150} />
                 </div>
                 </div>
                 <div className="flex space-x-4 text-xl text-white">
