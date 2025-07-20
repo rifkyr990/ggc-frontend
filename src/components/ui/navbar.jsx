@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 
@@ -10,29 +10,59 @@ export default function Navbar() {
     const [openProyek, setOpenProyek] = useState(false)
     const [openLokasi, setOpenLokasi] = useState(false)
     const [openInfo, setOpenInfo] = useState(false)
-
+    // State untuk visibilitas navbar
+    const [showNavbar, setShowNavbar] = useState(true)
+    // Ref untuk menyimpan posisi scroll sebelumnya
+    const prevScrollY = useRef(0)
 
     useEffect(() => {
-        const handleScroll = () => setScrolled(window.scrollY > 10)
+        const handleScroll = () => {
+            const currentScrollY = window.scrollY
+            setScrolled(currentScrollY > 10)
+            // Deteksi arah scroll
+            if (currentScrollY > prevScrollY.current && currentScrollY > 50) {
+                // Scroll ke bawah
+                setShowNavbar(false)
+            } else {
+                // Scroll ke atas
+                setShowNavbar(true)
+            }
+            prevScrollY.current = currentScrollY
+        }
+        // Tambahkan event mousemove
+        const handleMouseMove = (e) => {
+            if (e.clientY < 40) {
+                setShowNavbar(true)
+            } else if (window.scrollY > 50 && prevScrollY.current < window.scrollY) {
+                // Jika scroll ke bawah dan kursor tidak di atas
+                setShowNavbar(false)
+            }
+        }
         window.addEventListener('scroll', handleScroll)
-        return () => window.removeEventListener('scroll', handleScroll)
+        window.addEventListener('mousemove', handleMouseMove)
+        return () => {
+            window.removeEventListener('scroll', handleScroll)
+            window.removeEventListener('mousemove', handleMouseMove)
+        }
     }, [])
 
     const navTextColor = scrolled ? 'text-black' : 'text-white'
 
     return (
+        <>
         <header
         className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
-            scrolled || menuOpen ? 'bg-white shadow-md' : 'bg-transparent'}`}
+            scrolled || menuOpen ? 'bg-white/90 backdrop-blur-sm shadow-md' : 'bg-transparent'} ${showNavbar ? 'translate-y-0' : '-translate-y-full'}`}
+        style={{ willChange: 'transform' }}
         >
         <nav className="flex items-center justify-between px-6 lg:px-40 py-4">
             {/* Logo */}
             <div className="flex items-center gap-2">
             <Image
-                src="/image/logo.svg"
+                src="/image/logo.png"
                 alt="Logo"
-                width={100}
-                height={100}
+                width={150}
+                height={150}
             />
             </div>
 
@@ -97,12 +127,23 @@ export default function Navbar() {
                     </li>
 
                     <li>
-                        <Link
-                        href="#contact"
-                        className="bg-[#FFAC12] hover:bg-orange-500 text-black font-semibold px-5 py-2 rounded-md flex items-center gap-2 transition"
-                        >
-                        Contact Us <span className="text-white">→</span>
-                        </Link>
+                        <div className="[perspective:800px] w-32 h-10">
+                            <Link
+                                href="#contact"
+                                className="group block w-full h-full"
+                            >
+                                <div className="relative w-full h-full [transform-style:preserve-3d] transition-transform duration-500 group-hover:rotate-y-180">
+                                    {/* Front Side */}
+                                    <div className="absolute inset-0 flex items-center justify-center bg-[#FFAC12] text-black font-semibold rounded-md transition-colors duration-300 group-hover:bg-orange-500 [backface-visibility:hidden]">
+                                        Contact Us <span className="text-white ml-2">→</span>
+                                    </div>
+                                    {/* Back Side */}
+                                    <div className="absolute inset-0 flex items-center justify-center bg-black text-white font-semibold rounded-md [transform:rotateY(180deg)] [backface-visibility:hidden]">
+                                        For More
+                                    </div>
+                                </div>
+                            </Link>
+                        </div>
                     </li>
                 </ul>
             </div>
@@ -196,17 +237,50 @@ export default function Navbar() {
 
                 {/* Contact Button */}
                 <li>
-                    <Link
-                    href="#contact"
-                    onClick={() => setMenuOpen(false)}
-                    className="bg-orange-400 hover:bg-orange-500 text-black font-semibold px-4 py-2 rounded-md flex items-center gap-2 transition w-fit"
-                    >
-                    Contact Us <span className="text-white">→</span>
-                    </Link>
+                    <div className="[perspective:800px] w-32 h-10">
+                        <Link
+                            href="#contact"
+                            onClick={() => setMenuOpen(false)}
+                            className="group block w-full h-full"
+                        >
+                            <div className="relative w-full h-full [transform-style:preserve-3d] transition-transform duration-500 group-hover:rotate-y-180">
+                                {/* Front Side */}
+                                <div className="absolute inset-0 flex items-center justify-center bg-[#FFAC12] text-black font-semibold rounded-md transition-colors duration-300 group-hover:bg-orange-500 [backface-visibility:hidden]">
+                                    Contact Us <span className="text-white ml-2">→</span>
+                                </div>
+                                {/* Back Side */}
+                                <div className="absolute inset-0 flex items-center justify-center bg-black text-white font-semibold rounded-md [transform:rotateY(180deg)] [backface-visibility:hidden]">
+                                    For More
+                                </div>
+                            </div>
+                        </Link>
+                    </div>
                 </li>
                 </ul>
             </div>
         )}
         </header>
+        {/* Hamburger fixed saat navbar hilang */}
+        {(!showNavbar && !menuOpen) && (
+            (() => { console.log('Render hamburger fixed!'); return null })() ||
+            <button
+                onClick={() => { setMenuOpen(true); setShowNavbar(true); }}
+                className="fixed top-4 right-6 z-[100] bg-white shadow-lg border-2 border-black rounded-full p-2 transition-all duration-300" // md:hidden dihapus sementara
+                aria-label="Open menu"
+            >
+                <svg
+                    className="text-black"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    width={32}
+                    height={32}
+                >
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+            </button>
+        )}
+        </>
     )
 }
