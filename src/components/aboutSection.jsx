@@ -15,7 +15,7 @@ const AboutSection = () => {
             <div className="w-full md:w-1/2 h-80 md:h-[600px] flex-shrink-0 flex items-center justify-center relative">
                 <div className="relative w-full h-80 md:h-[600px]">
                     <video
-                        src="/video/about.mp4"
+                        src="/video/about1.mp4"
                         className="w-full h-80 md:h-[600px] object-cover rounded-tr-4xl relative z-1"
                         autoPlay
                         loop
