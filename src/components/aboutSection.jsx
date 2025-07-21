@@ -14,13 +14,14 @@ const AboutSection = () => {
             {/* Left Image */}
             <div className="w-full md:w-1/2 h-80 md:h-[600px] flex-shrink-0 flex items-center justify-center relative">
                 <div className="relative w-full h-80 md:h-[600px]">
-                    <video
-                        src="/video/about.mp4"
-                        className="w-full h-80 md:h-[600px] object-cover rounded-tr-4xl relative z-1"
-                        autoPlay
-                        loop
-                        muted
-                        controls
+                    <iframe
+                        src="https://www.youtube.com/embed/RfZ6qekO4oU?si=xQL0mNyKf2CDtfjY&amp;controls=0"
+                        title="YouTube video player"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        referrerPolicy="strict-origin-when-cross-origin"
+                        allowFullScreen
+                        className="absolute top-0 left-0 w-full h-full object-cover rounded-tr-4xl z-1"
+                        style={{ border: 0 }}
                     />
                 </div>
                 <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 w-[98%] h-12 md:h-20 bg-black opacity-60 rounded-b-3xl blur-lg z-0" />
