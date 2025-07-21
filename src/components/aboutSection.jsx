@@ -1,3 +1,4 @@
+"use client"
 import React from "react";
 import Image from "next/image";
 
@@ -15,15 +16,76 @@ const AboutSection = () => {
             {/* Left Video */}
             <div className="w-full md:w-1/2 h-80 md:h-[600px] flex-shrink-0 flex items-center justify-center relative">
                 <div className="relative w-full h-80 md:h-[600px]">
-                    <iframe
-                        src="https://www.youtube.com/embed/RfZ6qekO4oU?si=xQL0mNyKf2CDtfjY&amp;controls=0"
-                        title="YouTube video player"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                        referrerPolicy="strict-origin-when-cross-origin"
-                        allowFullScreen
-                        className="absolute top-0 left-0 w-full h-full object-cover rounded-tr-4xl z-1"
-                        style={{ border: 0 }}
-                    />
+                
+                    {/* Tampilkan thumbnail, lalu ganti dengan iframe saat diklik */}
+                    {(() => {
+                        const [showVideo, setShowVideo] = React.useState(false);
+                        const [loading, setLoading] = React.useState(false);
+                        const [iframeLoaded, setIframeLoaded] = React.useState(false);
+
+                        // Handler ketika tombol play di klik
+                        const handlePlayClick = () => {
+                            setLoading(true);
+                            setShowVideo(true);
+                        };
+
+                        // Jika showVideo true, render iframe dan loading spinner jika belum loaded
+                        if (showVideo) {
+                            return (
+                                <div className="w-full h-full relative">
+                                    {!iframeLoaded && (
+                                        <div className="absolute inset-0 flex items-center justify-center z-20 bg-black bg-opacity-60 rounded-tr-4xl">
+                                            <div className="flex flex-col items-center">
+                                                <svg className="animate-spin h-12 w-12 text-[#FFAC12] mb-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                                                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
+                                                </svg>
+                                                <span className="text-white font-semibold">Memuat video...</span>
+                                            </div>
+                                        </div>
+                                    )}
+                                    <iframe
+                                        className="w-full h-full rounded-tr-4xl"
+                                        src="https://screenpal.com/player/cTirDUnIhvQ?autoplay=1"
+                                        title="Tentang GGG"
+                                        allow="autoplay; fullscreen"
+                                        allowFullScreen
+                                        style={{
+                                            border: "none",
+                                        }}
+                                        onLoad={() => setIframeLoaded(true)}
+                                    ></iframe>
+                                </div>
+                            );
+                        }
+
+                        // Jika belum play, tampilkan thumbnail
+                        return (
+                            <div
+                                className="w-full h-full rounded-tr-4xl cursor-pointer relative group"
+                                onClick={handlePlayClick}
+                                style={{
+                                    backgroundColor: "#000",
+                                }}
+                            >
+                                <Image
+                                    src="/image/bg-hero/1.png"
+                                    alt="Thumbnail Video Tentang GGG"
+                                    fill
+                                    className="object-cover rounded-tr-4xl"
+                                    style={{ zIndex: 1 }}
+                                />
+                                <div className="absolute inset-0 flex items-center justify-center z-10">
+                                    <div className="bg-white bg-opacity-80 rounded-full p-4 group-hover:scale-110 transition-transform">
+                                        <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+                                            <circle cx="24" cy="24" r="24" fill="#FFAC12" />
+                                            <polygon points="20,16 34,24 20,32" fill="white" />
+                                        </svg>
+                                    </div>
+                                </div>
+                            </div>
+                        );
+                    })()}
                 </div>
                 <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 w-[98%] h-12 md:h-20 bg-black opacity-60 rounded-b-3xl blur-lg z-0" />
             </div>
