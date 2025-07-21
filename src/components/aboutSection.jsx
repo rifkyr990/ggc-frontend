@@ -11,7 +11,7 @@ const AboutSection = () => {
                     backgroundColor: "#f5f5f7"
                 }}
             />
-            {/* Left Image */}
+            {/* Left Video */}
             <div className="w-full md:w-1/2 h-80 md:h-[600px] flex-shrink-0 flex items-center justify-center relative">
                 <div className="relative w-full h-80 md:h-[600px]">
                     <iframe
