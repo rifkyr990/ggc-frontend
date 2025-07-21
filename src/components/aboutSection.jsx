@@ -11,6 +11,7 @@ const AboutSection = () => {
                     backgroundColor: "#f5f5f7"
                 }}
             />
+
             {/* Left Video */}
             <div className="w-full md:w-1/2 h-80 md:h-[600px] flex-shrink-0 flex items-center justify-center relative">
                 <div className="relative w-full h-80 md:h-[600px]">
@@ -29,15 +30,19 @@ const AboutSection = () => {
 
             {/* Right Text */}
             <div className="w-full lg:w-1/2 lg:pr-16 ml-10">
+
                 <div className="mb-4 h-1 w-30 bg-gradient-to-r from-[#FFAC12] to-black rounded-full" />
                 <h2 className="text-3xl font-bold mb-4 text-gray-700">About GGG</h2>
+
                 <p className="text-gray-600 mb-8">
                     GGG (Graha Gloria Grup) adalah perusahaan pengembang properti yang berfokus pada pembangunan hunian berkualitas tinggi dengan desain modern dan lingkungan yang asri. Kami berkomitmen memberikan solusi tempat tinggal terbaik bagi keluarga Indonesia melalui inovasi, integritas, dan pelayanan profesional. Bersama GGG, Anda dapat mewujudkan impian memiliki rumah yang nyaman, aman, dan bernilai investasi tinggi.
                 </p>
                 <div className="flex flex-wrap gap-4">
                 <button className="flex items-center px-8 py-4 bg-black text-white font-semibold rounded-tl-2xl  rounded-br-2xl rounded-tr-lg rounded-bl-lg shadow hover:bg-gray-900 transition-all duration-200">
                         Learn more
+
                         <span className="ml-2 text-[#FFAC12] text-xl">→</span>
+
                     </button>
                 </div>
             </div>
