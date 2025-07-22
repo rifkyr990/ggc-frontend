@@ -58,21 +58,22 @@ export default function Navbar() {
         <nav className="flex items-center justify-between px-6 lg:px-40 py-4">
             {/* Logo */}
             <div className="flex items-center gap-2">
-            <Image
-
-                src={scrolled ? "/image/logo3.png" : "/image/logo_putih.png"}
-
-                alt="Logo"
-                width={150}
-                height={150}
-            />
+            <Link href="/">
+                <Image
+                    src={scrolled ? "/image/logo3.png" : "/image/logo_putih.png"}
+                    alt="Logo"
+                    width={150}
+                    height={150}
+                    style={{ cursor: 'pointer' }}
+                />
+            </Link>
             </div>
 
             {/* Desktop Menu */}
             <div className="hidden md:flex items-center gap-6 relative">
                 <ul className={`flex items-center gap-6 text-sm font-medium ${navTextColor}`}>
                     <li>
-                        <Link href="#tentang">Tentang Kami</Link>
+                        <Link href="#about">Tentang Kami</Link>
                     </li>
 
                     {/* Dropdown - Proyek */}
