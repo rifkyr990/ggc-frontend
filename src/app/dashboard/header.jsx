@@ -11,7 +11,8 @@ const Header = () => {
     const pathToTitle = {
         '/dashboard': 'Dashboard',
         '/dashboard/blog': 'Blog',
-        '/dashboard/project': 'Projects',
+        '/dashboard/perumahan': 'Perumahan',
+        '/dashboard/fasilitas': 'Fasilitas',
     }
 
     const pageTitle = pathToTitle[pathname] || 'Dashboard'

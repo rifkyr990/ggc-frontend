@@ -1,215 +1,284 @@
-'use client'
-import React, { useState } from 'react'
-import Header from '../header'
-import Sidebar from '../sidebar'
+'use client';
+import React, { useState, useEffect } from 'react';
+import Header from '../header';
+import Sidebar from '../sidebar';
+import api from '../../lib/api'; // Import axios instance
 
-const CATEGORY_OPTIONS = ['Teknologi', 'Kesehatan', 'Pendidikan', 'Olahraga']
-
-const Button = ({ children, ...props }) => (
-    <button
-        className="rounded text-sm font-medium hover:opacity-90 transition"
-        {...props}
-    >
-        {children}
-    </button>
-)
+const CATEGORY_OPTIONS = ['News', 'Diskon'];
+const DEFAULT_FORM = {
+    title: '',
+    content: '',
+    categories: '',
+    thumbnail: '',
+    authorId: 1, 
+};
 
 const Page = () => {
-    const [articles, setArticles] = useState([
-        {
-            objectId: '1',
-            title: 'Belajar React',
-            categories: 'Teknologi',
-            thumbnail: 'https://via.placeholder.com/150',
-            content: 'React adalah library UI',
-            created: new Date()
-        },
-        {
-            objectId: '2',
-            title: 'Olahraga Pagi',
-            categories: 'Olahraga',
-            thumbnail: 'https://via.placeholder.com/150',
-            content: 'Olahraga penting untuk kesehatan.',
-            created: new Date()
+    const [formData, setFormData] = useState(DEFAULT_FORM);
+    const [articles, setArticles] = useState([]);
+    const [editId, setEditId] = useState(null);
+    const [thumbnailFile, setThumbnailFile] = useState(null);
+    const [searchQuery, setSearchQuery] = useState('');
+    const [currentPage, setCurrentPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(1);
+
+
+
+    // Ambil data artikel saat pertama load
+    useEffect(() => {
+        fetchArticles();
+    }, []);
+
+    const fetchArticles = async (page = 1) => {
+        try {
+            const res = await api.get('/articles', {
+                params: {
+                    page,
+                    limit: 5,
+                    search: searchQuery,
+                },
+                });
+            setArticles(res.data.data);
+            setTotalPages(res.data.totalPages);
+            setCurrentPage(res.data.page);
+        } catch (err) {
+            console.error('Gagal ambil artikel:', err);
         }
-    ])
+    };
 
-    const [formData, setFormData] = useState({
-        title: '',
-        categories: '',
-        thumbnail: '',
-        content: ''
-    })
-
-    const [editId, setEditId] = useState(null)
 
     const handleChange = (e) => {
-        setFormData({ ...formData, [e.target.name]: e.target.value })
-    }
+        setFormData((prev) => ({
+        ...prev,
+        [e.target.name]: e.target.value,
+        }));
+    };
 
-    const handleSubmit = (e) => {
-        e.preventDefault()
+    const handleSubmit = async (e) => {
+        e.preventDefault();
 
-        if (editId) {
-        // Update artikel
-        const updatedArticles = articles.map(article =>
-            article.objectId === editId ? { ...article, ...formData } : article
-        )
-        setArticles(updatedArticles)
-        setEditId(null)
-        
-        } else {
-        // Tambah artikel baru
-        const newArticle = {
-            ...formData,
-            objectId: Date.now().toString(),
-            created: new Date()
+        try {
+            const formDataToSend = new FormData();
+                formDataToSend.append('title', formData.title);
+                formDataToSend.append('content', formData.content);
+                formDataToSend.append('category', formData.categories);
+                formDataToSend.append('authorId', formData.authorId);
+
+            if (thumbnailFile) {
+                formDataToSend.append('thumbnail', thumbnailFile);
+            }
+
+
+            if (editId) {
+                await api.put(`/articles/${editId}`, formDataToSend, {
+                    headers: { 'Content-Type': 'multipart/form-data' },
+                });
+            } else {
+                await api.post('/articles/', formDataToSend, {
+                    headers: { 'Content-Type': 'multipart/form-data' },
+                });
+            }
+
+            fetchArticles();
+            setFormData(DEFAULT_FORM);
+            setEditId(null);
+        } catch (err) {
+            console.error('Gagal simpan artikel:', err.response?.data || err.message);
         }
-        setArticles([...articles, newArticle])
-        }
-
-        // Reset form
-        setFormData({
-            title: '',
-            categories: '',
-            thumbnail: '',
-            content: ''
-        })
-    }
+    };
 
     const handleEditClick = (id) => {
-    const articleToEdit = articles.find(item => item.objectId === id)
-    if (articleToEdit) {
+        const article = articles.find((a) => a.id === id);
+        if (article) {
         setFormData({
-            title: articleToEdit.title,
-            categories: articleToEdit.categories,
-            thumbnail: articleToEdit.thumbnail,
-            content: articleToEdit.content
-        })
-        setEditId(id)
+            title: article.title,
+            content: article.content,
+            categories: article.category,
+            thumbnail: article.thumbnail,
+            authorId: article.authorId,
+        });
+        setEditId(id);
         }
-    }
+    };
 
-    const handleDelete = (id) => {
-        if (confirm('Yakin ingin menghapus artikel ini?')) {
-            setArticles(articles.filter(item => item.objectId !== id))
+    const handleDelete = async (id) => {
+        if (!confirm('Yakin hapus artikel ini?')) return;
+
+        try {
+            await api.delete(`/articles/${id}`);
+            fetchArticles();
+        } catch (err) {
+            console.error('Gagal hapus artikel:', err);
         }
-    }
+    };
 
-  return (
-    <section>
-        {/* Header & Sidebar */}
-        <Header />
-        <Sidebar />
+    const Button = ({ children, ...props }) => (
+        <button
+        className="rounded text-sm font-medium hover:opacity-90 transition"
+        {...props}
+        >
+        {children}
+        </button>
+    );
 
-        <main className="md:ml-64 p-6 bg-gray-100 min-h-screen">
-        {/* Form Section */}
-        <section className="bg-white p-4 sm:p-6 rounded-lg shadow mb-8">
-            <h3 className="text-lg font-semibold text-gray-800 mb-4">
-                {editId ? 'Edit Artikel' : 'Tambah Artikel'}
-            </h3>
-            <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-            {/* Judul & Kategori */}
-            <div className="flex flex-col md:flex-row gap-4">
-                <div className="flex-1">
-                    <label className="block text-sm text-gray-700 mb-1">Judul</label>
-                    <input
-                        type="text"
-                        name="title"
-                        value={formData.title}
-                        onChange={handleChange}
-                        placeholder="Judul Artikel"
-                        className="w-full p-2 border border-gray-300 rounded placeholder-gray-400 text-gray-400"
-                        required
-                    />
-                </div>
-                <div className="flex-1">
-                    <label className="block text-sm text-gray-700 mb-1">Kategori</label>
-                    <select
-                        name="categories"
-                        value={formData.categories}
-                        onChange={handleChange}
-                        className="w-full p-2 border border-gray-300 rounded text-gray-400"
-                        required
-                    >
-                    <option value="">=== Pilih kategori ===</option>
-                        {CATEGORY_OPTIONS.map((val) => (
-                            <option key={val} value={val}>{val}</option>
-                        ))}
-                    </select>
-                </div>
-            </div>
+    useEffect(() => {
+        fetchArticles(currentPage);
+    }, [currentPage]);
 
-            <div>
-                <label className="block text-sm text-gray-700 mb-1">Thumbnail</label>
-                <input
-                    type="text"
-                    name="thumbnail"
-                    value={formData.thumbnail}
-                    onChange={handleChange}
-                    placeholder="e.g : https://image.com/gambar.png"
-                    className="w-full p-2 border border-gray-300 rounded placeholder-gray-400 text-gray-400"
-                    required
-                />
-            </div>
+    return (
+        <section>
+            <Header />
+            <Sidebar />
 
-            <div>
-                <label className="block text-sm text-gray-700 mb-1">Deskripsi</label>
-                <textarea
-                    name="content"
-                    value={formData.content}
-                    onChange={handleChange}
-                    placeholder="Deskripsi singkat"
-                    rows={4}
-                    className="w-full p-2 border border-gray-300 rounded resize-none placeholder-gray-400 text-gray-400"
-                    required
-                />
-            </div>
+            <main className="md:ml-64 p-6 bg-gray-100 min-h-screen">
+                <section className="bg-white p-4 sm:p-6 rounded-lg shadow mb-8">
+                    <h3 className="text-lg font-semibold text-gray-800 mb-4">
+                        {editId ? 'Edit Artikel' : 'Tambah Artikel'}
+                    </h3>
+                    <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+                        <div className="flex flex-col md:flex-row gap-4">
+                            <div className="flex-1">
+                                <label className="block text-sm text-gray-700 mb-1">Judul</label>
+                                <input
+                                type="text"
+                                name="title"
+                                value={formData.title}
+                                onChange={handleChange}
+                                placeholder="Judul Artikel"
+                                className="w-full p-2 border border-gray-300 rounded"
+                                required
+                                />
+                            </div>
+                            <div className="flex-1">
+                                <label className="block text-sm text-gray-700 mb-1">Kategori</label>
+                                <select
+                                    name="categories"
+                                    value={formData.categories}
+                                    onChange={handleChange}
+                                    className="w-full p-2 border border-gray-300 rounded"
+                                    required
+                                >
+                                <option value="">=== Pilih kategori ===</option>
+                                {CATEGORY_OPTIONS.map((val) => (
+                                    <option key={val} value={val}>
+                                    {val}
+                                    </option>
+                                ))}
+                                </select>
+                            </div>
+                        </div>
 
-            <div className="flex justify-end">
-                <button
-                    type="submit"
-                    className="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition"
-                >
-                    {editId ? 'Update' : 'Tambah'}
-                </button>
-            </div>
-          </form>
+                        {/* Thumbnail & Deskripsi */}
+                        <div>
+                            <label className="block text-sm text-gray-700 mb-1">Thumbnail (Upload)</label>
+                            <input
+                                type="file"
+                                name="thumbnail"
+                                accept="image/*"
+                                onChange={(e) => setThumbnailFile(e.target.files[0])}
+                                className="w-full p-2 border border-gray-300 rounded bg-white"
+                                required={!editId} // wajib diisi saat create
+                            />
+                        </div>
+                        <div>
+                        <label className="block text-sm text-gray-700 mb-1">Deskripsi</label>
+                            <textarea
+                                name="content"
+                                value={formData.content}
+                                onChange={handleChange}
+                                rows={4}
+                                className="w-full p-2 border border-gray-300 rounded resize-none"
+                                required
+                            />
+                        </div>
+
+                        <div className="flex justify-end">
+                            <button
+                                type="submit"
+                                className="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition"
+                            >
+                                {editId ? 'Update' : 'Tambah'}
+                            </button>
+                        </div>
+                    </form>
+                </section>
+
+                {/* Table Section */}
+                <section className="relative overflow-x-auto shadow-md rounded-lg">
+                    <div className="mb-4 flex gap-2 justify-end">
+                        <input
+                            type="text"
+                            placeholder="Cari judul artikel..."
+                            value={searchQuery}
+                            onChange={(e) => setSearchQuery(e.target.value)}
+                            className="border border-gray-300 rounded px-3 py-2 w-full max-w-sm"
+                        />
+                        <button
+                            onClick={() => fetchArticles(1)}
+                            className="bg-blue-600 text-white px-4 py-2 rounded"
+                        >
+                            Cari
+                        </button>
+                    </div>
+
+                    <table className="w-full text-sm text-left text-gray-500">
+                        <thead className="text-xs text-gray-500 uppercase bg-gray-50">
+                            <tr>
+                                <th className="px-4 py-3">Judul</th>
+                                <th className="px-4 py-3">Kategori</th>
+                                <th className="px-4 py-3">Thumbnail</th>
+                                <th className="px-4 py-3">Isi konten</th>
+                                <th className="px-4 py-3">Tanggal</th>
+                                <th className="px-4 py-3">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {articles.map((article) => (
+                                <tr key={article.id} className="bg-white border-b hover:bg-gray-50">
+                                <td className="px-4 py-4">{article.title}</td>
+                                <td className="px-4 py-4">{article.category}</td>
+                                <td className="px-4 py-4 max-w-[120px] truncate">
+                                    <a href={article.thumbnail} target="_blank" rel="noreferrer" className="text-blue-600 underline">
+                                    Lihat
+                                    </a>
+                                </td>
+                                <td className="px-4 py-4 max-w-[150px] truncate">{article.content}</td>
+                                <td className="px-4 py-4">
+                                    {new Date(article.createdAt).toLocaleDateString('id-ID')}
+                                </td>
+                                <td className="px-4 py-4 flex flex-col sm:flex-row gap-2">
+                                    <Button className="bg-blue-600 text-white px-4 py-2" onClick={() => handleEditClick(article.id)}>
+                                    Edit
+                                    </Button>
+                                    <Button className="bg-red-600 text-white px-4 py-2" onClick={() => handleDelete(article.id)}>
+                                    Delete
+                                    </Button>
+                                </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                    <div className="flex justify-center my-4 gap-2">
+                        <button
+                            onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+                            disabled={currentPage === 1}
+                            className="px-4 py-2 bg-gray-300 rounded disabled:opacity-50"
+                        >
+                            Prev
+                        </button>
+                        <span className="px-4 py-2">{currentPage} / {totalPages}</span>
+                        <button
+                            onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
+                            disabled={currentPage === totalPages}
+                            className="px-4 py-2 bg-gray-300 rounded disabled:opacity-50"
+                        >
+                            Next
+                        </button>
+                    </div>
+                </section>
+            </main>
         </section>
+    );
+};
 
-        {/* Table Section */}
-        <section className="relative overflow-x-auto shadow-md rounded-lg">
-            <table className="w-full text-sm text-left text-gray-500">
-                <thead className="text-xs text-gray-700 uppercase bg-gray-50">
-                <tr>
-                    <th className="px-4 py-3">Judul</th>
-                    <th className="px-4 py-3">Kategori</th>
-                    <th className="px-4 py-3">Thumbnail</th>
-                    <th className="px-4 py-3">Isi konten</th>
-                    <th className="px-4 py-3">Tanggal</th>
-                    <th className="px-4 py-3">Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {articles.map((article) => (
-                        <tr key={article.objectId} className="bg-gray-100 border-b-gray-200 hover:bg-gray-100">
-                            <td className="px-4 py-4 max-w-[120px] truncate">{article.title}</td>
-                            <td className="px-4 py-4">{article.categories}</td>
-                            <td className="px-4 py-4 max-w-[150px] truncate">{article.thumbnail}</td>
-                            <td className="px-4 py-4 max-w-[150px] truncate">{article.content}</td>
-                            <td className="px-4 py-4">{new Date(article.created).toLocaleDateString('id-ID')}</td>
-                            <td className="px-4 py-4 flex flex-col sm:flex-row gap-2">
-                                <Button className="bg-blue-600 text-white px-5 py-2 rounded font-medium hover:opacity-90 transition" onClick={() => handleEditClick(article.objectId)}>Edit</Button>
-                                <Button className="bg-red-600 text-white px-5 py-2 rounded font-medium hover:opacity-90 transition" onClick={() => handleDelete(article.objectId)}>Delete</Button>
-                            </td>
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
-        </section>
-      </main>
-    </section>
-  )
-}
-
-export default Page
+export default Page;

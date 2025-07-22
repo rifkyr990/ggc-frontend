@@ -9,7 +9,8 @@ const Sidebar = () => {
     const menuItems = [
         { name: 'Dashboard', path: '/dashboard' },
         { name: 'Blog', path: '/dashboard/blog' },
-        { name: 'Projects', path: '/dashboard/project' },
+        { name: 'Perumahan', path: '/dashboard/perumahan' },
+        { name: 'Fasilitas', path: '/dashboard/fasilitas' },
     ]
 
     return (
