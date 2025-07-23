@@ -73,7 +73,7 @@ export default function Navbar() {
             <div className="hidden md:flex items-center gap-6 relative">
                 <ul className={`flex items-center gap-6 text-sm font-medium ${navTextColor}`}>
                     <li>
-                        <Link href="#about">Tentang Kami</Link>
+                        <Link href="/about">Tentang Kami</Link>
                     </li>
 
                     {/* Dropdown - Proyek */}

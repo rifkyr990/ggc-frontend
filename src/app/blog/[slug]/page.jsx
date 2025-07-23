@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import Link from "next/link";
 
-const BACKENDLESS_URL = "https://sturdycrate-us.backendless.app/api/data/blog";
+const BACKENDLESS_URL = process.env.NEXT_PUBLIC_BACKENDLESS_URL_BLOG;
 
 const slugify = (str) => str && str.toString().toLowerCase().replace(/\s+/g, '-');
 
