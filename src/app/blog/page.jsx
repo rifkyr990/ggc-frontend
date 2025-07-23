@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 
-const BACKENDLESS_URL = "https://sturdycrate-us.backendless.app/api/data/blog";
+const BACKENDLESS_URL = process.env.NEXT_PUBLIC_BACKENDLESS_URL_BLOG;
 
 function slugify(text) {
     return text
@@ -68,7 +68,7 @@ export default function BlogPage() {
                 }}
             >
                 {/* Overlay gradasi hijau-gold */}
-                <div className="absolute inset-0 bg-black/50 z-0" />
+                <div className="absolute inset-0 bg-gradient-to-br from-black/60 via-green-900/30 to-yellow-700/20  z-10" />
                 <div className="relative z-10 flex flex-col items-center justify-center h-full w-full px-4">
                     <h1 className="text-4xl md:text-5xl font-extrabold text-white mb-4 drop-shadow-lg tracking-tight text-center">
                         Blog & Artikel

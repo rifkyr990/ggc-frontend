@@ -12,7 +12,7 @@ export default function AboutPage() {
                     priority
                     className="object-cover w-full h-full z-0" 
                 />
-                <div className="absolute inset-0 bg-black/60 z-10" />
+                <div className="absolute inset-0 bg-gradient-to-br from-black/60 via-green-900/30 to-yellow-700/20  z-10" />
                 <div className="relative z-20 flex flex-col items-center justify-center h-full w-full">
                     <h1 className="text-4xl md:text-5xl font-light italic tracking-widest mb-2 text-white drop-shadow pt-20 mt-6">GRAHA GLORIA</h1>
                     <h2 className="text-3xl md:text-4xl font-light tracking-widest mb-6 text-white drop-shadow">GROUP</h2>
