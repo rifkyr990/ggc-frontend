@@ -27,7 +27,7 @@ const CallOut = () => {
                 </p>
                 <div className="flip-card" style={{ perspective: '800px' }}>
                     <Link href="/contact" legacyBehavior passHref>
-                        <a className="flip-card-inner" tabIndex={0}>
+                        <button className="flip-card-inner" tabIndex={0}>
                             <span className="flip-card-front">
                                 Pelajari lebih lanjut
                                 <span className="icon">→</span>
@@ -36,7 +36,7 @@ const CallOut = () => {
                                 Siap konsultasi?
                                 <span className="icon">💬</span>
                             </span>
-                        </a>
+                        </button>
                     </Link>
                     <style jsx>{`
                         .flip-card {
