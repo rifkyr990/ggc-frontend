@@ -11,17 +11,28 @@ export default function PropertyContactForm() {
         setForm({ ...form, [e.target.name]: e.target.value });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
         setSuccess(false);
         setError('');
-        // Simulasi submit
-        setTimeout(() => {
-            setLoading(false);
-            setSuccess(true);
-            setForm({ name: '', phone: '', email: '', message: '' });
-        }, 1200);
+        try {
+            const res = await fetch('/api/send-email', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(form),
+            });
+            const data = await res.json();
+            if (data.success) {
+                setSuccess(true);
+                setForm({ name: '', phone: '', email: '', message: '' });
+            } else {
+                setError(data.error || 'Gagal mengirim pesan.');
+            }
+        } catch (err) {
+            setError('Terjadi kesalahan.');
+        }
+        setLoading(false);
     };
 
     return (

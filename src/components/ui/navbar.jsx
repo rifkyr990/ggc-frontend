@@ -132,7 +132,7 @@ export default function Navbar() {
                     <li>
                         <div className="[perspective:800px] w-32 h-10">
                             <Link
-                                href="#contact"
+                                href="/contact"
                                 className="group block w-full h-full"
                             >
                                 <div className="relative w-full h-full [transform-style:preserve-3d] transition-transform duration-500 group-hover:rotate-y-180">
@@ -242,7 +242,7 @@ export default function Navbar() {
                 <li>
                     <div className="[perspective:800px] w-32 h-10">
                         <Link
-                            href="#contact"
+                            href="/contact"
                             onClick={() => setMenuOpen(false)}
                             className="group block w-full h-full"
                         >
