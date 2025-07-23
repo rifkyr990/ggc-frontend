@@ -1,10 +1,10 @@
-'use client'
+'use client';
 
-import React, { useState, useEffect } from 'react'
-import axios from 'axios'
-import Header from '../header'
-import Sidebar from '../sidebar'
+import { useEffect, useState } from 'react';
+import Header from '../header';
+import Sidebar from '../sidebar';
 import api from '../../lib/api';
+import Select from 'react-select';
 
 const Button = ({ children, ...props }) => (
   <button
@@ -13,7 +13,7 @@ const Button = ({ children, ...props }) => (
   >
     {children}
   </button>
-)
+);
 
 const Page = () => {
   const [formData, setFormData] = useState({
@@ -21,120 +21,189 @@ const Page = () => {
     lokasi: '',
     hargaMulai: '',
     deskripsi: '',
-    thumbnail: null,
-    gambarLainnya: [],
     spesifikasi: {
       luasTanah: '',
       luasBangunan: '',
       kamarTidur: '',
       kamarMandi: '',
-      garasi: false,
       listrik: '',
     },
-  })
+    fasilitasIds: [],
+    thumbnail: null,
+    gambarLainnya: [],
+  });
 
-  const [perumahanList, setPerumahanList] = useState([])
-  const [search, setSearch] = useState('')
-  const [page, setPage] = useState(1)
-  const [totalPages, setTotalPages] = useState(1)
-  const [editId, setEditId] = useState(null)
+  const [fasilitasOptions, setFasilitasOptions] = useState([]);
+  const [perumahanList, setPerumahanList] = useState([]);
+  const [editId, setEditId] = useState(null);
+  const [search, setSearch] = useState('');
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [isClient, setIsClient] = useState(false);
 
-  // FETCH DATA
+  const fetchFasilitas = async () => {
+    try {
+      const res = await api.get('/fasilitas'); // asumsi: res.data = [{ id: 1, nama: 'Kolam Renang' }]
+      const options = res.data.map(f => ({
+        value: f.id,
+        label: f.nama,
+      }));
+      setFasilitasOptions(options);
+    } catch (err) {
+      console.error('Gagal fetch fasilitas:', err);
+    }
+  };
+
+
   const fetchPerumahan = async () => {
-    const res = await api.get('/perumahan', {
-      params: { search, page },
-    })
-    setPerumahanList(res.data)
-    setTotalPages(res.data.totalPages)
-  }
+    try {
+      const res = await api.get('/perumahan', {
+        params: { search, page }
+      });
+      setPerumahanList(res.data.data || []);
+      setTotalPages(res.data.totalPages || 1);
+    } catch (err) {
+      console.error('Gagal fetch data:', err);
+    }
+  };
 
   useEffect(() => {
-    fetchPerumahan()
-  }, [page])
+    setIsClient(true);
+    fetchPerumahan();
+    fetchFasilitas(); // tambahkan ini
+  }, []);
+
+  useEffect(() => {
+      fetchPerumahan();
+    }, [page]);
+  
+  useEffect(() => {
+    fetchPerumahan();
+  }, [search]);
 
   const handleChange = (e) => {
-    const { name, value, type, files } = e.target
+    const { name, value, files, type } = e.target;
 
     if (name.startsWith('spesifikasi.')) {
-      const key = name.split('.')[1]
-      setFormData((prev) => ({
+      const key = name.split('.')[1];
+      setFormData(prev => ({
         ...prev,
-        spesifikasi: { ...prev.spesifikasi, [key]: value },
-      }))
+        spesifikasi: {
+          ...prev.spesifikasi,
+          [key]: value,
+        },
+      }));
     } else if (type === 'file') {
       if (name === 'thumbnail') {
-        setFormData((prev) => ({ ...prev, thumbnail: files[0] }))
+        setFormData(prev => ({ ...prev, thumbnail: files[0] }));
       } else if (name === 'gambarLainnya') {
-        setFormData((prev) => ({ ...prev, gambarLainnya: files }))
+        setFormData(prev => ({ ...prev, gambarLainnya: files }));
       }
     } else {
-      setFormData((prev) => ({ ...prev, [name]: value }))
+      setFormData(prev => ({ ...prev, [name]: value }));
     }
-  }
+  };
+
+  const handleSelectFasilitas = (selected) => {
+    setFormData(prev => ({
+      ...prev,
+      fasilitasIds: selected ? selected.map(item => item.value) : [],
+    }));
+  };
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
-    const form = new FormData()
-    form.append('nama', formData.nama)
-    form.append('lokasi', formData.lokasi)
-    form.append('hargaMulai', formData.hargaMulai)
-    form.append('deskripsi', formData.deskripsi)
-    form.append('thumbnail', formData.thumbnail)
+    e.preventDefault();
+    const method = editId ? 'put' : 'post';
+    const endpoint = editId ? `/perumahan/${editId}` : '/perumahan';
 
-    for (let i = 0; i < formData.gambarLainnya.length; i++) {
-      form.append('gambarLainnya', formData.gambarLainnya[i])
+    const data = new FormData();
+    data.append('nama', formData.nama);
+    data.append('lokasi', formData.lokasi);
+    data.append('hargaMulai', formData.hargaMulai);
+    data.append('deskripsi', formData.deskripsi);
+
+    // Spesifikasi harus di-stringify
+    data.append('spesifikasi', JSON.stringify(formData.spesifikasi));
+
+    // FasilitasIds juga di-stringify
+    data.append('fasilitasIds', JSON.stringify(formData.fasilitasIds));
+
+    // Thumbnail wajib
+    if (formData.thumbnail) {
+      data.append('thumbnail', formData.thumbnail);
     }
 
-    form.append('spesifikasi', JSON.stringify(formData.spesifikasi))
+    // Gambar lainnya (opsional, array of files)
+    if (formData.gambarLainnya && formData.gambarLainnya.length > 0) {
+      for (let i = 0; i < formData.gambarLainnya.length; i++) {
+        data.append('gambarLainnya', formData.gambarLainnya[i]);
+      }
+    }
 
     try {
-      if (editId) {
-        await api.put(`/perumahan/${editId}`, form)
-      } else {
-        await api.post('/perumahan/create', form)
-      }
-      fetchPerumahan()
-      setFormData({
-        nama: '',
-        lokasi: '',
-        hargaMulai: '',
-        deskripsi: '',
-        thumbnail: null,
-        gambarLainnya: [],
-        spesifikasi: {
-          luasTanah: '',
-          luasBangunan: '',
-          kamarTidur: '',
-          kamarMandi: '',
-          garasi: false,
-          listrik: '',
-        },
-      })
-      setEditId(null)
+      await api[method](endpoint, data, {
+        headers: { 'Content-Type': 'multipart/form-data' },
+      });
+
+      fetchPerumahan();   // Refresh data
+      resetForm();
+      
     } catch (err) {
-      console.error(err)
+      console.error('Gagal simpan:', err?.response?.data || err.message);
+      alert('Gagal simpan data');
     }
-  }
+  };
+
 
   const handleEdit = (item) => {
-    setEditId(item.id)
+    setEditId(item.id);
     setFormData({
       nama: item.nama,
       lokasi: item.lokasi,
       hargaMulai: item.hargaMulai,
       deskripsi: item.deskripsi,
+      spesifikasi: item.spesifikasi || {
+        luasTanah: '',
+        luasBangunan: '',
+        kamarTidur: '',
+        kamarMandi: '',
+        listrik: '',
+      },
+      fasilitasIds: item.fasilitas?.map(f => f.fasilitas.id) || [],
       thumbnail: null,
       gambarLainnya: [],
-      spesifikasi: item.spesifikasi || {},
-    })
-  }
+    });
+  };
 
   const handleDelete = async (id) => {
-    if (confirm('Yakin ingin menghapus?')) {
-      await api.delete(`/perumahan/${id}`)
-      fetchPerumahan()
+    if (!confirm('Yakin ingin menghapus?')) return;
+    try {
+      await api.delete(`/perumahan/${id}`);
+      fetchPerumahan();
+    } catch (err) {
+      console.error('Gagal hapus:', err);
     }
-  }
+  };
+
+  const resetForm = () => {
+    setFormData({
+      nama: '',
+      lokasi: '',
+      hargaMulai: '',
+      deskripsi: '',
+      spesifikasi: {
+        luasTanah: '',
+        luasBangunan: '',
+        kamarTidur: '',
+        kamarMandi: '',
+        listrik: '',
+      },
+      fasilitasIds: [],
+      thumbnail: null,
+      gambarLainnya: [],
+    });
+    setEditId(null);
+  };
 
   return (
     <section>
@@ -146,78 +215,213 @@ const Page = () => {
             {editId ? 'Edit Perumahan' : 'Tambah Perumahan'}
           </h3>
           <form onSubmit={handleSubmit} className="flex flex-col gap-4" encType="multipart/form-data">
-            <div className="flex flex-col md:flex-row gap-4">
-              <div className="flex-1">
-                <label htmlFor="nama" className='block text-sm text-gray-700 mb-2'>Nama Perumahan</label>
-                <input type="text" name="nama" placeholder="Nama Perumahan" value={formData.nama} onChange={handleChange} required className="p-2 border rounded w-full border-gray-400" />
-              </div>
-              <div className="flex-1">
-                <label htmlFor="lokasi" className='block text-sm text-gray-700 mb-2'>Lokasi</label>
-                <input type="text" name="lokasi" placeholder="Lokasi Perumahan" value={formData.lokasi} onChange={handleChange} required className="p-2 border rounded w-full border-gray-400" />
-              </div>
+            {/* Nama */}
+            <div>
+              <label htmlFor="nama" className="block mb-1 text-sm font-medium text-gray-700">Nama</label>
+              <input
+                type="text"
+                id="nama"
+                name="nama"
+                value={formData.nama}
+                onChange={handleChange}
+                placeholder="Masukkan nama perumahan"
+                required
+                className="w-full px-3 py-2 border border-gray-300 rounded"
+              />
             </div>
 
-            <div className="flex flex-col md:flex-row gap-4">
-              <div className="flex-1">
-                <label htmlFor="hargaMulai" className='block text-sm text-gray-700 mb-2'>Harga Mulai</label>
-                <input type="number" name="hargaMulai" placeholder="ex: 500000000" value={formData.hargaMulai} onChange={handleChange} required className="p-2 border rounded w-full border-gray-400" />
-              </div>
-              <div className="flex-1">
-                <label htmlFor="spesifikasi.luasTanah" className='block text-sm text-gray-700 mb-2'>Luas Tanah</label>
-                <input type="number" name="spesifikasi.luasTanah" placeholder='ex: 100' value={formData.spesifikasi.luasTanah} onChange={handleChange} className="p-2 border rounded w-full border-gray-400" />
-              </div>
-            </div>
-            <div className="flex flex-col md:flex-row gap-4">
-              <div className="flex-1">
-                <label htmlFor="spesifikasi.luasBangunan" className='block text-sm text-gray-700 mb-2'>Luas Bangunan</label>
-                <input type="number" name="spesifikasi.luasBangunan" placeholder='ex: 100' value={formData.spesifikasi.luasBangunan} onChange={handleChange} className="p-2 border rounded w-full border-gray-400" />
-              </div>
-              <div className="flex-1">
-                <label htmlFor="spesifikasi.kamarTidur" className='block text-sm text-gray-700 mb-2'>Kamar Tidur</label>
-                <input type="number" name="spesifikasi.kamarTidur" placeholder='ex: 3' value={formData.spesifikasi.kamarTidur} onChange={handleChange} className="p-2 border rounded w-full border-gray-400" />
-              </div>
+            {/* Lokasi */}
+            <div>
+              <label htmlFor="lokasi" className="block mb-1 text-sm font-medium text-gray-700">Lokasi</label>
+              <input
+                type="text"
+                id="lokasi"
+                name="lokasi"
+                value={formData.lokasi}
+                onChange={handleChange}
+                placeholder="Masukkan lokasi"
+                required
+                className="w-full px-3 py-2 border border-gray-300 rounded"
+              />
             </div>
 
-            <div className="flex flex-col md:flex-row gap-4">
-              <div className="flex-1">
-                <label htmlFor="spesifikasi.kamarMandi" className='block text-sm text-gray-700 mb-2'>Kamar Mandi</label>
-                <input type="number" name="spesifikasi.kamarMandi" placeholder='ex: 2' value={formData.spesifikasi.kamarMandi} onChange={handleChange} className="p-2 border rounded w-full border-gray-400" />
-              </div>
-              <div className="flex-1">
-                <label htmlFor="spesifikasi.listrik" className='block text-sm text-gray-700 mb-2'>Listrik</label>
-                <input type="text" name="spesifikasi.listrik" value={formData.spesifikasi.listrik} onChange={handleChange} placeholder="ex: 2200 Watt" className="p-2 border rounded w-full border-gray-400" />
-              </div>
+            {/* Harga Mulai */}
+            <div>
+              <label htmlFor="hargaMulai" className="block mb-1 text-sm font-medium text-gray-700">Harga Mulai (Rp)</label>
+              <input
+                type="number"
+                id="hargaMulai"
+                name="hargaMulai"
+                value={formData.hargaMulai}
+                onChange={handleChange}
+                placeholder="Masukkan harga mulai"
+                required
+                className="w-full px-3 py-2 border border-gray-300 rounded"
+                min="0"
+              />
             </div>
 
-            <div className="flex flex-col md:flex-row gap-4">
-              <div className="flex-1">
-                <label htmlFor="thumbnail" className='block text-sm text-gray-700 mb-2'>Thumbnail</label>
-                <input type="file" name="thumbnail" accept="image/*" onChange={handleChange} className="p-2 border rounded w-full border-gray-400" required={!editId} />
+            {/* Spesifikasi */}
+            <fieldset className="border p-4 rounded border-gray-300">
+              <legend className="text-gray-700 font-semibold mb-2">Spesifikasi</legend>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label htmlFor="luasTanah" className="block mb-1 text-sm text-gray-700">Luas Tanah (m²)</label>
+                  <input
+                    type="number"
+                    id="luasTanah"
+                    name="spesifikasi.luasTanah"
+                    value={formData.spesifikasi.luasTanah}
+                    onChange={handleChange}
+                    placeholder="Luas tanah"
+                    className="w-full px-3 py-2 border border-gray-300 rounded"
+                    min="0"
+                  />
+                </div>
+                <div>
+                  <label htmlFor="luasBangunan" className="block mb-1 text-sm text-gray-700">Luas Bangunan (m²)</label>
+                  <input
+                    type="number"
+                    id="luasBangunan"
+                    name="spesifikasi.luasBangunan"
+                    value={formData.spesifikasi.luasBangunan}
+                    onChange={handleChange}
+                    placeholder="Luas bangunan"
+                    className="w-full px-3 py-2 border border-gray-300 rounded"
+                    min="0"
+                  />
+                </div>
+                <div>
+                  <label htmlFor="kamarTidur" className="block mb-1 text-sm text-gray-700">Kamar Tidur</label>
+                  <input
+                    type="number"
+                    id="kamarTidur"
+                    name="spesifikasi.kamarTidur"
+                    value={formData.spesifikasi.kamarTidur}
+                    onChange={handleChange}
+                    placeholder="Jumlah kamar tidur"
+                    className="w-full px-3 py-2 border border-gray-300 rounded"
+                    min="0"
+                  />
+                </div>
+                <div>
+                  <label htmlFor="kamarMandi" className="block mb-1 text-sm text-gray-700">Kamar Mandi</label>
+                  <input
+                    type="number"
+                    id="kamarMandi"
+                    name="spesifikasi.kamarMandi"
+                    value={formData.spesifikasi.kamarMandi}
+                    onChange={handleChange}
+                    placeholder="Jumlah kamar mandi"
+                    className="w-full px-3 py-2 border border-gray-300 rounded"
+                    min="0"
+                  />
+                </div>
+                <div>
+                  <label htmlFor="listrik" className="block mb-1 text-sm text-gray-700">Listrik (Watt)</label>
+                  <input
+                    type="text"
+                    id="listrik"
+                    name="spesifikasi.listrik"
+                    value={formData.spesifikasi.listrik}
+                    onChange={handleChange}
+                    placeholder="Daya listrik"
+                    className="w-full px-3 py-2 border border-gray-300 rounded"
+                  />
+                </div>
               </div>
-              <div className="flex-1">
-                <label htmlFor="gambarLainnya" className='block text-sm text-gray-700 mb-2'>Gambar Lainnya</label>
-                <input type="file" name="gambarLainnya" multiple accept="image/*" onChange={handleChange} className="p-2 border rounded w-full border-gray-400" />
-              </div>
+            </fieldset>
+
+            {/* Fasilitas */}
+            <div>
+              <label className="block text-sm text-gray-700 mb-2">Fasilitas</label>
+              {isClient && (
+                <Select
+                  isMulti
+                  options={fasilitasOptions}
+                  value={fasilitasOptions.filter(opt => formData.fasilitasIds.includes(opt.value))}
+                  onChange={handleSelectFasilitas}
+                  placeholder="Pilih fasilitas"
+                />
+              )}
             </div>
-            <label className="block text-sm text-gray-700 ">Deskripsi</label>
-            <textarea name="deskripsi" placeholder="Deskripsi" value={formData.deskripsi} onChange={handleChange} className="w-full p-2 border border-gray-400 rounded resize-none" required />
+
+            {/* Thumbnail */}
+            <div>
+              <label htmlFor="thumbnail" className="block mb-1 text-sm font-medium text-gray-700">Thumbnail</label>
+              <input
+                type="file"
+                id="thumbnail"
+                name="thumbnail"
+                accept="image/*"
+                onChange={handleChange}
+                className="block w-full text-sm text-gray-600"
+              />
+              {formData.thumbnail && (
+                <p className="mt-1 text-xs text-gray-500">File: {formData.thumbnail.name}</p>
+              )}
+            </div>
+
+            {/* Gambar Lainnya */}
+            <div>
+              <label htmlFor="gambarLainnya" className="block mb-1 text-sm font-medium text-gray-700">Gambar Lainnya</label>
+              <input
+                type="file"
+                id="gambarLainnya"
+                name="gambarLainnya"
+                accept="image/*"
+                onChange={handleChange}
+                multiple
+                className="block w-full text-sm text-gray-600"
+              />
+              {formData.gambarLainnya.length > 0 && (
+                <p className="mt-1 text-xs text-gray-500">
+                  {Array.from(formData.gambarLainnya).map(file => file.name).join(', ')}
+                </p>
+              )}
+            </div>
+
+            {/* Deskripsi */}
+            <div>
+              <label htmlFor="deskripsi" className="block mb-1 text-sm font-medium text-gray-700">Deskripsi</label>
+              <textarea
+                id="deskripsi"
+                name="deskripsi"
+                rows={4}
+                value={formData.deskripsi}
+                onChange={handleChange}
+                placeholder="Tulis deskripsi di sini..."
+                required
+                className="w-full p-2 border border-gray-300 rounded resize-none"
+              />
+            </div>
+
+            {/* Submit Button */}
             <div className="flex justify-end">
-              <button type="submit" className="bg-blue-600 text-white px-6 py-2 rounded">
+              <button
+                type="submit"
+                className="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition"
+              >
                 {editId ? 'Update' : 'Tambah'}
               </button>
             </div>
           </form>
         </section>
 
-        {/* Search */}
+        {/* search */}
         <div className="mb-4 flex gap-2 justify-end">
-          <input type="text" placeholder="Cari nama perumahan..." value={search} onChange={(e) => setSearch(e.target.value)} className="border px-3 py-2 rounded w-full max-w-sm border-gray-400" />
-          <button onClick={() => fetchPerumahan()} className="bg-blue-600 text-white px-4 py-2 rounded">
+          <input
+            type="text"
+            placeholder="Cari nama perumahan..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            className="border px-3 py-2 rounded w-full max-w-sm border-gray-400"
+          />
+          <button onClick={fetchPerumahan} className="bg-blue-600 text-white px-4 py-2 rounded">
             Cari
           </button>
         </div>
 
-        {/* Tabel */}
         <section className="relative overflow-x-auto shadow-md rounded-lg">
           <table className="w-full text-sm text-left text-gray-500">
             <thead className="text-xs text-gray-700 uppercase bg-gray-50">
@@ -225,7 +429,7 @@ const Page = () => {
                 <th className="px-4 py-3">Nama</th>
                 <th className="px-4 py-3">Lokasi</th>
                 <th className="px-4 py-3">Harga</th>
-                <th className="px-4 py-3">Deskripsi</th>
+                <th className="px-4 py-3 max-w-[200px]">Deskripsi</th>
                 <th className="px-4 py-3">Tanggal</th>
                 <th className="px-4 py-3">Action</th>
               </tr>
@@ -235,7 +439,7 @@ const Page = () => {
                 <tr key={item.id} className="bg-white border-b hover:bg-gray-50">
                   <td className="px-4 py-2">{item.nama}</td>
                   <td className="px-4 py-2">{item.lokasi}</td>
-                  <td className="px-4 py-2">Rp {item.hargaMulai.toLocaleString('id-ID')}</td>
+                  <td className="px-4 py-2">Rp {parseInt(item.hargaMulai).toLocaleString('id-ID')}</td>
                   <td className="px-4 py-2 truncate max-w-[200px]">{item.deskripsi}</td>
                   <td className="px-4 py-2">{new Date(item.createdAt).toLocaleDateString()}</td>
                   <td className="px-4 py-2">
@@ -248,8 +452,6 @@ const Page = () => {
               ))}
             </tbody>
           </table>
-
-          {/* Pagination */}
           <div className="my-4 flex justify-center items-center gap-4">
             <Button onClick={() => setPage((p) => Math.max(1, p - 1))} disabled={page === 1} className="bg-gray-200 px-3 py-1 rounded">
               Prev
@@ -262,7 +464,7 @@ const Page = () => {
         </section>
       </main>
     </section>
-  )
-}
+  );
+};
 
-export default Page
+export default Page;
