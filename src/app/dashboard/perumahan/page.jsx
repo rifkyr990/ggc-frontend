@@ -44,11 +44,12 @@ const Page = () => {
   const fetchFasilitas = async () => {
     try {
       const res = await api.get('/fasilitas'); // asumsi: res.data = [{ id: 1, nama: 'Kolam Renang' }]
-      const options = res.data.map(f => ({
+      const options = res.data.data.map(f => ({
         value: f.id,
         label: f.nama,
       }));
       setFasilitasOptions(options);
+
     } catch (err) {
       console.error('Gagal fetch fasilitas:', err);
     }
