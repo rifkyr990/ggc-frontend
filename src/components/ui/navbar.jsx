@@ -121,7 +121,7 @@ export default function Navbar() {
                         </div>
                         <ul className="absolute top-6 left-0 w-40 bg-white text-black rounded-md shadow-lg opacity-0 group-hover:opacity-100 invisible group-hover:visible transition-all duration-200 z-10">
                             <li className="px-4 py-2 hover:bg-gray-100">
-                                <Link href="#info-blog">Blog</Link>
+                                <Link href="/blog">Blog</Link>
                             </li>
                             <li className="px-4 py-2 hover:bg-gray-100">
                                 <Link href="#info-news">News</Link>
@@ -232,7 +232,7 @@ export default function Navbar() {
                     </button>
                     {openInfo && (
                     <ul className="mt-2 ml-4 text-right text-sm flex flex-col gap-2">
-                        <li><Link href="#info-blog" onClick={() => setMenuOpen(false)}>Blog</Link></li>
+                        <li><Link href="/blog" onClick={() => setMenuOpen(false)}>Blog</Link></li>
                         <li><Link href="#info-news" onClick={() => setMenuOpen(false)}>News</Link></li>
                     </ul>
                     )}
