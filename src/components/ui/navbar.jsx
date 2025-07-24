@@ -58,21 +58,22 @@ export default function Navbar() {
         <nav className="flex items-center justify-between px-6 lg:px-40 py-4">
             {/* Logo */}
             <div className="flex items-center gap-2">
-            <Image
-
-                src={scrolled ? "/image/logo3.png" : "/image/logo_putih.png"}
-
-                alt="Logo"
-                width={150}
-                height={150}
-            />
+            <Link href="/">
+                <Image
+                    src={scrolled ? "/image/logo3.png" : "/image/logo_putih.png"}
+                    alt="Logo"
+                    width={150}
+                    height={150}
+                    style={{ cursor: 'pointer' }}
+                />
+            </Link>
             </div>
 
             {/* Desktop Menu */}
             <div className="hidden md:flex items-center gap-6 relative">
                 <ul className={`flex items-center gap-6 text-sm font-medium ${navTextColor}`}>
                     <li>
-                        <Link href="#tentang">Tentang Kami</Link>
+                        <Link href="/about">Tentang Kami</Link>
                     </li>
 
                     {/* Dropdown - Proyek */}
@@ -120,10 +121,10 @@ export default function Navbar() {
                         </div>
                         <ul className="absolute top-6 left-0 w-40 bg-white text-black rounded-md shadow-lg opacity-0 group-hover:opacity-100 invisible group-hover:visible transition-all duration-200 z-10">
                             <li className="px-4 py-2 hover:bg-gray-100">
-                                <Link href="#info-blog">Blog</Link>
+                                <Link href="/blog">Blog</Link>
                             </li>
                             <li className="px-4 py-2 hover:bg-gray-100">
-                                <Link href="#info-news">News</Link>
+                                <Link href="/karir">karir</Link>
                             </li>
                         </ul>
                     </li>
@@ -131,7 +132,7 @@ export default function Navbar() {
                     <li>
                         <div className="[perspective:800px] w-32 h-10">
                             <Link
-                                href="#contact"
+                                href="/contact"
                                 className="group block w-full h-full"
                             >
                                 <div className="relative w-full h-full [transform-style:preserve-3d] transition-transform duration-500 group-hover:rotate-y-180">
@@ -231,7 +232,7 @@ export default function Navbar() {
                     </button>
                     {openInfo && (
                     <ul className="mt-2 ml-4 text-right text-sm flex flex-col gap-2">
-                        <li><Link href="#info-blog" onClick={() => setMenuOpen(false)}>Blog</Link></li>
+                        <li><Link href="/blog" onClick={() => setMenuOpen(false)}>Blog</Link></li>
                         <li><Link href="#info-news" onClick={() => setMenuOpen(false)}>News</Link></li>
                     </ul>
                     )}
@@ -241,7 +242,7 @@ export default function Navbar() {
                 <li>
                     <div className="[perspective:800px] w-32 h-10">
                         <Link
-                            href="#contact"
+                            href="/contact"
                             onClick={() => setMenuOpen(false)}
                             className="group block w-full h-full"
                         >

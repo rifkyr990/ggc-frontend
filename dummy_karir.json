@@ -1,0 +1,47 @@
+[
+    {
+        "title": "Sales Executive",
+        "department": "Sales & Marketing",
+        "location": "Surabaya",
+        "type": "Full Time",
+        "description": "Bertanggung jawab mencari dan mengelola prospek klien properti, melakukan presentasi, dan menutup penjualan unit perumahan atau apartemen.",
+        "imageUrl": "/image/bg-hero/1.png",
+        "applyUrl": "mailto:hrd@grahagloria.com?subject=Lamaran%20Sales%20Executive"
+    },
+    {
+        "title": "Property Analyst",
+        "department": "Research & Development",
+        "location": "Jakarta",
+        "type": "Full Time",
+        "description": "Melakukan analisa pasar properti, tren harga, dan memberikan rekomendasi investasi untuk pengembangan proyek baru.",
+        "imageUrl": "/image/bg-hero/2.png",
+        "applyUrl": "mailto:hrd@grahagloria.com?subject=Lamaran%20Property%20Analyst"
+    },
+    {
+        "title": "Site Engineer",
+        "department": "Engineering",
+        "location": "Malang",
+        "type": "Contract",
+        "description": "Mengawasi pelaksanaan proyek konstruksi, memastikan kualitas dan timeline pembangunan sesuai standar perusahaan.",
+        "imageUrl": "/image/bg-hero/3.png",
+        "applyUrl": "mailto:hrd@grahagloria.com?subject=Lamaran%20Site%20Engineer"
+    },
+    {
+        "title": "Digital Marketing Specialist",
+        "department": "Marketing",
+        "location": "Remote",
+        "type": "Full Time",
+        "description": "Membuat strategi pemasaran digital, mengelola kampanye iklan online, dan meningkatkan brand awareness Graha Gloria Group.",
+        "imageUrl": "/image/bg-hero/4.png",
+        "applyUrl": "mailto:hrd@grahagloria.com?subject=Lamaran%20Digital%20Marketing%20Specialist"
+    },
+    {
+        "title": "Customer Service Officer",
+        "department": "Customer Service",
+        "location": "Surabaya",
+        "type": "Full Time",
+        "description": "Memberikan pelayanan terbaik kepada calon pembeli dan penghuni, menangani pertanyaan dan keluhan dengan profesional.",
+        "imageUrl": "/image/heros_test.png",
+        "applyUrl": "mailto:hrd@grahagloria.com?subject=Lamaran%20Customer%20Service%20Officer"
+    }
+]

@@ -1,5 +1,6 @@
 "use client"
 import React from "react";
+import Link from "next/link";
 
 const CallOut = () => {
     return (
@@ -25,16 +26,18 @@ const CallOut = () => {
                     Graha Gloria Group berkomitmen menghadirkan hunian berkualitas dengan desain modern, lingkungan asri, dan nilai investasi tinggi. Temukan rumah yang nyaman, aman, dan sesuai kebutuhan keluarga Anda bersama kami. Percayakan masa depan hunian Anda pada pengembang terpercaya!
                 </p>
                 <div className="flip-card" style={{ perspective: '800px' }}>
-                    <button className="flip-card-inner" tabIndex={0}>
-                        <span className="flip-card-front">
-                            Pelajari lebih lanjut
-                            <span className="icon">→</span>
-                        </span>
-                        <span className="flip-card-back">
-                            Siap konsultasi?
-                            <span className="icon">💬</span>
-                        </span>
-                    </button>
+                    <Link href="/contact" legacyBehavior passHref>
+                        <button className="flip-card-inner" tabIndex={0}>
+                            <span className="flip-card-front">
+                                Pelajari lebih lanjut
+                                <span className="icon">→</span>
+                            </span>
+                            <span className="flip-card-back">
+                                Siap konsultasi?
+                                <span className="icon">💬</span>
+                            </span>
+                        </button>
+                    </Link>
                     <style jsx>{`
                         .flip-card {
                             display: inline-block;
