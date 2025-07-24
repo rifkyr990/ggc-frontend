@@ -5,6 +5,7 @@ import Header from '../header';
 import Sidebar from '../sidebar';
 import api from '../../lib/api';
 import Select from 'react-select';
+import ProtectedRoute from '@/app/auth/ProtectedRouted';
 
 const Button = ({ children, ...props }) => (
   <button
@@ -207,7 +208,8 @@ const Page = () => {
   };
 
   return (
-    <section>
+    <ProtectedRoute>
+      <section>
       <Header />
       <Sidebar />
       <main className="md:ml-64 p-6 bg-gray-100 min-h-screen">
@@ -465,6 +467,7 @@ const Page = () => {
         </section>
       </main>
     </section>
+    </ProtectedRoute>
   );
 };
 

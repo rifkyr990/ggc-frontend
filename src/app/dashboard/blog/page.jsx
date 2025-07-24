@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import Header from '../header';
 import Sidebar from '../sidebar';
 import api from '../../lib/api'; // Import axios instance
+import ProtectedRoute from '@/app/auth/ProtectedRouted';
 
 const CATEGORY_OPTIONS = ['News', 'Diskon'];
 const DEFAULT_FORM = {
@@ -126,7 +127,8 @@ const Page = () => {
     }, [currentPage]);
 
     return (
-        <section>
+        <ProtectedRoute>
+            <section>
             <Header />
             <Sidebar />
 
@@ -278,6 +280,7 @@ const Page = () => {
                 </section>
             </main>
         </section>
+        </ProtectedRoute>
     );
 };
 

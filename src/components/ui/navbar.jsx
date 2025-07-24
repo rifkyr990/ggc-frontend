@@ -22,7 +22,7 @@ export default function Navbar() {
     const handleLogout = () => {
         localStorage.removeItem('user');
         setIsLogin(false);
-        window.location.href = '/login'; // redirect ke login
+        window.location.href = '/auth/login'; // redirect ke login
     };
 
     useEffect(() => {
@@ -138,10 +138,10 @@ export default function Navbar() {
                             {isLogin ? (
                             <>
                                 <li className="px-4 py-2 hover:bg-gray-100">
-                                <button onClick={handleLogout}>Logout</button>
+                                    <Link href="/dashboard">Dashboard</Link>
                                 </li>
                                 <li className="px-4 py-2 hover:bg-gray-100">
-                                <Link href="/dashboard">Dashboard</Link>
+                                    <button onClick={handleLogout}>Logout</button>
                                 </li>
                             </>
                             ) : (

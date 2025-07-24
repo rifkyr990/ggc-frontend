@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react'
 import Header from '../header'
 import Sidebar from '../sidebar'
 import api from '../../lib/api'
+import ProtectedRoute from '@/app/auth/ProtectedRouted'
 
 const Button = ({ children, ...props }) => (
     <button
@@ -107,7 +108,8 @@ const Page = () => {
   }
 
   return (
-    <section>
+    <ProtectedRoute>
+      <section>
       <Header />
       <Sidebar />
       <main className="md:ml-64 p-6">
@@ -204,6 +206,7 @@ const Page = () => {
         </section>
       </main>
     </section>
+    </ProtectedRoute>
   )
 }
 
