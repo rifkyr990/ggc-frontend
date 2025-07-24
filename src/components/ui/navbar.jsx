@@ -10,18 +10,27 @@ export default function Navbar() {
     const [openProyek, setOpenProyek] = useState(false)
     const [openLokasi, setOpenLokasi] = useState(false)
     const [openInfo, setOpenInfo] = useState(false)
-    // State untuk visibilitas navbar
     const [showNavbar, setShowNavbar] = useState(true)
-    // Ref untuk menyimpan posisi scroll sebelumnya
     const prevScrollY = useRef(0)
+    const [isLogin, setIsLogin] = useState(false);
+
+    useEffect(() => {
+        const user = localStorage.getItem('user');
+        setIsLogin(!!user); // true kalau ada user
+    }, []);
+
+    const handleLogout = () => {
+        localStorage.removeItem('user');
+        setIsLogin(false);
+        window.location.href = '/login'; // redirect ke login
+    };
 
     useEffect(() => {
         const handleScroll = () => {
             const currentScrollY = window.scrollY
             setScrolled(currentScrollY > 10)
-            // Deteksi arah scroll
+
             if (currentScrollY > prevScrollY.current && currentScrollY > 50) {
-                // Scroll ke bawah
                 setShowNavbar(false)
             } else {
                 // Scroll ke atas
@@ -125,6 +134,21 @@ export default function Navbar() {
                             <li className="px-4 py-2 hover:bg-gray-100">
                                 <Link href="#info-news">News</Link>
                             </li>
+
+                            {isLogin ? (
+                            <>
+                                <li className="px-4 py-2 hover:bg-gray-100">
+                                <button onClick={handleLogout}>Logout</button>
+                                </li>
+                                <li className="px-4 py-2 hover:bg-gray-100">
+                                <Link href="/dashboard">Dashboard</Link>
+                                </li>
+                            </>
+                            ) : (
+                            <li className="px-4 py-2 hover:bg-gray-100">
+                                <Link href="/auth/login">Login</Link>
+                            </li>
+                            )}
                         </ul>
                     </li>
 

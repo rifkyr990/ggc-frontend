@@ -2,10 +2,12 @@
 import React from 'react'
 import Sidebar from './sidebar'
 import Header from './header'
+import ProtectedRoute from '../auth/ProtectedRouted'
 
     const page = () => {
         return (
-        <div>
+        <ProtectedRoute>
+            <div>
             {/* Sidebar */}
             <Sidebar/>
 
@@ -64,6 +66,7 @@ import Header from './header'
                 </div>
             </main>
         </div>
+        </ProtectedRoute>
     )
 }
 
