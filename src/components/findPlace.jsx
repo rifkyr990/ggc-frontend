@@ -2,6 +2,8 @@
 import React, { useEffect, useState } from "react";
 import { Bed, Bath, Snowflake } from "lucide-react";
 import { fetchPerumahan } from "../backendlessApi";
+import Link from "next/link";
+import slugify from "slugify";
 
 export default function FindPlace() {
     const [properties, setProperties] = useState([]);
@@ -127,7 +129,12 @@ export default function FindPlace() {
                     </div>
                 ) : (
                     paginatedProperties.map((property, idx) => (
-                        <div key={idx} className="bg-white rounded-3xl shadow-2xl overflow-hidden flex flex-col min-h-[440px] max-w-xs mx-auto border border-[#BFA14A]/30">
+                        <Link
+                            key={property.objectId || idx}
+                            href={`/property/${slugify(property.name, { lower: true })}`}
+                            className="bg-white rounded-3xl shadow-2xl overflow-hidden flex flex-col min-h-[440px] max-w-xs mx-auto border border-[#BFA14A]/30 hover:scale-105 transition-transform duration-200"
+                            style={{ textDecoration: "none" }}
+                        >
                             <div className="h-60 w-full overflow-hidden">
                                 <img
                                     src={property.img?.replace('/public', '') || property.img_url || "/image/heros_test.png"}
@@ -155,7 +162,7 @@ export default function FindPlace() {
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </Link>
                     ))
                 )}
             </div>

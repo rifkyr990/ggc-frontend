@@ -1,0 +1,72 @@
+[
+  {
+    "title": "Tips Membeli Rumah",
+    "slug": "tips-membeli-rumah",
+    "imageUrl": "/image/bg-hero/1.png",
+    "content": "<p>Berikut adalah tips membeli rumah pertama Anda...</p>",
+    "created": "2024-06-01T10:00:00Z"
+  },
+  {
+    "title": "Cara KPR Rumah Mudah",
+    "slug": "cara-kpr-rumah-mudah",
+    "imageUrl": "/image/bg-hero/2.png",
+    "content": "<p>KPR kini lebih mudah dengan tips berikut...</p>",
+    "created": "2024-06-02T11:00:00Z"
+  },
+  {
+    "title": "Inspirasi Desain Minimalis",
+    "slug": "inspirasi-desain-minimalis",
+    "imageUrl": "/image/bg-hero/3.png",
+    "content": "<p>Desain minimalis tetap jadi favorit keluarga muda...</p>",
+    "created": "2024-06-03T12:00:00Z"
+  },
+  {
+    "title": "Investasi Properti Aman",
+    "slug": "investasi-properti-aman",
+    "imageUrl": "/image/bg-hero/4.png",
+    "content": "<p>Investasi properti tetap menguntungkan di tahun ini...</p>",
+    "created": "2024-06-04T13:00:00Z"
+  },
+  {
+    "title": "Panduan Renovasi Rumah",
+    "slug": "panduan-renovasi-rumah",
+    "imageUrl": "/image/heros_test.png",
+    "content": "<p>Renovasi rumah jadi mudah dengan panduan berikut...</p>",
+    "created": "2024-06-05T14:00:00Z"
+  },
+  {
+    "title": "Dekorasi Rumah Sederhana",
+    "slug": "dekorasi-rumah-sederhana",
+    "imageUrl": "/image/heros_test2.webp",
+    "content": "<p>Ide dekorasi rumah sederhana namun elegan...</p>",
+    "created": "2024-06-06T15:00:00Z"
+  },
+  {
+    "title": "Mengenal Sertifikat Tanah",
+    "slug": "mengenal-sertifikat-tanah",
+    "imageUrl": "/image/heros_test3.webp",
+    "content": "<p>Pentingnya memahami jenis sertifikat tanah...</p>",
+    "created": "2024-06-07T16:00:00Z"
+  },
+  {
+    "title": "Cara Jual Rumah Cepat",
+    "slug": "cara-jual-rumah-cepat",
+    "imageUrl": "/image/bg-hero/1.png",
+    "content": "<p>Strategi agar rumah cepat laku di pasaran...</p>",
+    "created": "2024-06-08T17:00:00Z"
+  },
+  {
+    "title": "Perbedaan Rumah Subsidi dan Komersil",
+    "slug": "perbedaan-rumah-subsidi-dan-komersil",
+    "imageUrl": "/image/bg-hero/2.png",
+    "content": "<p>Kenali perbedaan rumah subsidi dan komersil...</p>",
+    "created": "2024-06-09T18:00:00Z"
+  },
+  {
+    "title": "Tips Menata Taman Rumah",
+    "slug": "tips-menata-taman-rumah",
+    "imageUrl": "/image/bg-hero/3.png",
+    "content": "<p>Taman rumah asri dengan penataan yang tepat...</p>",
+    "created": "2024-06-10T19:00:00Z"
+  }
+] 
