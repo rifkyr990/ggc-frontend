@@ -2,9 +2,7 @@
 
 import { DM_Sans } from "next/font/google";
 import "./globals.css";
-import Navbar from "@/components/ui/navbar";
-import Footer from "@/components/ui/footer";
-
+import { ReduxProvider } from './lib/redux/provider';
 // Inisialisasi font DM Sans
 const dmSans = DM_Sans({
   variable: "--font-dm-sans",
@@ -21,9 +19,9 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={`${dmSans.variable} font-sans antialiased`}>
-        <Navbar />
-        {children}
-        <Footer />
+        <ReduxProvider>
+          {children}
+        </ReduxProvider>
       </body>
     </html>
   );
