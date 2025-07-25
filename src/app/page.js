@@ -4,10 +4,13 @@ import HeroSection from "@/components/heroSection";
 import CallOut from "@/components/callOut"; 
 import Testimoni from "@/components/testimoni";
 import React from "react";
+import Navbar from "@/components/ui/navbar";
+import Footer from "@/components/ui/footer";
 
 export default function Home() {
   return (
     <div>
+      <Navbar/>
       <section id="tentang">
         <HeroSection />
       </section>
@@ -22,6 +25,9 @@ export default function Home() {
       </section>
       <section id="testimoni">
         <Testimoni />
+      </section>
+      <section id="footer">
+        <Footer/>
       </section>
     </div>
   );
