@@ -5,7 +5,7 @@ import Sidebar from '../sidebar';
 import api from '../../lib/api'; // Import axios instance
 import ProtectedRoute from '@/app/auth/ProtectedRouted';
 
-const CATEGORY_OPTIONS = ['News', 'Diskon'];
+const CATEGORY_OPTIONS = ['News', 'Karir'];
 const DEFAULT_FORM = {
     title: '',
     content: '',

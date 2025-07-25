@@ -100,12 +100,13 @@ const AboutSection = () => {
                     GGG (Graha Gloria Grup) adalah perusahaan pengembang properti yang berfokus pada pembangunan hunian berkualitas tinggi dengan desain modern dan lingkungan yang asri. Kami berkomitmen memberikan solusi tempat tinggal terbaik bagi keluarga Indonesia melalui inovasi, integritas, dan pelayanan profesional. Bersama GGG, Anda dapat mewujudkan impian memiliki rumah yang nyaman, aman, dan bernilai investasi tinggi.
                 </p>
                 <div className="flex flex-wrap gap-4">
-                <button className="flex items-center px-8 py-4 bg-black text-white font-semibold rounded-tl-2xl  rounded-br-2xl rounded-tr-lg rounded-bl-lg shadow hover:bg-gray-900 transition-all duration-200">
-                        Learn more
-
-                        <span className="ml-2 text-[#FFAC12] text-xl">→</span>
-
-                    </button>
+                <a
+                    href="/about"
+                    className="flex items-center px-8 py-4 bg-black text-white font-semibold rounded-tl-2xl rounded-br-2xl rounded-tr-lg rounded-bl-lg shadow hover:bg-gray-900 transition-all duration-200"
+                >
+                    Learn more
+                    <span className="ml-2 text-[#FFAC12] text-xl">→</span>
+                </a>
                 </div>
             </div>
         </section>

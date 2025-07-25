@@ -1,11 +1,10 @@
-"use client"
+'use client';
 import React from "react";
+import Link from "next/link";
 
 const CallOut = () => {
     return (
-        <section
-            className="relative w-full h-[70vh] flex items-center justify-center overflow-hidden"
-        >
+        <section className="relative w-full h-[70vh] flex items-center justify-center overflow-hidden">
             {/* Background Parallax */}
             <div
                 className="absolute inset-0 bg-fixed bg-center bg-cover"
@@ -25,7 +24,7 @@ const CallOut = () => {
                     Graha Gloria Group berkomitmen menghadirkan hunian berkualitas dengan desain modern, lingkungan asri, dan nilai investasi tinggi. Temukan rumah yang nyaman, aman, dan sesuai kebutuhan keluarga Anda bersama kami. Percayakan masa depan hunian Anda pada pengembang terpercaya!
                 </p>
                 <div className="flip-card" style={{ perspective: '800px' }}>
-                    <button className="flip-card-inner" tabIndex={0}>
+                    <button href="/contact" className="flip-card-inner" tabIndex={0}>
                         <span className="flip-card-front">
                             Pelajari lebih lanjut
                             <span className="icon">→</span>
@@ -49,6 +48,8 @@ const CallOut = () => {
                             cursor: pointer;
                             transform-style: preserve-3d;
                             transition: transform 0.6s cubic-bezier(0.4,0.2,0.2,1);
+                            text-decoration: none;
+                            display: block;
                         }
                         .flip-card:hover .flip-card-inner,
                         .flip-card:focus-within .flip-card-inner {
