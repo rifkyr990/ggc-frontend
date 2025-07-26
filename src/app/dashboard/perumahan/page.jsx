@@ -16,20 +16,14 @@ const Button = ({ children, ...props }) => (
   </button>
 );
 
-const TYPE_OPTIONS = [
-  'Type 50',
-  'Type 53',
-  'Type 60',
-  'Type 65',
-  'Ruko'
-];
+const TYPE_OPTIONS = ["Type 50", "Type 53", "Type 60", "Type 65", "Ruko"];
 
 const LOCATION_OPTION = [
-  'Graha indah',
-  'Graha Indah Ketanon',
-  'Graha Indah Beji 1',
-  'Graha Indah Beji 2',
-]
+  "Graha indah",
+  "Graha Indah Ketanon",
+  "Graha Indah Beji 1",
+  "Graha Indah Beji 2",
+];
 
 const Page = () => {
   const [formData, setFormData] = useState({
@@ -305,13 +299,18 @@ const Page = () => {
                 >
                   Lokasi
                 </label>
-                <select name="lokasi" value={formData.lokasi} onChange={handleChange}
-                  className="w-full p-2 border border-gray-300 rounded" required>
+                <select
+                  name="lokasi"
+                  value={formData.lokasi}
+                  onChange={handleChange}
+                  className="w-full p-2 border border-gray-300 rounded"
+                  required
+                >
                   <option value="">=== Pilih lokasi ===</option>
                   {LOCATION_OPTION.map((val) => (
-                  <option key={val} value={val}>
-                    {val}
-                  </option>
+                    <option key={val} value={val}>
+                      {val}
+                    </option>
                   ))}
                 </select>
               </div>
@@ -415,7 +414,7 @@ const Page = () => {
                       min="0"
                     />
                   </div>
-                  
+
                   <div>
                     <label
                       htmlFor="listrik"
@@ -434,14 +433,21 @@ const Page = () => {
                     />
                   </div>
                   <div className="flex-1">
-                    <label className="block text-sm text-gray-700 mb-1">Type rumah</label>
-                    <select name="type" value={formData.type} onChange={handleChange}
-                      className="w-full p-2 border border-gray-300 rounded" required>
+                    <label className="block text-sm text-gray-700 mb-1">
+                      Type rumah
+                    </label>
+                    <select
+                      name="type"
+                      value={formData.type}
+                      onChange={handleChange}
+                      className="w-full p-2 border border-gray-300 rounded"
+                      required
+                    >
                       <option value="">=== Pilih type ===</option>
                       {TYPE_OPTIONS.map((val) => (
-                      <option key={val} value={val}>
-                        {val}
-                      </option>
+                        <option key={val} value={val}>
+                          {val}
+                        </option>
                       ))}
                     </select>
                   </div>
