@@ -57,10 +57,12 @@ const Page = () => {
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [isClient, setIsClient] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const fetchFasilitas = async () => {
     try {
-      const res = await api.get("/fasilitas");
+      setLoading(true);
+      const res = await api.get("/fasilitas"); // asumsi: res.data = [{ id: 1, nama: 'Kolam Renang' }]
       const options = res.data.data.map((f) => ({
         value: f.id,
         label: f.nama,
@@ -68,11 +70,14 @@ const Page = () => {
       setFasilitasOptions(options);
     } catch (err) {
       console.error("Gagal fetch fasilitas:", err);
+    } finally {
+      setLoading(false);
     }
   };
 
   const fetchPerumahan = async () => {
     try {
+      setLoading(true);
       const res = await api.get("/perumahan", {
         params: { search, page },
       });
@@ -80,6 +85,8 @@ const Page = () => {
       setTotalPages(res.data.totalPages || 1);
     } catch (err) {
       console.error("Gagal fetch data:", err);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -129,6 +136,7 @@ const Page = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     const method = editId ? "put" : "post";
     const endpoint = editId ? `/perumahan/${editId}` : "/perumahan/create";
 
@@ -161,9 +169,12 @@ const Page = () => {
       await api[method](endpoint, data);
       fetchPerumahan(); // Refresh data
       resetForm();
+      window.location.reload(); // Auto refresh browser setelah upload berhasil
     } catch (err) {
       console.error("Gagal simpan:", err?.response?.data || err.message);
       alert("Gagal simpan data");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -190,11 +201,14 @@ const Page = () => {
 
   const handleDelete = async (id) => {
     if (!confirm("Yakin ingin menghapus?")) return;
+    setLoading(true);
     try {
       await api.delete(`/perumahan/${id}`);
       fetchPerumahan();
     } catch (err) {
       console.error("Gagal hapus:", err);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -225,6 +239,35 @@ const Page = () => {
         <Header />
         <Sidebar />
         <main className="md:ml-64 p-6 bg-gray-100 min-h-screen">
+          {loading && (
+            <div className="fixed inset-0 bg-black/30 flex items-center justify-center z-50">
+              <div className="bg-white p-6 rounded shadow flex flex-col items-center">
+                <svg
+                  className="animate-spin h-8 w-8 text-blue-600 mb-2"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <circle
+                    className="opacity-25"
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    strokeWidth="4"
+                  ></circle>
+                  <path
+                    className="opacity-75"
+                    fill="currentColor"
+                    d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
+                  ></path>
+                </svg>
+                <span className="text-blue-700 font-semibold">
+                  Memproses data...
+                </span>
+              </div>
+            </div>
+          )}
           <section className="bg-white p-4 sm:p-6 rounded-lg shadow mb-8">
             <h3 className="text-lg font-semibold text-gray-800 mb-4">
               {editId ? "Edit Perumahan" : "Tambah Perumahan"}
@@ -431,19 +474,42 @@ const Page = () => {
                 >
                   Thumbnail
                 </label>
+                <label
+                  htmlFor="thumbnail"
+                  className="inline-flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded cursor-pointer hover:bg-blue-700 transition text-sm font-semibold"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={1.5}
+                    stroke="currentColor"
+                    className="w-5 h-5"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M12 16v-8m0 0l-3 3m3-3l3 3M4.5 19.5A9 9 0 1119.5 4.5a9 9 0 01-15 15z"
+                    />
+                  </svg>
+                  Pilih File Thumbnail
+                </label>
                 <input
                   type="file"
                   id="thumbnail"
                   name="thumbnail"
                   accept="image/*"
                   onChange={handleChange}
-                  className="block w-full text-sm text-gray-600"
+                  className="hidden"
                 />
                 {formData.thumbnail && (
                   <p className="mt-1 text-xs text-gray-500">
                     File: {formData.thumbnail.name}
                   </p>
                 )}
+                <p className="mt-1 text-xs text-red-500">
+                  Maksimal 2MB per gambar
+                </p>
               </div>
 
               {/* Gambar Lainnya */}
@@ -454,6 +520,26 @@ const Page = () => {
                 >
                   Gambar Lainnya
                 </label>
+                <label
+                  htmlFor="gambarLainnya"
+                  className="inline-flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded cursor-pointer hover:bg-blue-700 transition text-sm font-semibold"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={1.5}
+                    stroke="currentColor"
+                    className="w-5 h-5"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M12 16v-8m0 0l-3 3m3-3l3 3M4.5 19.5A9 9 0 1119.5 4.5a9 9 0 01-15 15z"
+                    />
+                  </svg>
+                  Pilih File Gambar Lainnya
+                </label>
                 <input
                   type="file"
                   id="gambarLainnya"
@@ -461,7 +547,7 @@ const Page = () => {
                   accept="image/*"
                   onChange={handleChange}
                   multiple
-                  className="block w-full text-sm text-gray-600"
+                  className="hidden"
                 />
                 {formData.gambarLainnya.length > 0 && (
                   <p className="mt-1 text-xs text-gray-500">
@@ -470,6 +556,9 @@ const Page = () => {
                       .join(", ")}
                   </p>
                 )}
+                <p className="mt-1 text-xs text-red-500">
+                  Maksimal 2MB per gambar
+                </p>
               </div>
 
               {/* Deskripsi */}
@@ -522,6 +611,16 @@ const Page = () => {
           </div>
 
           <section className="relative overflow-x-auto shadow-md rounded-lg">
+            {/* Tombol Refresh */}
+            <div className="flex justify-end mb-2">
+              <button
+                type="button"
+                className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition"
+                onClick={() => window.location.reload()}
+              >
+                Refresh
+              </button>
+            </div>
             <table className="w-full text-sm text-left text-gray-500">
               <thead className="text-xs text-gray-700 uppercase bg-gray-50">
                 <tr>
