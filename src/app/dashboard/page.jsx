@@ -20,25 +20,25 @@ const page = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
             {[
               {
-                label: "Users",
+                label: "Total visitor hari ini",
                 value: "26K",
                 change: "-12.4%",
                 color: "bg-purple-500",
               },
               {
-                label: "Income",
+                label: "Total Blog",
                 value: "$6,200",
                 change: "+40.9%",
                 color: "bg-blue-500",
               },
               {
-                label: "Conversion Rate",
+                label: "Total Perum",
                 value: "2.49%",
                 change: "+84.7%",
                 color: "bg-yellow-500",
               },
               {
-                label: "Sessions",
+                label: "Total Carrier",
                 value: "44K",
                 change: "-23.6%",
                 color: "bg-red-500",

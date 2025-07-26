@@ -16,12 +16,28 @@ const Button = ({ children, ...props }) => (
   </button>
 );
 
+const TYPE_OPTIONS = [
+  'Type 50',
+  'Type 53',
+  'Type 60',
+  'Type 65',
+  'Ruko'
+];
+
+const LOCATION_OPTION = [
+  'Graha indah',
+  'Graha Indah Ketanon',
+  'Graha Indah Beji 1',
+  'Graha Indah Beji 2',
+]
+
 const Page = () => {
   const [formData, setFormData] = useState({
     nama: "",
     lokasi: "",
     hargaMulai: "",
     deskripsi: "",
+    type: "",
     spesifikasi: {
       luasTanah: "",
       luasBangunan: "",
@@ -44,7 +60,7 @@ const Page = () => {
 
   const fetchFasilitas = async () => {
     try {
-      const res = await api.get("/fasilitas"); // asumsi: res.data = [{ id: 1, nama: 'Kolam Renang' }]
+      const res = await api.get("/fasilitas");
       const options = res.data.data.map((f) => ({
         value: f.id,
         label: f.nama,
@@ -70,7 +86,7 @@ const Page = () => {
   useEffect(() => {
     setIsClient(true);
     fetchPerumahan();
-    fetchFasilitas(); // tambahkan ini
+    fetchFasilitas();
   }, []);
 
   useEffect(() => {
@@ -121,11 +137,8 @@ const Page = () => {
     data.append("lokasi", formData.lokasi);
     data.append("hargaMulai", formData.hargaMulai);
     data.append("deskripsi", formData.deskripsi);
-
-    // Spesifikasi harus di-stringify
+    data.append("type", formData.type);
     data.append("spesifikasi", JSON.stringify(formData.spesifikasi));
-
-    // FasilitasIds juga di-stringify
     data.append("fasilitasIds", JSON.stringify(formData.fasilitasIds));
 
     // Validasi thumbnail wajib diisi saat create
@@ -161,6 +174,7 @@ const Page = () => {
       lokasi: item.lokasi,
       hargaMulai: item.hargaMulai,
       deskripsi: item.deskripsi,
+      type: item.type,
       spesifikasi: item.spesifikasi || {
         luasTanah: "",
         luasBangunan: "",
@@ -190,6 +204,7 @@ const Page = () => {
       lokasi: "",
       hargaMulai: "",
       deskripsi: "",
+      type: "",
       spesifikasi: {
         luasTanah: "",
         luasBangunan: "",
@@ -247,16 +262,15 @@ const Page = () => {
                 >
                   Lokasi
                 </label>
-                <input
-                  type="text"
-                  id="lokasi"
-                  name="lokasi"
-                  value={formData.lokasi}
-                  onChange={handleChange}
-                  placeholder="Masukkan lokasi"
-                  required
-                  className="w-full px-3 py-2 border border-gray-300 rounded"
-                />
+                <select name="lokasi" value={formData.lokasi} onChange={handleChange}
+                  className="w-full p-2 border border-gray-300 rounded" required>
+                  <option value="">=== Pilih lokasi ===</option>
+                  {LOCATION_OPTION.map((val) => (
+                  <option key={val} value={val}>
+                    {val}
+                  </option>
+                  ))}
+                </select>
               </div>
 
               {/* Harga Mulai */}
@@ -358,6 +372,7 @@ const Page = () => {
                       min="0"
                     />
                   </div>
+                  
                   <div>
                     <label
                       htmlFor="listrik"
@@ -374,6 +389,18 @@ const Page = () => {
                       placeholder="Daya listrik"
                       className="w-full px-3 py-2 border border-gray-300 rounded"
                     />
+                  </div>
+                  <div className="flex-1">
+                    <label className="block text-sm text-gray-700 mb-1">Type rumah</label>
+                    <select name="type" value={formData.type} onChange={handleChange}
+                      className="w-full p-2 border border-gray-300 rounded" required>
+                      <option value="">=== Pilih type ===</option>
+                      {TYPE_OPTIONS.map((val) => (
+                      <option key={val} value={val}>
+                        {val}
+                      </option>
+                      ))}
+                    </select>
                   </div>
                 </div>
               </fieldset>

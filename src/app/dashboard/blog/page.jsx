@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import Header from '../header';
 import Sidebar from '../sidebar';
-import api from '../../lib/api'; // Import axios instance
+import api from '../../lib/api';
 import ProtectedRoute from '@/app/auth/ProtectedRouted';
 
 const CATEGORY_OPTIONS = ['News', 'Karir'];
@@ -23,9 +23,6 @@ const Page = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
 
-
-
-    // Ambil data artikel saat pertama load
     useEffect(() => {
         fetchArticles();
     }, []);
@@ -160,17 +157,16 @@ const Page = () => {
                                     className="w-full p-2 border border-gray-300 rounded"
                                     required
                                 >
-                                <option value="">=== Pilih kategori ===</option>
-                                {CATEGORY_OPTIONS.map((val) => (
-                                    <option key={val} value={val}>
-                                    {val}
-                                    </option>
-                                ))}
+                                    <option value="">=== Pilih kategori ===</option>
+                                    {CATEGORY_OPTIONS.map((val) => (
+                                        <option key={val} value={val}>
+                                        {val}
+                                        </option>
+                                    ))}
                                 </select>
                             </div>
                         </div>
 
-                        {/* Thumbnail & Deskripsi */}
                         <div>
                             <label className="block text-sm text-gray-700 mb-1">Thumbnail (Upload)</label>
                             <input

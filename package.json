@@ -10,6 +10,9 @@
     },
     "dependencies": {
         "@reduxjs/toolkit": "^2.8.2",
+        "@tiptap/pm": "^3.0.7",
+        "@tiptap/react": "^3.0.7",
+        "@tiptap/starter-kit": "^3.0.7",
         "axios": "^1.10.0",
         "cloudinary": "^2.7.0",
         "clsx": "^2.1.1",
@@ -27,6 +30,7 @@
     },
     "devDependencies": {
         "@tailwindcss/postcss": "^4",
+        "@tailwindcss/typography": "^0.5.16",
         "tailwindcss": "^4"
     }
 }
