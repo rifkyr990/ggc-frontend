@@ -9,6 +9,7 @@ export default function FindPlace() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
+  const ITEMS_PER_PAGE = 6;
 
   // Filter states
   const [lookingFor, setLookingFor] = useState("");
@@ -37,6 +38,7 @@ export default function FindPlace() {
           propertyType,
           price,
           page,
+          limit: ITEMS_PER_PAGE,
         },
       });
       return res.data;

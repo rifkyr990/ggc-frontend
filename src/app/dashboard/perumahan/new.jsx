@@ -41,8 +41,12 @@ const Page = () => {
   const [editId, setEditId] = useState(null);
   const [fasilitasOptions, setFasilitasOptions] = useState([]);
   const [isMounted, setIsMounted] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isFetching, setIsFetching] = useState(false);
+  const [isFetchingFasilitas, setIsFetchingFasilitas] = useState(false);
 
   const fetchFasilitas = async () => {
+    setIsFetchingFasilitas(true);
     try {
       const res = await api.get("/fasilitas"); // asumsi: res.data = [{ id: 1, nama: 'Kolam Renang' }]
       const options = res.data.map((f) => ({
@@ -52,10 +56,13 @@ const Page = () => {
       setFasilitasOptions(options);
     } catch (err) {
       console.error("Gagal fetch fasilitas:", err);
+    } finally {
+      setIsFetchingFasilitas(false);
     }
   };
 
   const fetchPerumahan = async () => {
+    setIsFetching(true);
     try {
       const res = await api.get("/perumahan", {
         params: { search, page },
@@ -64,6 +71,8 @@ const Page = () => {
       setTotalPages(res.data.totalPages || 1);
     } catch (err) {
       console.error("Gagal fetch data:", err);
+    } finally {
+      setIsFetching(false);
     }
   };
 
@@ -107,6 +116,7 @@ const Page = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
     const form = new FormData();
     form.append("nama", formData.nama);
     form.append("lokasi", formData.lokasi);
@@ -115,6 +125,7 @@ const Page = () => {
     // Validasi thumbnail wajib diisi saat create
     if (!editId && !formData.thumbnail) {
       alert("Thumbnail wajib diisi!");
+      setIsLoading(false);
       return;
     }
     if (formData.thumbnail) {
@@ -163,6 +174,8 @@ const Page = () => {
       }
       alert(msg);
       console.error(err);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -441,9 +454,38 @@ const Page = () => {
             <div className="flex justify-end">
               <button
                 type="submit"
-                className="bg-blue-600 text-white px-6 py-2 rounded"
+                className="bg-blue-600 text-white px-6 py-2 rounded flex items-center gap-2"
+                disabled={isLoading}
               >
-                {editId ? "Update" : "Tambah"}
+                {isLoading && (
+                  <svg
+                    className="animate-spin h-4 w-4 mr-2 text-white"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <circle
+                      className="opacity-25"
+                      cx="12"
+                      cy="12"
+                      r="10"
+                      stroke="currentColor"
+                      strokeWidth="4"
+                    ></circle>
+                    <path
+                      className="opacity-75"
+                      fill="currentColor"
+                      d="M4 12a8 8 0 018-8v8z"
+                    ></path>
+                  </svg>
+                )}
+                {editId
+                  ? isLoading
+                    ? "Menyimpan..."
+                    : "Update"
+                  : isLoading
+                  ? "Menyimpan..."
+                  : "Tambah"}
               </button>
             </div>
           </form>
@@ -468,60 +510,86 @@ const Page = () => {
 
         {/* Tabel */}
         <section className="relative overflow-x-auto shadow-md rounded-lg">
-          <table className="w-full text-sm text-left text-gray-500">
-            <thead className="text-xs text-gray-700 uppercase bg-gray-50">
-              <tr>
-                <th className="px-4 py-3">Nama</th>
-                <th className="px-4 py-3">Lokasi</th>
-                <th className="px-4 py-3">Harga</th>
-                <th className="px-4 py-3">Deskripsi</th>
-                <th className="px-4 py-3">Tanggal</th>
-                <th className="px-4 py-3">Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              {perumahanList.map((item) => (
-                <tr
-                  key={item.id}
-                  className="bg-white border-b hover:bg-gray-50"
-                >
-                  <td className="px-4 py-2">{item.nama}</td>
-                  <td className="px-4 py-2">{item.lokasi}</td>
-                  <td className="px-4 py-2">
-                    Rp {parseInt(item.hargaMulai).toLocaleString("id-ID")}
-                  </td>
-                  <td className="px-4 py-2 truncate max-w-[200px]">
-                    {item.deskripsi}
-                  </td>
-                  <td className="px-4 py-2">
-                    {new Date(item.createdAt).toLocaleDateString()}
-                  </td>
-                  <td className="px-4 py-2">
-                    <div className="flex gap-2">
-                      <Button
-                        className="bg-blue-500 text-white px-5 py-2 rounded"
-                        onClick={() => handleEdit(item)}
-                      >
-                        Edit
-                      </Button>
-                      <Button
-                        className="bg-red-600 text-white px-5 py-2 rounded"
-                        onClick={() => handleDelete(item.id)}
-                      >
-                        Hapus
-                      </Button>
-                    </div>
-                  </td>
+          {isFetching ? (
+            <div className="flex justify-center items-center py-10">
+              <svg
+                className="animate-spin h-6 w-6 mr-2 text-blue-600"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <circle
+                  className="opacity-25"
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  stroke="currentColor"
+                  strokeWidth="4"
+                ></circle>
+                <path
+                  className="opacity-75"
+                  fill="currentColor"
+                  d="M4 12a8 8 0 018-8v8z"
+                ></path>
+              </svg>
+              <span>Memuat data...</span>
+            </div>
+          ) : (
+            <table className="w-full text-sm text-left text-gray-500">
+              <thead className="text-xs text-gray-700 uppercase bg-gray-50">
+                <tr>
+                  <th className="px-4 py-3">Nama</th>
+                  <th className="px-4 py-3">Lokasi</th>
+                  <th className="px-4 py-3">Harga</th>
+                  <th className="px-4 py-3">Deskripsi</th>
+                  <th className="px-4 py-3">Tanggal</th>
+                  <th className="px-4 py-3">Action</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {perumahanList.map((item) => (
+                  <tr
+                    key={item.id}
+                    className="bg-white border-b hover:bg-gray-50"
+                  >
+                    <td className="px-4 py-2">{item.nama}</td>
+                    <td className="px-4 py-2">{item.lokasi}</td>
+                    <td className="px-4 py-2">
+                      Rp {parseInt(item.hargaMulai).toLocaleString("id-ID")}
+                    </td>
+                    <td className="px-4 py-2 truncate max-w-[200px]">
+                      {item.deskripsi}
+                    </td>
+                    <td className="px-4 py-2">
+                      {new Date(item.createdAt).toLocaleDateString()}
+                    </td>
+                    <td className="px-4 py-2">
+                      <div className="flex gap-2">
+                        <Button
+                          className="bg-blue-500 text-white px-5 py-2 rounded"
+                          onClick={() => handleEdit(item)}
+                        >
+                          Edit
+                        </Button>
+                        <Button
+                          className="bg-red-600 text-white px-5 py-2 rounded"
+                          onClick={() => handleDelete(item.id)}
+                        >
+                          Hapus
+                        </Button>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          )}
 
           {/* Pagination */}
           <div className="my-4 flex justify-center items-center gap-4">
             <Button
               onClick={() => setPage((p) => Math.max(1, p - 1))}
-              disabled={page === 1}
+              disabled={page === 1 || isFetching}
               className="bg-gray-200 px-3 py-1 rounded"
             >
               Prev
@@ -531,7 +599,7 @@ const Page = () => {
             </span>
             <Button
               onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
-              disabled={page === totalPages}
+              disabled={page === totalPages || isFetching}
               className="bg-gray-200 px-3 py-1"
             >
               Next

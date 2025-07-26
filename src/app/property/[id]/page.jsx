@@ -68,16 +68,16 @@ const PropertyDetailPage = () => {
         filter: "none",
       }}
     >
-      <div className="absolute inset-0 bg-gradient-to-br from-green-50/80 via-white/60 to-yellow-50/80 backdrop-blur-[6px] z-0" />
+      <div className="absolute inset-0 bg-gradient-to-br from-black/70 via-black/40 to-black/60 backdrop-blur-[6px] z-0" />
       <div
         className="relative z-10 max-w-7xl w-full mx-auto px-4 py-10 mt-24 rounded-tr-3xl shadow-2xl border border-yellow-200 bg-white/30 backdrop-blur-[8px] bg-clip-padding"
         style={{ boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.37)" }}
       >
-        <h1 className="text-4xl font-extrabold mb-2 text-transparent bg-clip-text bg-gradient-to-r from-yellow-600 via-yellow-400 to-green-600 drop-shadow-lg">
+        <h1 className="text-6xl font-extrabold mb-2 text-white drop-shadow-lg text-center">
           {property.name}
         </h1>
-        <div className="text-green-800 flex items-center gap-2 mb-4 text-lg font-medium">
-          <MapPin size={20} className="text-yellow-600" /> {property.location}
+        <div className=" flex items-center gap-2 mb-4 text-lg font-medium text-white">
+          <MapPin size={20} className="text-white" /> {property.location}
         </div>
 
         {/* Main Image as floating card */}
@@ -204,7 +204,7 @@ const PropertyDetailPage = () => {
         </div>
       </div>
       <div className="relative z-10 max-w-[1500px] w-full mx-auto px-4 mt-16 mb-10">
-        <SimilarListing />
+        <SimilarListing excludeId={params.id} />
       </div>
     </div>
   );
