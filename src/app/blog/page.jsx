@@ -27,7 +27,9 @@ export default function BlogPage() {
       setError(null);
       try {
         // Sesuaikan limit dengan blogsPerPage
-        const res = await api.get(`/articles?page=${currentPage}&limit=${blogsPerPage}`);
+        const res = await api.get(
+          `/articles?page=${currentPage}&limit=${blogsPerPage}`
+        );
         setBlogs(res.data.data);
       } catch (err) {
         setError("Gagal memuat blog.");
@@ -50,12 +52,16 @@ export default function BlogPage() {
   if (error)
     return (
       <div className="flex flex-col items-center justify-center min-h-[60vh]">
-        <div className="bg-red-100 text-red-600 px-6 py-4 rounded-xl shadow-lg">{error}</div>
+        <div className="bg-red-100 text-red-600 px-6 py-4 rounded-xl shadow-lg">
+          {error}
+        </div>
       </div>
     );
 
   if (blogs.length === 0)
-    return <div className="text-center text-gray-500 py-20">Tidak ada blog.</div>;
+    return (
+      <div className="text-center text-gray-500 py-20">Tidak ada blog.</div>
+    );
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-white via-green-50 to-yellow-100 pb-16">
@@ -75,8 +81,8 @@ export default function BlogPage() {
             Blog & Artikel
           </h1>
           <p className="text-lg md:text-xl text-white/90 max-w-2xl text-center">
-            Temukan inspirasi, tips, dan berita terbaru seputar properti, hunian,
-            dan gaya hidup modern di blog kami.
+            Temukan inspirasi, tips, dan berita terbaru seputar properti,
+            hunian, dan gaya hidup modern di blog kami.
           </p>
         </div>
       </div>
@@ -89,11 +95,14 @@ export default function BlogPage() {
             const imageUrl =
               blog.thumbnail ||
               "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80";
-            const tanggal = new Date(blog.createdAt).toLocaleDateString("id-ID", {
-              day: "numeric",
-              month: "short",
-              year: "numeric",
-            });
+            const tanggal = new Date(blog.createdAt).toLocaleDateString(
+              "id-ID",
+              {
+                day: "numeric",
+                month: "short",
+                year: "numeric",
+              }
+            );
             return (
               <Link
                 key={blog.id}
@@ -116,7 +125,7 @@ export default function BlogPage() {
                     {blog.title}
                   </h2>
                   <p className="text-green-800 text-base mb-2 line-clamp-3">
-                    {blog.summary || (blog.content?.slice(0, 120) + "...")}
+                    {blog.summary || blog.content?.slice(0, 120) + "..."}
                   </p>
                   <span className="text-xs text-green-600 mt-auto">
                     Oleh{" "}
