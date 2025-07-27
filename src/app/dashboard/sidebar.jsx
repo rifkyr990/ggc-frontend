@@ -6,11 +6,12 @@ const Sidebar = () => {
   const pathname = usePathname();
 
   const menuItems = [
+    { name: "Beranda", path: "/"  },
     { name: "Dashboard", path: "/dashboard" },
     { name: "Blog", path: "/dashboard/blog" },
     { name: "Perumahan", path: "/dashboard/perumahan" },
     { name: "Fasilitas", path: "/dashboard/fasilitas" },
-    { name: "Carrier", path: "/dashboard/carrier" },
+    { name: "Karir", path: "/dashboard/carrier" },
   ];
 
   return (

@@ -5,7 +5,7 @@ import Link from "next/link";
 
 export default function Footer() {
   return (
-    <footer className="bg-gradient-to-b from-black to-[#1a1a1a] text-white px-6 py-12 z-200">
+    <footer className="bg-gradient-to-b from-black to-[#1a1a1a] text-white px-6 py-12 z-200 bottom-0 w-full">
       <div className="max-w-7xl mx-auto">
         {/* CTA */}
         <div className="flex flex-col md:flex-row justify-between items-center mb-12">
@@ -45,7 +45,7 @@ export default function Footer() {
               </li>
               <li>
                 <Link
-                  href="#proyek"
+                  href="/proyek"
                   className="hover:text-orange-400 transition"
                 >
                   Proyek
@@ -53,14 +53,14 @@ export default function Footer() {
               </li>
               <li>
                 <Link
-                  href="#lokasi"
+                  href="/lokasi"
                   className="hover:text-orange-400 transition"
                 >
                   Lokasi
                 </Link>
               </li>
               <li>
-                <Link href="#info" className="hover:text-orange-400 transition">
+                <Link href="" className="hover:text-orange-400 transition">
                   Info
                 </Link>
               </li>

@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { Bed, Bath, Snowflake } from "lucide-react";
 import api from "@/app/lib/api"; // pastikan api.get('/perumahan/filter')
 import Link from "next/link";
+import slugify from "slugify";
 
 export default function FindPlace() {
   const [properties, setProperties] = useState([]);
@@ -120,7 +121,7 @@ export default function FindPlace() {
           properties.map((p) => (
             <Link
               key={p.id}
-              href={`/property/${p.id}`}
+              href={`/property/${slugify(p.nama, { lower: true })}`}
               className="bg-white rounded-lg shadow-md overflow-hidden flex flex-col hover:scale-105 transition-transform duration-300"
             >
               <img

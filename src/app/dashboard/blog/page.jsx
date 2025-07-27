@@ -316,7 +316,8 @@ const Page = () => {
                     </tr>
                   ))}
                 </tbody>
-                <div className="flex justify-center my-4 gap-2">
+              </table>
+              <div className="flex justify-center my-4 gap-2">
                   <button
                     onClick={() =>
                       setCurrentPage((prev) => Math.max(prev - 1, 1))
@@ -339,7 +340,6 @@ const Page = () => {
                     Next
                   </button>
                 </div>
-              </table>
             </section>
           )}
         </main>

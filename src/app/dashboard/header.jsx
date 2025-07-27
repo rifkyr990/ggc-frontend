@@ -12,11 +12,12 @@ const Header = () => {
   const router = useRouter();
 
   const pathToTitle = {
+    "/": "Beranda",
     "/dashboard": "Dashboard",
     "/dashboard/blog": "Blog",
     "/dashboard/perumahan": "Perumahan",
     "/dashboard/fasilitas": "Fasilitas",
-    "/dahsboard/carrier" : "Carrier"
+    "/dahsboard/carrier" : "Karir"
   };
 
   const pageTitle = pathToTitle[pathname] || "Dashboard";
@@ -40,12 +41,6 @@ const Header = () => {
     <header className="md:ml-64 bg-gray-800 shadow p-4 py-8 flex justify-between items-center sticky top-0 z-100 text-white">
       <h2 className="text-xl font-semibold">{pageTitle}</h2>
       <div className="flex items-center gap-4">
-        <Link
-          href="/"
-          className="bg-yellow-400 hover:bg-yellow-500 text-gray-900 font-semibold px-3 py-1 rounded transition-colors duration-200"
-        >
-          Home
-        </Link>
         <div className="relative" ref={dropdownRef}>
           <button
             onClick={() => setIsOpen(!isOpen)}
@@ -65,6 +60,7 @@ const Header = () => {
             <div className="absolute right-0 mt-2 w-40 bg-white text-black rounded shadow-md z-50 p-2">
               {/* Hanya tampil di mobile (md ke bawah) */}
               <ul className="flex flex-col md:hidden">
+                <Link href="/" className="px-4 py-2 hover:bg-gray-100">Beranda</Link>
                 <Link href="/dashboard" className="px-4 py-2 hover:bg-gray-100">
                   Dashboard
                 </Link>

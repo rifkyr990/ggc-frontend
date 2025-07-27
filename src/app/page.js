@@ -10,24 +10,26 @@ import FindPlace from "@/components/findPlace";
 
 export default function Home() {
   return (
-    <div>
+    <>
       <Navbar />
-      <section id="tentang">
-        <HeroSection />
-      </section>
-      <section id="about">
-        <AboutSection />
-      </section>
-      <section id="proyek1">
-        <FindPlace/>
-      </section>
-      <section id="callout">
-        <CallOut />
-      </section>
-      <section id="testimoni">
-        <Testimoni />
-      </section>
+      <div>
+        <section id="tentang">
+          <HeroSection />
+        </section>
+        <section id="about">
+          <AboutSection />
+        </section>
+        <section id="proyek1">
+          <FindPlace />
+        </section>
+        <section id="callout">
+          <CallOut />
+        </section>
+        <section id="testimoni">
+          <Testimoni />
+        </section>
+      </div>
       <Footer />
-    </div>
+    </>
   );
 }

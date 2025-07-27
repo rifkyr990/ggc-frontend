@@ -95,27 +95,35 @@ export default function Navbar() {
               {/* Dropdown - Proyek */}
               <li className="relative group cursor-pointer">
                 <div className="flex items-center gap-1">
-                  <span>Proyek</span>
-                  <svg
-                    className="w-4 h-4 transform group-hover:rotate-180 transition duration-200"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M19 9l-7 7-7-7"
-                    />
-                  </svg>
+                  <Link href="/proyek" className="flex items-center gap-1">
+                    <span>Proyek</span>
+                    <svg
+                      className="w-4 h-4 transform group-hover:rotate-180 transition duration-200"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M19 9l-7 7-7-7"
+                      />
+                    </svg>
+                  </Link>
                 </div>
-                <ul className="absolute top-6 left-0 w-40 bg-white text-black rounded-md shadow-lg opacity-0 group-hover:opacity-100 invisible group-hover:visible transition-all duration-200 z-10">
+                <ul className="absolute top-6 left-0 w-56 bg-white text-black rounded-md shadow-lg opacity-0 group-hover:opacity-100 invisible group-hover:visible transition-all duration-200 z-10">
                   <li className="px-4 py-2 hover:bg-gray-100">
-                    <Link href="#proyek1">Proyek 1</Link>
+                    <Link href="/proyek/ketanon">Graha Indah Ketanon</Link>
                   </li>
                   <li className="px-4 py-2 hover:bg-gray-100">
-                    <Link href="#proyek2">Proyek 2</Link>
+                    <Link href="/proyek/majan">Graha Indah Majan</Link>
+                  </li>
+                  <li className="px-4 py-2 hover:bg-gray-100">
+                    <Link href="/proyek/beji1">Graha Indah Beji 1</Link>
+                  </li>
+                  <li className="px-4 py-2 hover:bg-gray-100">
+                    <Link href="/proyek/beji2">Graha Indah Beji 2</Link>
                   </li>
                 </ul>
               </li>
@@ -123,27 +131,35 @@ export default function Navbar() {
               {/* Dropdown - Lokasi */}
               <li className="relative group cursor-pointer">
                 <div className="flex items-center gap-1">
-                  <span>Lokasi</span>
-                  <svg
-                    className="w-4 h-4 transform group-hover:rotate-180 transition duration-200"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M19 9l-7 7-7-7"
-                    />
-                  </svg>
+                  <Link href="/lokasi" className="flex items-center gap-1">
+                    <span>Lokasi</span>
+                    <svg
+                      className="w-4 h-4 transform group-hover:rotate-180 transition duration-200"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M19 9l-7 7-7-7"
+                      />
+                    </svg>
+                  </Link>
                 </div>
-                <ul className="absolute top-6 left-0 w-40 bg-white text-black rounded-md shadow-lg opacity-0 group-hover:opacity-100 invisible group-hover:visible transition-all duration-200 z-10">
+                <ul className="absolute top-6 left-0 w-56 bg-white text-black rounded-md shadow-lg opacity-0 group-hover:opacity-100 invisible group-hover:visible transition-all duration-200 z-10">
                   <li className="px-4 py-2 hover:bg-gray-100">
-                    <Link href="#lokasi-jakarta">Jakarta</Link>
+                    <Link href="/lokasi/ketanon">Graha Indah Ketanon</Link>
                   </li>
                   <li className="px-4 py-2 hover:bg-gray-100">
-                    <Link href="#lokasi-bandung">Bandung</Link>
+                    <Link href="/lokasi/majan">Graha Indah Majan</Link>
+                  </li>
+                  <li className="px-4 py-2 hover:bg-gray-100">
+                    <Link href="/lokasi/beji1">Graha Indah Beji 1</Link>
+                  </li>
+                  <li className="px-4 py-2 hover:bg-gray-100">
+                    <Link href="/lokasi/beji2">Graha Indah Beji 2</Link>
                   </li>
                 </ul>
               </li>
@@ -171,7 +187,7 @@ export default function Navbar() {
                     <Link href="/blog">Blog</Link>
                   </li>
                   <li className="px-4 py-2 hover:bg-gray-100">
-                    <Link href="/karir">karir</Link>
+                    <Link href="/karir">Karir</Link>
                   </li>
 
                   {isLogin ? (
@@ -264,9 +280,10 @@ export default function Navbar() {
 
               {/* Proyek Dropdown */}
               <li className="w-full">
-                <button
-                  onClick={() => setOpenProyek(!openProyek)}
+                <Link
+                  href="/proyek"
                   className="flex justify-between items-center w-full"
+                  onClick={() => setMenuOpen(false)}
                 >
                   <span>Proyek</span>
                   <svg
@@ -284,17 +301,39 @@ export default function Navbar() {
                       d="M19 9l-7 7-7-7"
                     />
                   </svg>
-                </button>
+                </Link>
                 {openProyek && (
                   <ul className="mt-2 ml-4 text-right text-sm flex flex-col gap-2">
                     <li>
-                      <Link href="#proyek1" onClick={() => setMenuOpen(false)}>
-                        Proyek 1
+                      <Link
+                        href="/proyek/ketanon"
+                        onClick={() => setMenuOpen(false)}
+                      >
+                        Graha Indah Ketanon
                       </Link>
                     </li>
                     <li>
-                      <Link href="#proyek2" onClick={() => setMenuOpen(false)}>
-                        Proyek 2
+                      <Link
+                        href="/proyek/majan"
+                        onClick={() => setMenuOpen(false)}
+                      >
+                        Graha Indah Majan
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        href="/proyek/beji1"
+                        onClick={() => setMenuOpen(false)}
+                      >
+                        Graha Indah Beji 1
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        href="/proyek/beji2"
+                        onClick={() => setMenuOpen(false)}
+                      >
+                        Graha Indah Beji 2
                       </Link>
                     </li>
                   </ul>
@@ -303,9 +342,10 @@ export default function Navbar() {
 
               {/* Lokasi Dropdown */}
               <li className="w-full">
-                <button
-                  onClick={() => setOpenLokasi(!openLokasi)}
+                <Link
+                  href="/lokasi"
                   className="flex justify-between items-center w-full"
+                  onClick={() => setMenuOpen(false)}
                 >
                   <span>Lokasi</span>
                   <svg
@@ -323,23 +363,39 @@ export default function Navbar() {
                       d="M19 9l-7 7-7-7"
                     />
                   </svg>
-                </button>
+                </Link>
                 {openLokasi && (
                   <ul className="mt-2 ml-4 text-right text-sm flex flex-col gap-2">
                     <li>
                       <Link
-                        href="#lokasi-jakarta"
+                        href="/lokasi/ketanon"
                         onClick={() => setMenuOpen(false)}
                       >
-                        Jakarta
+                        Graha Indah Ketanon
                       </Link>
                     </li>
                     <li>
                       <Link
-                        href="#lokasi-bandung"
+                        href="/lokasi/majan"
                         onClick={() => setMenuOpen(false)}
                       >
-                        Bandung
+                        Graha Indah Majan
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        href="/lokasi/beji1"
+                        onClick={() => setMenuOpen(false)}
+                      >
+                        Graha Indah Beji 1
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        href="/lokasi/beji2"
+                        onClick={() => setMenuOpen(false)}
+                      >
+                        Graha Indah Beji 2
                       </Link>
                     </li>
                   </ul>
