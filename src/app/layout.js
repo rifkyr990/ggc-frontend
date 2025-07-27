@@ -20,11 +20,9 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={`${dmSans.variable} font-sans antialiased`}>
+      <body className={`${dmSans.variable} font-sans antialiased overflow-x-hidden`}>
         <ReduxProvider>
-          <Navbar />
           {children}
-          <Footer />
         </ReduxProvider>
       </body>
     </html>

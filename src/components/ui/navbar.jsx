@@ -16,13 +16,13 @@ export default function Navbar() {
 
   useEffect(() => {
     const user = localStorage.getItem("user");
-    setIsLogin(!!user); // true kalau ada user
+    setIsLogin(!!user);
   }, []);
 
   const handleLogout = () => {
     localStorage.removeItem("user");
     setIsLogin(false);
-    window.location.href = "/auth/login"; // redirect ke login
+    window.location.href = "/auth/login";
   };
 
   useEffect(() => {
@@ -43,7 +43,6 @@ export default function Navbar() {
       if (e.clientY < 40) {
         setShowNavbar(true);
       } else if (window.scrollY > 50 && prevScrollY.current < window.scrollY) {
-        // Jika scroll ke bawah dan kursor tidak di atas
         setShowNavbar(false);
       }
     };
@@ -86,6 +85,9 @@ export default function Navbar() {
             <ul
               className={`flex items-center gap-6 text-sm font-medium ${navTextColor}`}
             >
+              <li>
+                <Link href="/">Beranda</Link>
+              </li>
               <li>
                 <Link href="/about">Tentang Kami</Link>
               </li>

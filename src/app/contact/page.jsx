@@ -2,9 +2,13 @@
 import Image from "next/image";
 import dynamic from "next/dynamic";
 import PropertyContactForm from "@/components/PropertyContactForm";
+import Navbar from "@/components/ui/navbar";
+import Footer from "@/components/ui/footer";
 
 const ContactPage = () => {
     return (
+        <>
+        <Navbar/>
         <main className="min-h-screen bg-gradient-to-br from-[#e9f5e1] via-[#fffbe6] to-[#f5f5f7] flex flex-col items-center justify-start pt-0">
             {/* Hero Section */}
             <section
@@ -100,6 +104,8 @@ const ContactPage = () => {
                 </div>
             </section>
         </main>
+        <Footer/>
+        </>
     );
 };
 

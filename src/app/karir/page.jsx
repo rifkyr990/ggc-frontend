@@ -1,6 +1,8 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import api from "../lib/api";
+import Navbar from "@/components/ui/navbar";
+import Footer from "@/components/ui/footer";
 
 const BACKENDLESS_URL = process.env.NEXT_PUBLIC_BACKENDLESS_URL_KARIR;
 
@@ -23,6 +25,8 @@ export default function KarirPage() {
   }, []);
 
   return (
+    <>
+    <Navbar/>
     <div className="min-h-screen bg-gradient-to-br from-white via-green-50 to-yellow-100 pb-16">
       {/* Hero Section */}
       <div
@@ -146,5 +150,7 @@ export default function KarirPage() {
         )}
       </div>
     </div>
+    <Footer/>
+    </>
   );
 }

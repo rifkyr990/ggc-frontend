@@ -3,6 +3,8 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import Link from "next/link";
 import api from "@/app/lib/api";
+import Footer from "@/components/ui/footer";
+import Navbar from "@/components/ui/navbar";
 
 const slugify = (str) => str && str.toString().toLowerCase().replace(/\s+/g, '-');
 
@@ -69,6 +71,8 @@ export default function BlogDetailPage() {
     if (!blog) return <div className="text-center py-20">Blog tidak ditemukan.</div>;
 
     return (
+        <>
+        <Navbar/>
         <div className="min-h-screen w-full bg-gradient-to-br from-[#0a0f0a] via-[#e8f5e9] to-[#bfa14a]/10 py-16 px-2 md:px-0 flex justify-center items-start relative">
             <div className="w-full max-w-350 mx-auto flex flex-col md:flex-row gap-12 mt-20 bg-white/80 backdrop-blur-md rounded-3xl shadow-2xl p-0 md:p-0 border border-[#BFA14A]/30">
                 {/* KONTEN UTAMA BLOG */}
@@ -121,5 +125,7 @@ export default function BlogDetailPage() {
                 </aside>
             </div>
         </div>
+        <Footer/>
+        </>
     );
 }

@@ -1,15 +1,17 @@
 import AboutSection from "@/components/aboutSection";
-import FindPlace from "@/components/findPlace";
 import HeroSection from "@/components/heroSection";
 import CallOut from "@/components/callOut";
 import Testimoni from "@/components/testimoni";
 import React from "react";
 import Navbar from "@/components/ui/navbar";
 import Footer from "@/components/ui/footer";
+import FindPlace from "@/components/findPlace";
+// import FindPlace from "@/components/FindPlace/FindPlace";
 
 export default function Home() {
   return (
     <div>
+      <Navbar />
       <section id="tentang">
         <HeroSection />
       </section>
@@ -17,7 +19,7 @@ export default function Home() {
         <AboutSection />
       </section>
       <section id="proyek1">
-        <FindPlace />
+        <FindPlace/>
       </section>
       <section id="callout">
         <CallOut />
@@ -25,6 +27,7 @@ export default function Home() {
       <section id="testimoni">
         <Testimoni />
       </section>
+      <Footer />
     </div>
   );
 }

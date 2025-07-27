@@ -18,11 +18,23 @@ const Button = ({ children, ...props }) => (
 
 const TYPE_OPTIONS = ["Type 50", "Type 53", "Type 60", "Type 65", "Ruko"];
 
-const LOCATION_OPTION = [
-  "Graha indah",
-  "Graha Indah Ketanon",
-  "Graha Indah Beji 1",
-  "Graha Indah Beji 2",
+const PERUM_OPTION = [
+  {
+    nama: "Graha Indah Ketanon",
+    lokasi: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d30033.965762123113!2d111.90570058369319!3d-8.03880101816621!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e78fcd4b016811f%3A0x6b3dbef632927eaa!2sPerum%20Graha%20Indah%20Ketanon!5e0!3m2!1sid!2sid!4v1753599647089!5m2!1sid!2sid"
+  },
+  {
+    nama: "Graha Indah Beji",
+    lokasi: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3955.346855318253!2d111.89693337423402!3d-7.535539175929556!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e77fd060f85dd35%3A0x9f4080b105b8ec5d!2sPerum%20Graha%20Indah%20Beji!5e0!3m2!1sid!2sid!4v1753683912345!5m2!1sid!2sid"
+  },
+  {
+    nama: "Graha Indah Beji 2",
+    lokasi: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3955.346855318253!2d111.89900000000001!3d-7.534000000000001!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e77fd06555a5b01%3A0x7a7f295f5e5e5a5e!2sPerum%20Graha%20Indah%20Beji%202!5e0!3m2!1sid!2sid!4v1753683912346!5m2!1sid!2sid"
+  },
+  {
+    nama: "Graha Indah",
+    lokasi: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3955.346855318253!2d111.90300000000001!3d-7.532000000000001!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e77fd06333a5b01%3A0x5e5e5e5e5e5e5e5e!2sPerum%20Graha%20Indah!5e0!3m2!1sid!2sid!4v1753683912347!5m2!1sid!2sid"
+  }
 ];
 
 const Page = () => {
@@ -52,11 +64,14 @@ const Page = () => {
   const [totalPages, setTotalPages] = useState(1);
   const [isClient, setIsClient] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const [selectedPerumahan, setSelectedPerumahan] = useState(null);
+
 
   const fetchFasilitas = async () => {
     try {
       setLoading(true);
-      const res = await api.get("/fasilitas"); // asumsi: res.data = [{ id: 1, nama: 'Kolam Renang' }]
+      const res = await api.get("/fasilitas");
       const options = res.data.data.map((f) => ({
         value: f.id,
         label: f.nama,
@@ -99,27 +114,35 @@ const Page = () => {
   }, [search]);
 
   const handleChange = (e) => {
-    const { name, value, files, type } = e.target;
+      const { name, value, files, type } = e.target;
 
-    if (name.startsWith("spesifikasi.")) {
-      const key = name.split(".")[1];
-      setFormData((prev) => ({
-        ...prev,
-        spesifikasi: {
-          ...prev.spesifikasi,
-          [key]: value,
-        },
-      }));
-    } else if (type === "file") {
-      if (name === "thumbnail") {
-        setFormData((prev) => ({ ...prev, thumbnail: files[0] }));
-      } else if (name === "gambarLainnya") {
-        setFormData((prev) => ({ ...prev, gambarLainnya: files }));
+      if (name === "nama") {
+        const selected = PERUM_OPTION.find((item) => item.nama === value);
+        setFormData((prev) => ({
+          ...prev,
+          nama: value,
+          lokasi: selected?.lokasi || "", // otomatis isi lokasi
+        }));
+      } else if (name.startsWith("spesifikasi.")) {
+        const key = name.split(".")[1];
+        setFormData((prev) => ({
+          ...prev,
+          spesifikasi: {
+            ...prev.spesifikasi,
+            [key]: value,
+          },
+        }));
+      } else if (type === "file") {
+        if (name === "thumbnail") {
+          setFormData((prev) => ({ ...prev, thumbnail: files[0] }));
+        } else if (name === "gambarLainnya") {
+          setFormData((prev) => ({ ...prev, gambarLainnya: files }));
+        }
+      } else {
+        setFormData((prev) => ({ ...prev, [name]: value }));
       }
-    } else {
-      setFormData((prev) => ({ ...prev, [name]: value }));
-    }
   };
+
 
   const handleSelectFasilitas = (selected) => {
     setFormData((prev) => ({
@@ -170,6 +193,11 @@ const Page = () => {
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleViewDetail = (item) => {
+    setSelectedPerumahan(item);
+    setShowModal(true);
   };
 
   const handleEdit = (item) => {
@@ -277,42 +305,48 @@ const Page = () => {
                   htmlFor="nama"
                   className="block mb-1 text-sm font-medium text-gray-700"
                 >
-                  Nama
-                </label>
-                <input
-                  type="text"
-                  id="nama"
-                  name="nama"
-                  value={formData.nama}
-                  onChange={handleChange}
-                  placeholder="Masukkan nama perumahan"
-                  required
-                  className="w-full px-3 py-2 border border-gray-300 rounded"
-                />
-              </div>
-
-              {/* Lokasi */}
-              <div>
-                <label
-                  htmlFor="lokasi"
-                  className="block mb-1 text-sm font-medium text-gray-700"
-                >
-                  Lokasi
+                  Nama Perumahan
                 </label>
                 <select
-                  name="lokasi"
-                  value={formData.lokasi}
+                  name="nama"
+                  value={formData.nama}
                   onChange={handleChange}
                   className="w-full p-2 border border-gray-300 rounded"
                   required
                 >
-                  <option value="">=== Pilih lokasi ===</option>
-                  {LOCATION_OPTION.map((val) => (
-                    <option key={val} value={val}>
-                      {val}
+                  <option value="">=== Pilih Perumahan ===</option>
+                  {PERUM_OPTION.map((val, idx) => (
+                    <option key={idx} value={val.nama}>
+                      {val.nama}
                     </option>
                   ))}
                 </select>
+              </div>
+
+              {/* Lokasi */}
+              <div>
+                {/* Lokasi Viewer */}
+                {formData.lokasi && (
+                  <div className="mt-4">
+                    <label
+                      htmlFor="lokasi"
+                      className="block mb-1 text-sm font-medium text-gray-700"
+                    >
+                      Lokasi
+                    </label>
+                    <div className="w-full h-[300px] rounded overflow-hidden border">
+                      <iframe
+                        src={formData.lokasi}
+                        width="100%"
+                        height="100%"
+                        style={{ border: 0 }}
+                        allowFullScreen=""
+                        loading="lazy"
+                        referrerPolicy="no-referrer-when-downgrade"
+                      ></iframe>
+                    </div>
+                  </div>
+                )}
               </div>
 
               {/* Harga Mulai */}
@@ -598,7 +632,68 @@ const Page = () => {
               </div>
             </form>
           </section>
+          
+          {/* Modal Detail Perumahan */}
+          {showModal && selectedPerumahan && (
+            <div className="fixed inset-0 z-50 bg-black/40 flex items-center justify-center px-4">
+              <div className="bg-white w-full max-w-2xl rounded-lg shadow-lg overflow-auto max-h-[90vh] p-6 relative">
+                <button
+                  className="absolute top-2 right-2 text-gray-600 hover:text-red-500"
+                  onClick={() => setShowModal(false)}
+                >
+                  ✕
+                </button>
 
+                <h2 className="text-xl font-bold mb-4">
+                  Detail: {selectedPerumahan.nama}
+                </h2>
+
+                {/* Lokasi Map */}
+                {selectedPerumahan.lokasi && (
+                  <div className="mb-4 h-64 border rounded overflow-hidden">
+                    <iframe
+                      src={selectedPerumahan.lokasi}
+                      width="100%"
+                      height="100%"
+                      style={{ border: 0 }}
+                      allowFullScreen=""
+                      loading="lazy"
+                      referrerPolicy="no-referrer-when-downgrade"
+                    ></iframe>
+                  </div>
+                )}
+
+                <div className="space-y-2 text-sm">
+                  <p>
+                    <span className="font-medium">Harga Mulai:</span> Rp{" "}
+                    {Number(selectedPerumahan.hargaMulai).toLocaleString("id-ID")}
+                  </p>
+                  <p>
+                    <span className="font-medium">Type:</span> {selectedPerumahan.type}
+                  </p>
+                  <p>
+                    <span className="font-medium">Deskripsi:</span>{" "}
+                    {selectedPerumahan.deskripsi}
+                  </p>
+                  <p>
+                    <span className="font-medium">Spesifikasi:</span>
+                  </p>
+                  <ul className="ml-4 list-disc">
+                    <li>Luas Tanah: {selectedPerumahan.spesifikasi?.luasTanah} m²</li>
+                    <li>Luas Bangunan: {selectedPerumahan.spesifikasi?.luasBangunan} m²</li>
+                    <li>Kamar Tidur: {selectedPerumahan.spesifikasi?.kamarTidur}</li>
+                    <li>Kamar Mandi: {selectedPerumahan.spesifikasi?.kamarMandi}</li>
+                    <li>Listrik: {selectedPerumahan.spesifikasi?.listrik}</li>
+                  </ul>
+
+                  <div>
+                    <span className="font-medium">Fasilitas:</span>{" "}
+                    {(selectedPerumahan.fasilitas || []).map((f) => f.fasilitas.nama).join(", ")}
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
           {/* search */}
           <div className="mb-4 flex gap-2 justify-end">
             <input
@@ -631,7 +726,6 @@ const Page = () => {
               <thead className="text-xs text-gray-700 uppercase bg-gray-50">
                 <tr>
                   <th className="px-4 py-3">Nama</th>
-                  <th className="px-4 py-3">Lokasi</th>
                   <th className="px-4 py-3">Harga</th>
                   <th className="px-4 py-3 max-w-[200px]">Deskripsi</th>
                   <th className="px-4 py-3">Tanggal</th>
@@ -645,7 +739,6 @@ const Page = () => {
                     className="bg-white border-b hover:bg-gray-50"
                   >
                     <td className="px-4 py-2">{item.nama}</td>
-                    <td className="px-4 py-2">{item.lokasi}</td>
                     <td className="px-4 py-2">
                       Rp {parseInt(item.hargaMulai).toLocaleString("id-ID")}
                     </td>
@@ -657,6 +750,12 @@ const Page = () => {
                     </td>
                     <td className="px-4 py-2">
                       <div className="flex gap-2">
+                        <Button
+                          onClick={() => handleViewDetail(item)}
+                          className="bg-yellow-500 text-white px-5 py-2 rounded"
+                        >
+                          Detail
+                        </Button>
                         <Button
                           className="bg-blue-500 text-white px-5 py-2 rounded"
                           onClick={() => handleEdit(item)}

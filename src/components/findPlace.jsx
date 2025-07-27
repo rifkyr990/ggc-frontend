@@ -1,220 +1,159 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { Bed, Bath, Snowflake } from "lucide-react";
-import api from "@/app/lib/api";
+import api from "@/app/lib/api"; // pastikan api.get('/perumahan/filter')
 import Link from "next/link";
 
 export default function FindPlace() {
-  const [propertyData, setPropertyData] = useState({ data: [], totalPages: 1 });
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [properties, setProperties] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [nama, setNama] = useState("");
+  const [type, setType] = useState("");
+  const [hargaMin, setHargaMin] = useState("");
+  const [hargaMax, setHargaMax] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const ITEMS_PER_PAGE = 6;
+  const [totalPages, setTotalPages] = useState(1);
 
-  // Filter states
-  const [lookingFor, setLookingFor] = useState("");
-  const [location, setLocation] = useState("");
-  const [propertyType, setPropertyType] = useState("");
-  const [price, setPrice] = useState("");
+  // Opsi filter
+  const filterOptionsArr = [
+    { label: "Nama", state: nama, setter: setNama, options: ["Graha Indah Majan", "Graha Indah Beji 1", "Graha Indah Beji 2", "Graha Indah Ketanon"] },
+    { label: "Type", state: type, setter: setType, options: ["Cluster", "Townhouse", "Type 50"] },
+    { label: "Harga Min", state: hargaMin, setter: setHargaMin, options: [] },
+    { label: "Harga Max", state: hargaMax, setter: setHargaMax, options: [] },
+  ];
 
-  const slugify = (str) =>
-    str
-      .toLowerCase()
-      .replace(/\s+/g, "-")
-      .replace(/[^\w\-]+/g, "");
-
-  const fetchPerumahan = async ({
-    lookingFor = "",
-    lokasi = "",
-    propertyType = "",
-    price = "",
-    page = 1,
-  }) => {
+  const fetchData = async () => {
+    setLoading(true);
     try {
-      const res = await api.get("/perumahan", {
-        params: {
-          lookingFor,
-          lokasi,
-          propertyType,
-          price,
-          page,
-          limit: ITEMS_PER_PAGE,
-        },
-      });
-      return res.data;
+      const params = new URLSearchParams();
+      if (nama) params.append("nama", nama);
+      if (type) params.append("type", type);
+      if (hargaMin) params.append("hargaMin", hargaMin);
+      if (hargaMax) params.append("hargaMax", hargaMax);
+      params.append("page", currentPage);
+
+      const res = await api.get(`/perumahan/filter?${params.toString()}`);
+      const { data, totalPages: tp } = res.data;
+      setProperties(data);
+      setTotalPages(tp || 1);
     } catch (err) {
-      console.error("Gagal fetch data:", err);
-      throw err;
+      console.error("Fetch error:", err);
     }
+    setLoading(false);
   };
 
   useEffect(() => {
-    setLoading(true);
-    fetchPerumahan({
-      lookingFor,
-      lokasi: location,
-      propertyType,
-      price,
-      page: currentPage,
-    })
-      .then((res) => {
-        setPropertyData({ data: res.data, totalPages: res.totalPages });
-        setLoading(false);
-      })
-      .catch((err) => {
-        setError(err.message);
-        setLoading(false);
-      });
-  }, [lookingFor, location, propertyType, price, currentPage]);
-
-  if (error)
-    return <div className="text-center py-20 text-red-500">{error}</div>;
-
-  const { data: properties, totalPages } = propertyData;
-
-  const filterOptionsArr = [
-    {
-      label: "Looking For",
-      state: lookingFor,
-      setter: setLookingFor,
-      options: [...new Set(properties.map((p) => p.nama).filter(Boolean))],
-    },
-    {
-      label: "Location",
-      state: location,
-      setter: setLocation,
-      options: [...new Set(properties.map((p) => p.lokasi).filter(Boolean))],
-    },
-    {
-      label: "Property Type",
-      state: propertyType,
-      setter: setPropertyType,
-      options: [
-        ...new Set(
-          properties.map((p) => p.spesifikasi?.luasBangunan).filter(Boolean)
-        ),
-      ],
-    },
-    {
-      label: "Price",
-      state: price,
-      setter: setPrice,
-      options: [
-        ...[
-          ...new Set(properties.map((p) => p.hargaMulai).filter(Boolean)),
-        ].sort((a, b) => a - b),
-      ].map((harga) => `Rp ${harga.toLocaleString("id-ID")}`),
-    },
-  ];
+    fetchData();
+  }, [nama, type, hargaMin, hargaMax, currentPage]);
 
   return (
-    <div className="bg-[#f5f5f7] min-h-[140vh] flex flex-col items-center justify-start py-16 px-6 md:px-32">
+    <div className="bg-[#f5f5f7] min-h-screen flex flex-col items-center py-8 px-6 sm:px-12 md:px-40 lg:px-56">
       {/* Header */}
-      <div className="mb-12 w-full max-w-7xl">
-        <div className="mb-4 h-1 w-30 bg-gradient-to-r from-orange-500 to-black rounded-full" />
-        <h1 className="text-3xl md:text-4xl font-bold text-gray-700">
-          Find your next place to live
-        </h1>
+      <div className="mb-12 text-center">
+        <div className="h-1 w-20 bg-gradient-to-r from-orange-500 to-black mx-auto mb-4 rounded" />
+        <h1 className="font-bold text-4xl md:text-5xl m-0 text-gray-700 mb-5">Find Your Dream Home</h1>
+        <p className="text-gray-600 max-w-xl mx-auto">
+          Choose location, house type, and price to start finding the best place to live.
+        </p>
       </div>
-
       {/* Filter Bar */}
-      <div className="flex flex-col md:flex-row gap-6 mb-16 w-full max-w-7xl">
+      <div className="flex flex-wrap gap-4 mb-8 w-full max-w-4xl justify-center">
         {filterOptionsArr.map(({ label, state, setter, options }, idx) => (
-          <div key={idx} className="flex-1 flex flex-col">
-            <label className="mb-2 text-xs font-light text-gray-700 tracking-wide">
-              {label}
-            </label>
-            <select
-              value={state}
-              onChange={(e) => setter(e.target.value)}
-              className="bg-white/40 backdrop-blur-md border border-[#BFA14A] text-gray-800 rounded-2xl shadow-lg p-4 focus:ring-2 focus:ring-[#BFA14A] focus:outline-none transition placeholder:text-gray-400 hover:shadow-xl hover:border-[#FFD700] appearance-none font-medium tracking-wide relative pr-10"
-              style={{
-                backgroundImage:
-                  "url(\"data:image/svg+xml;utf8,<svg fill='gold' height='20' viewBox='0 0 24 24' width='20' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>\")",
-                backgroundRepeat: "no-repeat",
-                backgroundPosition: "right 1.25rem center",
-                backgroundSize: "1.2em",
-              }}
-            >
-              <option value="">Pilih</option>
-              {options.map((opt, i) => (
-                <option key={i} value={opt}>
-                  {opt}
-                </option>
-              ))}
-            </select>
+          <div key={idx} className="flex flex-col flex-1 min-w-[140px] max-w-[240px]">
+            <label className="mb-2 text-sm font-medium text-gray-700">{label}</label>
+            {options.length ? (
+              <select
+                value={state}
+                onChange={(e) => setter(e.target.value)}
+                className="p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+              >
+                <option value="">Pilih {label.toLowerCase()}</option>
+                {options.map((o) => (
+                  <option key={o} value={o}>{o}</option>
+                ))}
+              </select>
+            ) : (
+              <input
+                type={label.toLowerCase().includes("harga") ? "number" : "text"}
+                value={state}
+                onChange={(e) => setter(e.target.value)}
+                placeholder={`Masukkan ${label.toLowerCase()}`}
+                className="p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                min="0"
+              />
+            )}
           </div>
         ))}
       </div>
 
-      {/* Property Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10 w-full max-w-5xl min-h-[300px]">
+      {/* Grid */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10 w-full max-w-7xl">
         {loading ? (
-          <div className="col-span-3 flex flex-col items-center justify-center min-h-[40vh] w-full">
-            <div className="w-16 h-16 border-4 border-[#BFA14A]/30 border-t-[#BFA14A] rounded-full animate-spin mb-6"></div>
-            <div className="text-lg font-medium text-[#BFA14A] tracking-wide">
-              Mengambil data properti...
-            </div>
-          </div>
-        ) : (
-          properties.map((property, idx) => (
-            <Link
-              key={property.id || idx}
-              href={`/property/${property.id}`}
-              className="bg-white rounded-3xl shadow-2xl overflow-hidden flex flex-col min-h-[440px] max-w-xs mx-auto border border-[#BFA14A]/30 hover:scale-105 transition-transform duration-200"
-              style={{ width: "320px", height: "500px" }}
+          <div className="col-span-full flex flex-col items-center py-20">
+            <svg
+              className="animate-spin h-12 w-12 text-blue-500 mb-4"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
             >
-              <div className="h-60 w-full overflow-hidden">
-                <img
-                  src={property.thumbnail || "/image/heros_test.png"}
-                  alt={property.nama}
-                  className="object-cover w-full h-full"
-                />
-              </div>
-              <div className="p-6 flex-1 flex flex-col justify-between gap-2">
-                <div className="font-semibold text-lg text-gray-900 mb-1">
-                  {property.nama}
+              <circle
+                className="opacity-25"
+                cx="12"
+                cy="12"
+                r="10"
+                stroke="currentColor"
+                strokeWidth="4"
+              ></circle>
+              <path
+                className="opacity-75"
+                fill="currentColor"
+                d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
+              ></path>
+            </svg>
+            <p className="text-gray-600 text-lg">Mengambil data properti...</p>
+          </div>
+        ) : properties.length === 0 ? (
+          <p className="col-span-full text-center text-gray-500 text-lg py-20">
+            Tidak ada properti ditemukan.
+          </p>
+        ) : (
+          properties.map((p) => (
+            <Link
+              key={p.id}
+              href={`/property/${p.id}`}
+              className="bg-white rounded-lg shadow-md overflow-hidden flex flex-col hover:scale-105 transition-transform duration-300"
+            >
+              <img
+                src={p.thumbnail || "/image/heros_test.png"}
+                alt={p.nama}
+                className="object-cover w-full h-48"
+                loading="lazy"
+              />
+              <div className="p-5 flex flex-col flex-1">
+                <h2 className="font-semibold text-xl text-gray-800 truncate">{p.nama}</h2>
+                <div className="text-sm text-gray-600 mb-2">
+                  Rp {p.hargaMulai.toLocaleString("id-ID")}
+                  {p.spesifikasi?.luasBangunan && ` · ${p.spesifikasi.luasBangunan} m²`}
                 </div>
-                <div className="flex flex-wrap gap-2 text-xs mb-2">
-                  <span className="bg-[#BFA14A]/10 text-[#BFA14A] px-2 py-1 rounded-full">
-                    {property.lokasi}
-                  </span>
-                  <span className="bg-gray-100 text-gray-700 px-2 py-1 rounded-full">
-                    Rp {property.hargaMulai.toLocaleString("id-ID")}
-                  </span>
-                  {property.spesifikasi?.luasBangunan && (
-                    <span className="bg-gray-100 text-gray-700 px-2 py-1 rounded-full">
-                      {property.spesifikasi.luasBangunan} m²
-                    </span>
-                  )}
-                </div>
-                <div className="flex justify-between text-gray-500 text-sm border-t pt-2 mt-2">
+                <div className="flex items-center gap-6 text-gray-500 text-sm mt-auto">
                   <div className="flex items-center gap-1">
-                    <Bed className="w-5 h-5 text-gray-700" />{" "}
-                    {property.spesifikasi?.kamarTidur ?? 0}
+                    <Bed className="w-5 h-5" />
+                    <span>{p.spesifikasi?.kamarTidur || 0}</span>
                   </div>
                   <div className="flex items-center gap-1">
-                    <Bath className="w-5 h-5 text-gray-700" />{" "}
-                    {property.spesifikasi?.kamarMandi ?? 0}
+                    <Bath className="w-5 h-5" />
+                    <span>{p.spesifikasi?.kamarMandi || 0}</span>
                   </div>
                   <div className="flex items-center gap-1">
-                    <Snowflake className="w-5 h-5 text-gray-700" /> AC
+                    <Snowflake className="w-5 h-5" />
+                    <span>AC</span>
                   </div>
                 </div>
-
-                {/* Optional: Tampilkan fasilitas */}
-                <div className="flex flex-wrap gap-2 mt-3">
-                  {property.fasilitas.map((f, i) => (
-                    <div
-                      key={i}
-                      className="flex items-center gap-1 text-xs text-gray-600"
-                    >
+                <div className="flex flex-wrap gap-2 mt-3 text-xs text-gray-600">
+                  {p.fasilitas.map((f) => (
+                    <div key={f.fasilitasId} className="flex items-center gap-1 bg-gray-100 rounded px-2 py-1">
                       {f.fasilitas.iconUrl && (
-                        <img
-                          src={f.fasilitas.iconUrl}
-                          alt={f.fasilitas.nama}
-                          className="w-4 h-4"
-                        />
+                        <img src={f.fasilitas.iconUrl} alt={f.fasilitas.nama} className="w-4 h-4" />
                       )}
                       {f.fasilitas.nama}
                     </div>
@@ -228,15 +167,11 @@ export default function FindPlace() {
 
       {/* Pagination */}
       {totalPages > 1 && (
-        <div className="flex items-center gap-2 mt-10">
+        <div className="mt-12 flex flex-wrap justify-center gap-3">
           <button
-            onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+            onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
             disabled={currentPage === 1}
-            className={`px-3 py-1 rounded ${
-              currentPage === 1
-                ? "bg-gray-200 text-gray-400"
-                : "bg-white border text-gray-700 hover:bg-gray-100"
-            }`}
+            className="px-4 py-2 rounded-md border border-gray-300 bg-white text-gray-700 disabled:opacity-50 hover:bg-gray-100 transition"
           >
             Previous
           </button>
@@ -244,25 +179,19 @@ export default function FindPlace() {
             <button
               key={i}
               onClick={() => setCurrentPage(i + 1)}
-              className={`px-3 py-1 rounded ${
+              className={`px-4 py-2 rounded-md border ${
                 currentPage === i + 1
-                  ? "bg-orange-500 text-white"
-                  : "bg-white border text-gray-700 hover:bg-gray-100"
-              }`}
+                  ? "bg-blue-600 border-blue-600 text-white"
+                  : "bg-white border-gray-300 text-gray-700 hover:bg-gray-100"
+              } transition`}
             >
               {i + 1}
             </button>
           ))}
           <button
-            onClick={() =>
-              setCurrentPage((prev) => Math.min(prev + 1, totalPages))
-            }
+            onClick={() => setCurrentPage((p) => Math.min(p + 1, totalPages))}
             disabled={currentPage === totalPages}
-            className={`px-3 py-1 rounded ${
-              currentPage === totalPages
-                ? "bg-gray-200 text-gray-400"
-                : "bg-white border text-gray-700 hover:bg-gray-100"
-            }`}
+            className="px-4 py-2 rounded-md border border-gray-300 bg-white text-gray-700 disabled:opacity-50 hover:bg-gray-100 transition"
           >
             Next
           </button>

@@ -2,16 +2,18 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import api from "../lib/api";
+import Navbar from "@/components/ui/navbar";
+import Footer from "@/components/ui/footer";
 
 function slugify(text) {
   return text
     .toString()
     .toLowerCase()
-    .replace(/\s+/g, "-") // Ganti spasi dengan -
-    .replace(/[^\w\-]+/g, "") // Hapus karakter non-word
-    .replace(/\-\-+/g, "-") // Ganti multiple - dengan single -
-    .replace(/^-+/, "") // Hapus - di awal
-    .replace(/-+$/, ""); // Hapus - di akhir
+    .replace(/\s+/g, "-")
+    .replace(/[^\w\-]+/g, "")
+    .replace(/\-\-+/g, "-")
+    .replace(/^-+/, "")
+    .replace(/-+$/, "");
 }
 
 export default function BlogPage() {
@@ -64,6 +66,8 @@ export default function BlogPage() {
     );
 
   return (
+    <>
+    <Navbar/>
     <div className="min-h-screen bg-gradient-to-br from-white via-green-50 to-yellow-100 pb-16">
       {/* Header Parallax */}
       <div
@@ -144,5 +148,7 @@ export default function BlogPage() {
         {/* Kalau backend kasih totalPages, bisa tambahkan pagination disini */}
       </div>
     </div>
+    <Footer/>
+    </>
   );
 }

@@ -5,13 +5,14 @@ import { useParams } from "next/navigation";
 import { MapPin, BedDouble, Bath, BadgeCheck, ListChecks } from "lucide-react";
 import api from "@/app/lib/api"; // pastikan path ini sesuai dengan strukturmu
 import SimilarListing from "@/components/SimilarListing";
+import Navbar from "@/components/ui/navbar";
+import Footer from "@/components/ui/footer";
 
 const PropertyDetailPage = () => {
   const params = useParams();
   const [property, setProperty] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-  // Tambahkan state untuk gambar utama
   const [mainImage, setMainImage] = useState(null);
 
   useEffect(() => {
@@ -36,7 +37,6 @@ const PropertyDetailPage = () => {
         };
 
         setProperty(mapped);
-        // Set main image ke thumbnail utama
         setMainImage(mapped.img);
       } catch (err) {
         console.error("Error:", err);
@@ -58,6 +58,8 @@ const PropertyDetailPage = () => {
     );
 
   return (
+    <>
+    <Navbar/>
     <div
       className="min-h-screen w-full relative flex flex-col items-center justify-center"
       style={{
@@ -76,10 +78,6 @@ const PropertyDetailPage = () => {
         <h1 className="text-6xl font-extrabold mb-2 text-white drop-shadow-lg text-center">
           {property.name}
         </h1>
-        <div className=" flex items-center gap-2 mb-4 text-lg font-medium text-white">
-          <MapPin size={20} className="text-white" /> {property.location}
-        </div>
-
         {/* Main Image as floating card */}
         <div
           className="relative w-full h-[500px] mb-4 rounded-2xl overflow-hidden shadow-xl border-4 border-yellow-300 bg-white/40 backdrop-blur-[4px] flex items-center justify-center"
@@ -202,11 +200,25 @@ const PropertyDetailPage = () => {
             <p className="text-gray-500">Tidak ada fasilitas tersedia.</p>
           )}
         </div>
+        <div className="mb-6 bg-white/60 rounded-xl p-6 shadow border-l-8 border-green-400 backdrop-blur-[2px]">
+          <h2 className="font-bold text-xl flex items-center gap-2 text-green-800 mb-2">
+            <ListChecks className="text-yellow-600" /> Lokasi
+          </h2>
+          <iframe
+            src={property.location}
+            className="w-full h-[400px] rounded-md border-2 border-gray-300"
+            allowFullScreen=""
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
+          ></iframe>
+        </div>
       </div>
       <div className="relative z-10 max-w-[1500px] w-full mx-auto px-4 mt-16 mb-10">
         <SimilarListing excludeId={params.id} />
       </div>
     </div>
+    <Footer/>
+    </>
   );
 };
 
