@@ -147,7 +147,7 @@ export default function ProyekBeji1Page() {
             </div>
           </div>
           <a
-            href="https://wa.me/6282142991064"
+            href="https://wa.me/+6285645353662"
             target="_blank"
             rel="noopener noreferrer"
             className="mt-8 mb-8 px-6 py-2 bg-yellow-400 text-gray-900 font-bold rounded-full shadow-lg hover:bg-yellow-300 transition-colors duration-200 flex items-center justify-center gap-2"

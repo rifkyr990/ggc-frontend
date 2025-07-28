@@ -105,7 +105,7 @@ export default function KarirDetailPage() {
               </div>
               <div className="flex justify-end">
                 <a
-                  href={`https://wa.me/6282142991064?text=Halo%20HRD%2C%20saya%20ingin%20melamar%20untuk%20posisi%20${encodeURIComponent(
+                  href={`https://wa.me/+6285645353662?text=Halo%20HRD%2C%20saya%20ingin%20melamar%20untuk%20posisi%20${encodeURIComponent(
                     job.posisi
                   )}.`}
                   target="_blank"
