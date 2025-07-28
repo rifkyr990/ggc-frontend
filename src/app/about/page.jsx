@@ -174,25 +174,18 @@ export default function AboutPage() {
         <section className="max-w-3xl mx-auto px-4 ">
           <h4 className="text-lg font-semibold mb-2">HUBUNGI KAMI</h4>
           <p className="text-sm text-gray-600 mb-4">
-            Tertarik memiliki hunian di Graha Gloria Group? Masukkan email Anda
-            untuk konsultasi gratis atau hubungi tim kami untuk informasi lebih
-            lanjut.
+            Tertarik memiliki hunian di Graha Gloria Group? klik tombol di bawah untuk 
+            hubungi admin.
           </p>
-          <form className="flex gap-2 mb-2">
-            <input
-              type="email"
-              placeholder="Masukkan email Anda"
-              className="flex-1 border px-3 py-2 rounded"
-            />
-            <button
-              type="submit"
-              className="bg-black text-white px-4 py-2 rounded"
-            >
-              Kirim
-            </button>
-          </form>
-          <div className="text-xs text-gray-500 pb-10">
-            marketing@grahagloria.co.id | (031) 555-8899
+          <div className="pb-12">
+          <a
+            href="https://api.whatsapp.com/send?phone=+6285645353662&text=Halo%20Graha%20Gloria%2C%20saya%20tertarik%20untuk%20memiliki%20hunian%20di%20Graha%20Gloria%20Group.%20Tolong%20informasikan%20lebih%20lanjut%20mengenai%20hunian%20tersebut."
+            target="_blank"
+            rel="noopener noreferrer"
+            className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
+          >
+            Hubungi Kami via WhatsApp
+          </a>
           </div>
         </section>
       </main>
