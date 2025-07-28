@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useState, useRef } from "react";
+import { FaWhatsapp } from "react-icons/fa";
 
 const slides = [
   {
@@ -87,95 +88,122 @@ const HeroSection = () => {
   if (!hasMounted) return null;
 
   return (
-    <section className="relative w-full min-h-screen flex items-center justify-start bg-black overflow-hidden">
-      {/* Slides: 1 foto 1 main content */}
-      <div
-        className={`absolute inset-0 w-full h-full flex ${
-          disableTransition
-            ? ""
-            : "transition-transform duration-700 ease-in-out"
-        }`}
-        style={{
-          transform: `translateX(-${current * 100}vw)`,
-        }}
-        onTransitionEnd={() => {
-          // Untuk menghindari bug jika user klik dot saat transisi looping
-          if (current === slidesLength) {
-            setIsTransitioning(false);
-            setDisableTransition(true);
-            setCurrent(0);
-            setTimeout(() => {
-              setDisableTransition(false);
-            }, 20);
-          }
-        }}
+    <>
+      {/* Sticky WhatsApp Button */}
+      <a
+        href="https://wa.me/6285645353662?text=Halo%20Graha%20Gloria%2C%20saya%20ingin%20konsultasi%20properti"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="fixed z-50 bottom-6 right-6 flex items-end group"
+        aria-label="WhatsApp"
       >
-        {extendedSlides.map((slide, idx) => (
-          <div
-            key={idx}
-            className="w-screen h-full flex-shrink-0 relative flex items-center justify-center md:justify-start"
-          >
-            {/* Background Image */}
-            <img
-              src={slide.image}
-              alt={slide.title.replace(/\n/g, " ")}
-              className={`absolute inset-0 w-full h-full object-cover object-center min-h-screen z-0 transition-transform duration-3000 ease-in-out ${
-                idx === current % slidesLength ? "scale-115" : "scale-100"
-              }`}
-              draggable="false"
-            />
-            <div className="absolute inset-0 bg-gray-900/50 z-10 transition-all duration-700" />
-            {/* Main Content */}
-            <div className="relative z-20 px-4 md:ml-[12vw] max-w-full md:max-w-[600px] mt-32 md:mt-[calc(12rem+60px)] text-center md:text-left">
-              <h1 className="text-gray-200 text-3xl sm:text-4xl md:text-5xl font-bold leading-tight mb-6 md:mb-8 whitespace-pre-line transition-all duration-700">
-                {slide.title}
-              </h1>
-              <p className="text-white text-base sm:text-lg leading-relaxed mb-8 md:mb-12 max-w-full md:max-w-[520px] transition-all duration-700">
-                {slide.desc}
-              </p>
-            </div>
-          </div>
-        ))}
-      </div>
-      {/* CTA Button */}
-      <div className="absolute left-1/2 bottom-0 -translate-x-1/2 z-[30] w-[95vw] sm:w-[90vw] md:w-[80vw] max-w-[1200px] px-2 md:px-0">
-        <div className="bg-white p-4 sm:p-6 md:p-8 md:px-10 flex items-center justify-center md:justify-start">
-          <button className="bg-transparent border-none text-gray-900 font-bold text-lg sm:text-xl cursor-pointer flex items-center gap-2 focus:outline-none">
-            See all listings
-            <span className="text-[#FFAC12] text-2xl sm:text-3xl ml-2 text-shadow-lg">
-              →
+        {/* Bubble Dialog */}
+        <span className="opacity-0 group-hover:opacity-100 pointer-events-none group-hover:pointer-events-auto translate-x-2 group-hover:translate-x-0 transition-all duration-300 ease-in-out mb-5 mr-2 select-none flex items-center">
+          <span className="relative">
+            <span className="px-4 py-2 bg-white text-green-700 rounded-2xl shadow-lg font-semibold text-base whitespace-nowrap border border-green-200">
+              Hubungi Kami
             </span>
-          </button>
+            {/* Bubble Arrow */}
+            <span className="absolute -bottom-2 left-6 w-4 h-4 overflow-hidden">
+              <span className="block w-4 h-4 bg-white border-l border-b border-green-200 rotate-45 transform origin-top-left"></span>
+            </span>
+          </span>
+        </span>
+        <span className="bg-green-500 hover:bg-green-600 text-white rounded-full shadow-lg p-4 flex items-center justify-center transition-all group">
+          <FaWhatsapp className="w-7 h-7 drop-shadow-lg group-hover:scale-110 transition-transform" />
+        </span>
+        <span className="sr-only">Chat WhatsApp</span>
+      </a>
+      <section className="relative w-full min-h-screen flex items-center justify-start bg-black overflow-hidden">
+        {/* Slides: 1 foto 1 main content */}
+        <div
+          className={`absolute inset-0 w-full h-full flex ${
+            disableTransition
+              ? ""
+              : "transition-transform duration-700 ease-in-out"
+          }`}
+          style={{
+            transform: `translateX(-${current * 100}vw)`,
+          }}
+          onTransitionEnd={() => {
+            // Untuk menghindari bug jika user klik dot saat transisi looping
+            if (current === slidesLength) {
+              setIsTransitioning(false);
+              setDisableTransition(true);
+              setCurrent(0);
+              setTimeout(() => {
+                setDisableTransition(false);
+              }, 20);
+            }
+          }}
+        >
+          {extendedSlides.map((slide, idx) => (
+            <div
+              key={idx}
+              className="w-screen h-full flex-shrink-0 relative flex items-center justify-center md:justify-start"
+            >
+              {/* Background Image */}
+              <img
+                src={slide.image}
+                alt={slide.title.replace(/\n/g, " ")}
+                className={`absolute inset-0 w-full h-full object-cover object-center min-h-screen z-0 transition-transform duration-3000 ease-in-out ${
+                  idx === current % slidesLength ? "scale-115" : "scale-100"
+                }`}
+                draggable="false"
+              />
+              <div className="absolute inset-0 bg-gray-900/50 z-10 transition-all duration-700" />
+              {/* Main Content */}
+              <div className="relative z-20 px-4 md:ml-[12vw] max-w-full md:max-w-[600px] mt-32 md:mt-[calc(12rem+60px)] text-center md:text-left">
+                <h1 className="text-gray-200 text-3xl sm:text-4xl md:text-5xl font-bold leading-tight mb-6 md:mb-8 whitespace-pre-line transition-all duration-700">
+                  {slide.title}
+                </h1>
+                <p className="text-white text-base sm:text-lg leading-relaxed mb-8 md:mb-12 max-w-full md:max-w-[520px] transition-all duration-700">
+                  {slide.desc}
+                </p>
+              </div>
+            </div>
+          ))}
         </div>
-      </div>
-      {/* Dots Navigation */}
-      <div className="absolute left-1/2 bottom-24 sm:bottom-28 md:bottom-30 -translate-x-1/2 z-[40] flex gap-2">
-        {slides.map((_, idx) => (
-          <button
-            key={idx}
-            type="button"
-            onClick={() => handleDotClick(idx)}
-            className={`transition-all duration-300 focus:outline-none
-                            ${
-                              idx === current % slidesLength
-                                ? "w-6 sm:w-8 h-2 bg-[#FFAC12] border-2 border-[#FFAC12] shadow-lg scale-110 rounded"
-                                : "w-3 sm:w-5 h-1 bg-white/60 border border-gray-300 opacity-70 hover:opacity-100 hover:scale-105 rounded"
-                            }
-                        `}
-            aria-label={`Pilih gambar ${idx + 1}`}
-            style={{
-              cursor: "pointer",
-              padding: 0,
-              margin: 0,
-              boxShadow:
-                idx === current % slidesLength
-                  ? "0 0 8px 2px #fde04788"
-                  : "none",
-            }}
-          />
-        ))}
-      </div>
-    </section>
+        {/* CTA Button */}
+        <div className="absolute left-1/2 bottom-0 -translate-x-1/2 z-[30] w-[95vw] sm:w-[90vw] md:w-[80vw] max-w-[1200px] px-2 md:px-0">
+          <div className="bg-white p-4 sm:p-6 md:p-8 md:px-10 flex items-center justify-center md:justify-start">
+            <button className="bg-transparent border-none text-gray-900 font-bold text-lg sm:text-xl cursor-pointer flex items-center gap-2 focus:outline-none">
+              See all listings
+              <span className="text-[#FFAC12] text-2xl sm:text-3xl ml-2 text-shadow-lg">
+                →
+              </span>
+            </button>
+          </div>
+        </div>
+        {/* Dots Navigation */}
+        <div className="absolute left-1/2 bottom-24 sm:bottom-28 md:bottom-30 -translate-x-1/2 z-[40] flex gap-2">
+          {slides.map((_, idx) => (
+            <button
+              key={idx}
+              type="button"
+              onClick={() => handleDotClick(idx)}
+              className={`transition-all duration-300 focus:outline-none
+                              ${
+                                idx === current % slidesLength
+                                  ? "w-6 sm:w-8 h-2 bg-[#FFAC12] border-2 border-[#FFAC12] shadow-lg scale-110 rounded"
+                                  : "w-3 sm:w-5 h-1 bg-white/60 border border-gray-300 opacity-70 hover:opacity-100 hover:scale-105 rounded"
+                              }
+                          `}
+              aria-label={`Pilih gambar ${idx + 1}`}
+              style={{
+                cursor: "pointer",
+                padding: 0,
+                margin: 0,
+                boxShadow:
+                  idx === current % slidesLength
+                    ? "0 0 8px 2px #fde04788"
+                    : "none",
+              }}
+            />
+          ))}
+        </div>
+      </section>
+    </>
   );
 };
 
