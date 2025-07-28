@@ -273,6 +273,11 @@ export default function Navbar() {
           >
             <ul className="flex flex-col gap-4 text-sm font-medium">
               <li>
+                <Link href="/" onClick={() => setMenuOpen(false)}>
+                  Beranda
+                </Link>
+              </li>
+              <li>
                 <Link href="#tentang" onClick={() => setMenuOpen(false)}>
                   Tentang Kami
                 </Link>

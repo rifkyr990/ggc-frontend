@@ -6,7 +6,7 @@ import Header from '../header';
 import Sidebar from '../sidebar';
 
 const JENIS_OPTIONS = ['Fulltime', 'Freelance', 'Magang'];
-const LOKASI_OPTIONS = ['Jakarta', 'Bandung', 'Surabaya', 'Remote', 'Lainnya'];
+const LOKASI_OPTIONS = ['Tulungagung', 'lainnya'];
 
 const DEFAULT_FORM = {
     posisi: '',

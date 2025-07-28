@@ -19,8 +19,9 @@ const Page = () => {
 
     try {
       const res = await api.post("/auth/login", { email, password });
-
       const user = res.data;
+
+      console.log("ini LOGIN: ", res.data);
 
       if (!user || user.email.toLowerCase() !== ADMIN_EMAIL.toLowerCase()) {
         alert("AKSES DILARANG, HANYA ADMIN");

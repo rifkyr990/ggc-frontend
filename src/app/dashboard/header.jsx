@@ -82,6 +82,12 @@ const Header = () => {
                 >
                   Fasilitas
                 </Link>
+                <Link
+                  href="/dashboard/carrier"
+                  className="px-4 py-2 hover:bg-gray-100"
+                >
+                  Karir
+                </Link>
               </ul>
 
               {/* Logout untuk semua ukuran layar */}

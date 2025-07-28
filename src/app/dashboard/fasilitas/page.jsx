@@ -212,7 +212,7 @@ const Page = () => {
                       <td className="px-4 py-2">{item.nama}</td>
                       <td className="px-4 py-2">
                         <img
-                          src={item.icon}
+                          src={item.iconUrl}
                           alt={item.nama}
                           className="w-8 h-8"
                         />

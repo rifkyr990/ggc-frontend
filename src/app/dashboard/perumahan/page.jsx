@@ -21,19 +21,19 @@ const TYPE_OPTIONS = ["Type 50", "Type 53", "Type 60", "Type 65", "Ruko"];
 const PERUM_OPTION = [
   {
     nama: "Graha Indah Ketanon",
-    lokasi: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d30033.965762123113!2d111.90570058369319!3d-8.03880101816621!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e78fcd4b016811f%3A0x6b3dbef632927eaa!2sPerum%20Graha%20Indah%20Ketanon!5e0!3m2!1sid!2sid!4v1753599647089!5m2!1sid!2sid"
+    lokasi: "https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d3950.187105418415!2d111.907073!3d-8.082391999999999!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zOMKwMDQnNTYuNiJTIDExMcKwNTQnMjUuNSJF!5e0!3m2!1sid!2sid!4v1753637874631!5m2!1sid!2sid"
   },
   {
-    nama: "Graha Indah Beji",
-    lokasi: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3955.346855318253!2d111.89693337423402!3d-7.535539175929556!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e77fd060f85dd35%3A0x9f4080b105b8ec5d!2sPerum%20Graha%20Indah%20Beji!5e0!3m2!1sid!2sid!4v1753683912345!5m2!1sid!2sid"
+    nama: "Graha Indah Beji 1",
+    lokasi: "https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d3950.1750719411507!2d111.907196!3d-8.083620999999999!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zOMKwMDUnMDEuMCJTIDExMcKwNTQnMjUuOSJF!5e0!3m2!1sid!2sid!4v1753637802921!5m2!1sid!2sid"
   },
   {
     nama: "Graha Indah Beji 2",
-    lokasi: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3955.346855318253!2d111.89900000000001!3d-7.534000000000001!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e77fd06555a5b01%3A0x7a7f295f5e5e5a5e!2sPerum%20Graha%20Indah%20Beji%202!5e0!3m2!1sid!2sid!4v1753683912346!5m2!1sid!2sid"
+    lokasi: "https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d3950.187105418415!2d111.907073!3d-8.082391999999999!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zOMKwMDQnNTYuNiJTIDExMcKwNTQnMjUuNSJF!5e0!3m2!1sid!2sid!4v1753708252103!5m2!1sid!2sid"
   },
   {
-    nama: "Graha Indah",
-    lokasi: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3955.346855318253!2d111.90300000000001!3d-7.532000000000001!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e77fd06333a5b01%3A0x5e5e5e5e5e5e5e5e!2sPerum%20Graha%20Indah!5e0!3m2!1sid!2sid!4v1753683912347!5m2!1sid!2sid"
+    nama: "Graha Indah Majan",
+    lokasi: "https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d3950.568167333068!2d111.906572!3d-8.043377!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zOMKwMDInMzYuMiJTIDExMcKwNTQnMjMuNyJF!5e0!3m2!1sid!2sid!4v1753637595305!5m2!1sid!2sid"
   }
 ];
 
@@ -709,19 +709,17 @@ const Page = () => {
             >
               Cari
             </button>
-          </div>
-
-          <section className="relative overflow-x-auto shadow-md rounded-lg">
-            {/* Tombol Refresh */}
-            <div className="flex justify-end mb-2">
-              <button
+            <button
                 type="button"
                 className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition"
                 onClick={() => window.location.reload()}
               >
                 Refresh
               </button>
-            </div>
+          </div>
+
+          <section className="relative overflow-x-auto shadow-md rounded-lg">
+            {/* Tombol Refresh */}
             <table className="w-full text-sm text-left text-gray-500">
               <thead className="text-xs text-gray-700 uppercase bg-gray-50">
                 <tr>
