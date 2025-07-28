@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Navbar from "@/components/ui/navbar";
 import Footer from "@/components/ui/footer";
+import { FaWhatsapp } from "react-icons/fa";
 
 export default function AboutPage() {
   return (
@@ -177,15 +178,16 @@ export default function AboutPage() {
             Tertarik memiliki hunian di Graha Gloria Group? klik tombol di bawah untuk 
             hubungi admin.
           </p>
-          <div className="pb-12">
-          <a
-            href="https://api.whatsapp.com/send?phone=+6285645353662&text=Halo%20Graha%20Gloria%2C%20saya%20tertarik%20untuk%20memiliki%20hunian%20di%20Graha%20Gloria%20Group.%20Tolong%20informasikan%20lebih%20lanjut%20mengenai%20hunian%20tersebut."
-            target="_blank"
-            rel="noopener noreferrer"
-            className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
-          >
-            Hubungi Kami via WhatsApp
-          </a>
+          <div className="pb-12"> 
+            <a
+              href="https://api.whatsapp.com/send?phone=+6285645353662&text=Halo%20Graha%20Gloria%2C%20saya%20tertarik%20untuk%20memiliki%20hunian%20di%20Graha%20Gloria%20Group.%20Tolong%20informasikan%20lebih%20lanjut%20mengenai%20hunian%20tersebut."
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded inline-flex items-center gap-2"
+            >
+              <FaWhatsapp className="text-xl" />
+              Hubungi Kami Via Whatsapp
+            </a>
           </div>
         </section>
       </main>

@@ -11,8 +11,8 @@ export default function Navbar() {
   const [openLokasi, setOpenLokasi] = useState(false);
   const [openInfo, setOpenInfo] = useState(false);
   const [showNavbar, setShowNavbar] = useState(true);
-  const prevScrollY = useRef(0);
   const [isLogin, setIsLogin] = useState(false);
+  const prevScrollY = useRef(0);
 
   useEffect(() => {
     const user = localStorage.getItem("user");
@@ -33,7 +33,6 @@ export default function Navbar() {
       if (currentScrollY > prevScrollY.current && currentScrollY > 50) {
         setShowNavbar(false);
       } else {
-        // Scroll ke atas
         setShowNavbar(true);
       }
       prevScrollY.current = currentScrollY;
@@ -73,9 +72,9 @@ export default function Navbar() {
               <Image
                 src={scrolled ? "/image/logo3.png" : "/image/logo_putih.png"}
                 alt="Logo"
-                width={150}
+                width={150} // masih bisa pakai, tapi bisa dikurangi jika pakai class Tailwind
                 height={150}
-                style={{ cursor: "pointer" }}
+                className="w-24 sm:w-28 md:w-32 lg:w-36 h-auto pointer"
               />
             </Link>
           </div>
