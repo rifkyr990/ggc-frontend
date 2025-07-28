@@ -29,7 +29,7 @@ export default function Footer() {
             <ul className="space-y-2 text-gray-300">
               <li>
                 <Link
-                  href="#tentang"
+                  href="/about"
                   className="hover:text-orange-400 transition"
                 >
                   Tentang kami
@@ -37,7 +37,7 @@ export default function Footer() {
               </li>
               <li>
                 <Link
-                  href="#contact"
+                  href="/contact"
                   className="hover:text-orange-400 transition"
                 >
                   Contact Us
@@ -60,7 +60,7 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="" className="hover:text-orange-400 transition">
+                <Link href="/blog" className="hover:text-orange-400 transition">
                   Info
                 </Link>
               </li>
@@ -80,13 +80,13 @@ export default function Footer() {
               </div>
             </div>
             <div className="flex space-x-4 text-xl text-white">
-              <a href="#">
+              <a href="https://facebook.com/" target="_blank" rel="noopener noreferrer">
                 <FaFacebookF />
               </a>
-              <a href="#">
+              <a href="https://twitter.com/" target="_blank" rel="noopener noreferrer">
                 <FaTwitter />
               </a>
-              <a href="#">
+              <a href="https://instagram.com/" target="_blank" rel="noopener noreferrer">
                 <FaInstagram />
               </a>
             </div>
@@ -95,7 +95,7 @@ export default function Footer() {
           {/* Copyright */}
           <div className="flex flex-col items-end justify-center text-right text-gray-400">
             <p className="font-semibold text-white">
-              © 2025 PT. Graha Gloria Cemerlang
+              2025 PT. Graha Gloria Group
             </p>
             <p>All rights reserved</p>
           </div>

@@ -7,7 +7,7 @@ export default function LokasiBeji1Page() {
   return (
     <>
       <Navbar />
-      <div className="min-h-screen bg-gradient-to-br from-blue-900 via-white to-yellow-100 py-16 flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-br from-blue-900 via-white to-yellow-100 pt-32 pb-16 flex items-center justify-center">
         <div className="bg-white bg-opacity-90 rounded-3xl shadow-2xl p-10 max-w-4xl w-full border-4 border-yellow-400">
           <h1 className="text-5xl font-extrabold mb-2 text-yellow-500 drop-shadow-lg text-center tracking-wide">
             Graha Indah Beji 1
@@ -35,16 +35,17 @@ export default function LokasiBeji1Page() {
               Timur
             </p>
           </div>
-          <div className="mb-8 rounded-xl overflow-hidden shadow-lg border-2 border-yellow-200">
+          <div className="mb-8 rounded-xl overflow-hidden shadow-lg border-2 border-yellow-200 w-full h-[40vh] sm:h-[50vh] md:h-[60vh] flex justify-center items-center">
             <iframe
               src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d3950.1750719411507!2d111.907196!3d-8.083620999999999!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zOMKwMDUnMDEuMCJTIDExMcKwNTQnMjUuOSJF!5e0!3m2!1sid!2sid!4v1753637802921!5m2!1sid!2sid"
               width="100%"
-              height="350"
-              style={{ border: 0 }}
+              height="100%"
+              style={{ border: 0, width: '100%', height: '100%' }}
               allowFullScreen=""
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
-              title="Lokasi Graha Indah Beji 1 di Google Maps"
+              title="Lokasi Graha Indah Beji 1"
+              className="w-full h-full rounded-2xl shadow-lg"
             ></iframe>
           </div>
           <p className="text-center text-blue-900 text-lg font-medium">
