@@ -26,9 +26,12 @@ const Page = () => {
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [editId, setEditId] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [tableLoading, setTableLoading] = useState(false);
 
   // Ambil data fasilitas
   const fetchFasilitas = async () => {
+    setTableLoading(true);
     try {
       const res = await api.get("/fasilitas", {
         params: { search, page },
@@ -37,6 +40,8 @@ const Page = () => {
       setTotalPages(res.data.totalPages || 1);
     } catch (error) {
       console.error("Gagal fetch data:", error);
+    } finally {
+      setTableLoading(false);
     }
   };
 
@@ -69,6 +74,7 @@ const Page = () => {
       return;
     }
 
+    setLoading(true);
     const data = new FormData();
     data.append("nama", formData.nama);
     data.append("icon", formData.icon);
@@ -89,6 +95,8 @@ const Page = () => {
     } catch (error) {
       console.error("Gagal simpan:", error.response?.data || error.message);
       alert("Gagal menyimpan data");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -99,11 +107,14 @@ const Page = () => {
 
   const handleDelete = async (id) => {
     if (!confirm("Yakin ingin menghapus fasilitas ini?")) return;
+    setTableLoading(true);
     try {
       await api.delete(`/fasilitas/${id}`);
       fetchFasilitas();
     } catch (error) {
       console.error("Gagal hapus:", error.response?.data || error.message);
+    } finally {
+      setTableLoading(false);
     }
   };
 
@@ -152,8 +163,9 @@ const Page = () => {
                 <Button
                   type="submit"
                   className="bg-blue-600 text-white px-6 py-2 rounded"
+                  disabled={loading}
                 >
-                  {editId ? "Update" : "Submit"}
+                  {loading ? "Loading..." : editId ? "Update" : "Submit"}
                 </Button>
                 {editId && (
                   <Button
@@ -179,37 +191,53 @@ const Page = () => {
                 </tr>
               </thead>
               <tbody>
-                {fasilitas.map((item) => (
-                  <tr
-                    key={item.id}
-                    className="bg-white border-b hover:bg-gray-50"
-                  >
-                    <td className="px-4 py-2">{item.nama}</td>
-                    <td className="px-4 py-2">
-                      <img
-                        src={item.icon}
-                        alt={item.nama}
-                        className="w-8 h-8"
-                      />
-                    </td>
-                    <td className="px-4 py-2">
-                      <div className="flex gap-2">
-                        <Button
-                          className="bg-blue-500 text-white px-5 py-2 rounded"
-                          onClick={() => handleEdit(item)}
-                        >
-                          Edit
-                        </Button>
-                        <Button
-                          className="bg-red-600 text-white px-5 py-2 rounded"
-                          onClick={() => handleDelete(item.id)}
-                        >
-                          Hapus
-                        </Button>
-                      </div>
+                {tableLoading ? (
+                  <tr>
+                    <td colSpan="3" className="text-center py-8">
+                      Loading...
                     </td>
                   </tr>
-                ))}
+                ) : fasilitas.length === 0 ? (
+                  <tr>
+                    <td colSpan="3" className="text-center py-8">
+                      Tidak ada data
+                    </td>
+                  </tr>
+                ) : (
+                  fasilitas.map((item) => (
+                    <tr
+                      key={item.id}
+                      className="bg-white border-b hover:bg-gray-50"
+                    >
+                      <td className="px-4 py-2">{item.nama}</td>
+                      <td className="px-4 py-2">
+                        <img
+                          src={item.iconUrl}
+                          alt={item.nama}
+                          className="w-8 h-8"
+                        />
+                      </td>
+                      <td className="px-4 py-2">
+                        <div className="flex gap-2">
+                          <Button
+                            className="bg-blue-500 text-white px-5 py-2 rounded"
+                            onClick={() => handleEdit(item)}
+                            disabled={tableLoading}
+                          >
+                            Edit
+                          </Button>
+                          <Button
+                            className="bg-red-600 text-white px-5 py-2 rounded"
+                            onClick={() => handleDelete(item.id)}
+                            disabled={tableLoading}
+                          >
+                            Hapus
+                          </Button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))
+                )}
               </tbody>
             </table>
 
@@ -217,7 +245,7 @@ const Page = () => {
             <div className="my-4 flex justify-center items-center gap-4">
               <Button
                 onClick={() => setPage((p) => Math.max(1, p - 1))}
-                disabled={page === 1}
+                disabled={page === 1 || tableLoading}
                 className="bg-gray-200 px-3 py-1 rounded"
               >
                 Prev
@@ -227,7 +255,7 @@ const Page = () => {
               </span>
               <Button
                 onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
-                disabled={page === totalPages}
+                disabled={page === totalPages || tableLoading}
                 className="bg-gray-200 px-3 py-1"
               >
                 Next
