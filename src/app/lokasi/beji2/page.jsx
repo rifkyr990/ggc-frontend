@@ -7,7 +7,7 @@ export default function LokasiBeji2Page() {
   return (
     <>
       <Navbar />
-      <div className="min-h-screen bg-gradient-to-br from-blue-900 via-white to-yellow-100 py-16 flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-br from-blue-900 via-white to-yellow-100 pt-32 pb-16 flex items-center justify-center">
         <div className="bg-white bg-opacity-90 rounded-3xl shadow-2xl p-10 max-w-4xl w-full border-4 border-yellow-400">
           <h1 className="text-5xl font-extrabold mb-2 text-yellow-500 drop-shadow-lg text-center tracking-wide">
             Graha Indah Beji 2
@@ -35,16 +35,17 @@ export default function LokasiBeji2Page() {
               Timur
             </p>
           </div>
-          <div className="mb-8 rounded-xl overflow-hidden shadow-lg border-2 border-yellow-200">
+          <div className="mb-8 rounded-xl overflow-hidden shadow-lg border-2 border-yellow-200 w-full h-[40vh] sm:h-[50vh] md:h-[60vh] flex justify-center items-center">
             <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3955.123456789!2d111.123456789!3d-8.123456789!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e785123456789ab%3A0x123456789abcdef!2sGraha%20Indah%20Beji%201!5e0!3m2!1sid!2sid!4v1710000000000!5m2!1sid!2sid"
+              src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d3950.187105418415!2d111.907073!3d-8.082391999999999!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zOMKwMDQnNTYuNiJTIDExMcKwNTQnMjUuNSJF!5e0!3m2!1sen!2sid!4v1753705850213!5m2!1sen!2sid"
               width="100%"
-              height="350"
-              style={{ border: 0 }}
+              height="100%"
+              style={{ border: 0, width: '100%', height: '100%' }}
               allowFullScreen=""
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
-              title="Lokasi Graha Indah Beji 2 di Google Maps"
+              title="Lokasi Graha Indah Beji 2"
+              className="w-full h-full rounded-2xl shadow-lg"
             ></iframe>
           </div>
           <p className="text-center text-blue-900 text-lg font-medium">

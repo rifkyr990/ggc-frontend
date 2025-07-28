@@ -71,7 +71,7 @@ export default function AboutPage() {
               height={32}
               className="rounded-full"
             />
-            <span className="text-xs font-semibold">Budi Santoso</span>
+            <span className="text-xs font-semibold">PT. Graha Gloria Group</span>
             <span className="text-xs text-gray-500">Direktur Utama</span>
           </div>
         </section>
@@ -84,46 +84,46 @@ export default function AboutPage() {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             <div className="flex flex-col items-center">
               <Image
-                src="/image/about.png"
-                alt="Budi Santoso"
+                src="https://icon-library.com/images/no-profile-picture-icon/no-profile-picture-icon-14.jpg"
+                alt="PT. Graha Gloria Group"
                 width={120}
                 height={120}
                 className="rounded bg-gray-200"
               />
-              <span className="mt-2 text-sm font-semibold">Budi Santoso</span>
+              <span className="mt-2 text-sm font-semibold">PT. Graha Gloria Group</span>
               <span className="text-xs text-gray-500">Direktur Utama</span>
             </div>
             <div className="flex flex-col items-center">
               <Image
-                src="/image/about.png"
-                alt="Siti Rahmawati"
+                src="https://icon-library.com/images/no-profile-picture-icon/no-profile-picture-icon-14.jpg"
+                alt="PT. Graha Gloria Group"
                 width={120}
                 height={120}
                 className="rounded bg-gray-200"
               />
-              <span className="mt-2 text-sm font-semibold">Siti Rahmawati</span>
+              <span className="mt-2 text-sm font-semibold">PT. Graha Gloria Group</span>
               <span className="text-xs text-gray-500">Manajer Pemasaran</span>
             </div>
             <div className="flex flex-col items-center">
               <Image
-                src="/image/about.png"
-                alt="Andi Pratama"
+                src="https://icon-library.com/images/no-profile-picture-icon/no-profile-picture-icon-14.jpg"
+                alt="PT. Graha Gloria Group"
                 width={120}
                 height={120}
                 className="rounded bg-gray-200"
               />
-              <span className="mt-2 text-sm font-semibold">Andi Pratama</span>
+              <span className="mt-2 text-sm font-semibold">PT. Graha Gloria Group</span>
               <span className="text-xs text-gray-500">Manajer Proyek</span>
             </div>
             <div className="flex flex-col items-center">
               <Image
-                src="/image/about.png"
-                alt="Maria Yuliana"
+                src="https://icon-library.com/images/no-profile-picture-icon/no-profile-picture-icon-14.jpg"
+                alt="PT. Graha Gloria Group"
                 width={120}
                 height={120}
                 className="rounded bg-gray-200"
               />
-              <span className="mt-2 text-sm font-semibold">Maria Yuliana</span>
+              <span className="mt-2 text-sm font-semibold">PT. Graha Gloria Group</span>
               <span className="text-xs text-gray-500">
                 Keuangan & Administrasi
               </span>

@@ -16,21 +16,26 @@ const Page = () => {
 
   const login = async (e) => {
     e.preventDefault();
-
+  
     try {
+      console.log("Sending login request...");
       const res = await api.post("/auth/login", { email, password });
-
+      
+      console.log("Login response:", res.data);
       const user = res.data;
-
+  
       if (!user || user.email.toLowerCase() !== ADMIN_EMAIL.toLowerCase()) {
+        console.log("Access denied - not admin");
         alert("AKSES DILARANG, HANYA ADMIN");
         return;
       }
-
+  
+      console.log("Login successful, saving user:", user);
       // Simpan ke localStorage dan Redux
       localStorage.setItem("user", JSON.stringify(user));
       dispatch(setSignIn(user));
-
+  
+      console.log("Redirecting to dashboard...");
       router.push("/dashboard/");
     } catch (error) {
       console.error("Login error:", error);

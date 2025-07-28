@@ -27,7 +27,7 @@ export default function KarirPage() {
   return (
     <>
       <Navbar />
-      <div className="min-h-screen bg-gradient-to-br from-white via-green-50 to-yellow-100 pb-16">
+      <div className="min-h-screen bg-gradient-to-br from-green-900 via-gray-900 to-black pb-16 pt-24">
         {/* Hero Section */}
         <div
           className="w-full relative flex flex-col items-center justify-center h-[45vh] min-h-[320px] mb-12 shadow-2xl overflow-hidden"

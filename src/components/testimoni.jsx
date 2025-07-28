@@ -7,25 +7,25 @@ const testimonials = [
     text: "Pelayanan sangat ramah dan proses transaksi berjalan lancar. Saya sangat puas dengan rumah yang saya dapatkan.",
     name: "Lara Madrigal",
     role: "Client",
-    img: "/image/heros_test.png",
+    img: "https://icon-library.com/images/no-profile-picture-icon/no-profile-picture-icon-14.jpg",
   },
   {
     text: "Tim sangat membantu dari awal hingga akhir. Semua pertanyaan saya dijawab dengan jelas dan profesional.",
     name: "Budi Santoso",
     role: "Client",
-    img: "/image/heros_test2.webp",
+    img: "https://icon-library.com/images/no-profile-picture-icon/no-profile-picture-icon-14.jpg",
   },
   {
     text: "Saya merekomendasikan GGC kepada siapa saja yang ingin mencari hunian nyaman dan strategis.",
     name: "Siti Rahmawati",
     role: "Client",
-    img: "/image/heros_test3.webp",
+    img: "https://icon-library.com/images/no-profile-picture-icon/no-profile-picture-icon-14.jpg",
   },
   {
     text: "Proses pembelian sangat mudah dan transparan. Terima kasih atas bantuannya!",
     name: "Andi Wijaya",
     role: "Client",
-    img: "/image/heros_test2.webp",
+    img: "https://icon-library.com/images/no-profile-picture-icon/no-profile-picture-icon-14.jpg",
   },
 ];
 
@@ -205,7 +205,7 @@ const Testimoni = () => {
       <div className="hidden md:flex w-1/3 h-[300px] md:h-[600px] flex-shrink-0 items-end justify-end relative right-0 ml-4 md:ml-10">
         <div className="relative w-full h-full flex justify-end">
           <img
-            src="/image/heros_test2.webp"
+            src="/image/bg-hero/1.png"
             alt="Foto Testimoni"
             className="w-full h-full object-cover rounded-tl-4xl rounded-br-4xl relative z-10"
           />

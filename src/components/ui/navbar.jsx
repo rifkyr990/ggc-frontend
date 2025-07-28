@@ -273,23 +273,24 @@ export default function Navbar() {
           >
             <ul className="flex flex-col gap-4 text-sm font-medium">
               <li>
-                <Link href="#tentang" onClick={() => setMenuOpen(false)}>
+                <Link href="/" onClick={() => setMenuOpen(false)}>
+                  Beranda
+                </Link>
+              </li>
+              <li>
+                <Link href="/about" onClick={() => setMenuOpen(false)}>
                   Tentang Kami
                 </Link>
               </li>
-
               {/* Proyek Dropdown */}
               <li className="w-full">
-                <Link
-                  href="/proyek"
+                <button
+                  onClick={() => setOpenProyek(!openProyek)}
                   className="flex justify-between items-center w-full"
-                  onClick={() => setMenuOpen(false)}
                 >
                   <span>Proyek</span>
                   <svg
-                    className={`w-4 h-4 ml-2 transition-transform ${
-                      openProyek ? "rotate-180" : ""
-                    }`}
+                    className={`w-4 h-4 ml-2 transition-transform ${openProyek ? "rotate-180" : ""}`}
                     fill="none"
                     stroke="currentColor"
                     strokeWidth="2"
@@ -301,57 +302,25 @@ export default function Navbar() {
                       d="M19 9l-7 7-7-7"
                     />
                   </svg>
-                </Link>
+                </button>
                 {openProyek && (
                   <ul className="mt-2 ml-4 text-right text-sm flex flex-col gap-2">
-                    <li>
-                      <Link
-                        href="/proyek/ketanon"
-                        onClick={() => setMenuOpen(false)}
-                      >
-                        Graha Indah Ketanon
-                      </Link>
-                    </li>
-                    <li>
-                      <Link
-                        href="/proyek/majan"
-                        onClick={() => setMenuOpen(false)}
-                      >
-                        Graha Indah Majan
-                      </Link>
-                    </li>
-                    <li>
-                      <Link
-                        href="/proyek/beji1"
-                        onClick={() => setMenuOpen(false)}
-                      >
-                        Graha Indah Beji 1
-                      </Link>
-                    </li>
-                    <li>
-                      <Link
-                        href="/proyek/beji2"
-                        onClick={() => setMenuOpen(false)}
-                      >
-                        Graha Indah Beji 2
-                      </Link>
-                    </li>
+                    <li><Link href="/proyek/ketanon" onClick={() => setMenuOpen(false)}>Graha Indah Ketanon</Link></li>
+                    <li><Link href="/proyek/majan" onClick={() => setMenuOpen(false)}>Graha Indah Majan</Link></li>
+                    <li><Link href="/proyek/beji1" onClick={() => setMenuOpen(false)}>Graha Indah Beji 1</Link></li>
+                    <li><Link href="/proyek/beji2" onClick={() => setMenuOpen(false)}>Graha Indah Beji 2</Link></li>
                   </ul>
                 )}
               </li>
-
               {/* Lokasi Dropdown */}
               <li className="w-full">
-                <Link
-                  href="/lokasi"
+                <button
+                  onClick={() => setOpenLokasi(!openLokasi)}
                   className="flex justify-between items-center w-full"
-                  onClick={() => setMenuOpen(false)}
                 >
                   <span>Lokasi</span>
                   <svg
-                    className={`w-4 h-4 ml-2 transition-transform ${
-                      openLokasi ? "rotate-180" : ""
-                    }`}
+                    className={`w-4 h-4 ml-2 transition-transform ${openLokasi ? "rotate-180" : ""}`}
                     fill="none"
                     stroke="currentColor"
                     strokeWidth="2"
@@ -363,45 +332,16 @@ export default function Navbar() {
                       d="M19 9l-7 7-7-7"
                     />
                   </svg>
-                </Link>
+                </button>
                 {openLokasi && (
                   <ul className="mt-2 ml-4 text-right text-sm flex flex-col gap-2">
-                    <li>
-                      <Link
-                        href="/lokasi/ketanon"
-                        onClick={() => setMenuOpen(false)}
-                      >
-                        Graha Indah Ketanon
-                      </Link>
-                    </li>
-                    <li>
-                      <Link
-                        href="/lokasi/majan"
-                        onClick={() => setMenuOpen(false)}
-                      >
-                        Graha Indah Majan
-                      </Link>
-                    </li>
-                    <li>
-                      <Link
-                        href="/lokasi/beji1"
-                        onClick={() => setMenuOpen(false)}
-                      >
-                        Graha Indah Beji 1
-                      </Link>
-                    </li>
-                    <li>
-                      <Link
-                        href="/lokasi/beji2"
-                        onClick={() => setMenuOpen(false)}
-                      >
-                        Graha Indah Beji 2
-                      </Link>
-                    </li>
+                    <li><Link href="/lokasi/ketanon" onClick={() => setMenuOpen(false)}>Graha Indah Ketanon</Link></li>
+                    <li><Link href="/lokasi/majan" onClick={() => setMenuOpen(false)}>Graha Indah Majan</Link></li>
+                    <li><Link href="/lokasi/beji1" onClick={() => setMenuOpen(false)}>Graha Indah Beji 1</Link></li>
+                    <li><Link href="/lokasi/beji2" onClick={() => setMenuOpen(false)}>Graha Indah Beji 2</Link></li>
                   </ul>
                 )}
               </li>
-
               {/* Info Dropdown */}
               <li className="w-full">
                 <button
@@ -410,9 +350,7 @@ export default function Navbar() {
                 >
                   <span>Info</span>
                   <svg
-                    className={`w-4 h-4 ml-2 transition-transform ${
-                      openInfo ? "rotate-180" : ""
-                    }`}
+                    className={`w-4 h-4 ml-2 transition-transform ${openInfo ? "rotate-180" : ""}`}
                     fill="none"
                     stroke="currentColor"
                     strokeWidth="2"
@@ -427,31 +365,14 @@ export default function Navbar() {
                 </button>
                 {openInfo && (
                   <ul className="mt-2 ml-4 text-right text-sm flex flex-col gap-2">
-                    <li>
-                      <Link href="/blog" onClick={() => setMenuOpen(false)}>
-                        Blog
-                      </Link>
-                    </li>
-                    <li>
-                      <Link
-                        href="#info-news"
-                        onClick={() => setMenuOpen(false)}
-                      >
-                        News
-                      </Link>
-                    </li>
+                    <li><Link href="/blog" onClick={() => setMenuOpen(false)}>Blog</Link></li>
+                    <li><Link href="/karir" onClick={() => setMenuOpen(false)}>Karir</Link></li>
                   </ul>
                 )}
               </li>
-
-              {/* Contact Button */}
               <li>
                 <div className="[perspective:800px] w-32 h-10">
-                  <Link
-                    href="/contact"
-                    onClick={() => setMenuOpen(false)}
-                    className="group block w-full h-full"
-                  >
+                  <Link href="/contact" className="group block w-full h-full">
                     <div className="relative w-full h-full [transform-style:preserve-3d] transition-transform duration-500 group-hover:rotate-y-180">
                       {/* Front Side */}
                       <div className="absolute inset-0 flex items-center justify-center bg-[#FFAC12] text-black font-semibold rounded-md transition-colors duration-300 group-hover:bg-orange-500 [backface-visibility:hidden]">

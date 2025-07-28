@@ -4,10 +4,21 @@ import Navbar from "@/components/ui/navbar";
 import Footer from "@/components/ui/footer";
 
 const brochureImages = [
-  "/image/bg-hero/1.png",
-  "/image/bg-hero/2.png",
-  "/image/bg-hero/3.png",
-  "/image/bg-hero/4.png",
+  "/image/proyek/ketanon/1.png",
+  "/image/proyek/ketanon/2.png",
+  "/image/proyek/ketanon/3.png",
+  "/image/proyek/ketanon/4.png",
+  "/image/proyek/ketanon/5.png",
+  "/image/proyek/ketanon/6.png",
+  "/image/proyek/ketanon/7.png",
+  "/image/proyek/ketanon/8.png",
+  "/image/proyek/ketanon/9.png",
+  "/image/proyek/ketanon/10.png",
+  "/image/proyek/ketanon/11.png",
+  "/image/proyek/ketanon/12.png",
+  "/image/proyek/ketanon/13.png",
+  "/image/proyek/ketanon/14.png",
+  "/image/proyek/ketanon/15.png",
 ];
 
 export default function ProyekKetanonPage() {
@@ -68,50 +79,53 @@ export default function ProyekKetanonPage() {
             <h2 className="text-2xl font-bold text-yellow-400 mb-6 text-center">
               Pilihan Tipe Rumah
             </h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {/* Tipe 36 */}
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+              {/* Tipe 50 */}
               <div className="bg-gray-800 rounded-xl shadow-lg border-2 border-yellow-400 flex flex-col items-center p-4">
                 <img
-                  src="/image/bg-hero/1.png"
-                  alt="Tipe 36"
+                  src="/image/proyek/ketanon/3.png"
+                  alt="Tipe 50"
                   className="w-full h-40 object-cover rounded-lg mb-3 border border-yellow-300"
                 />
-                <h3 className="text-xl font-bold text-yellow-300 mb-1">
-                  Tipe 36
-                </h3>
+                <h3 className="text-xl font-bold text-yellow-300 mb-1">Tipe 50</h3>
                 <p className="text-gray-200 text-center text-sm">
-                  Rumah minimalis, cocok untuk keluarga muda. 2 Kamar tidur, 1
-                  kamar mandi, carport.
+                  Rumah nyaman, 2 kamar tidur, 1 kamar mandi, carport dan taman kecil.
                 </p>
               </div>
-              {/* Tipe 45 */}
+              {/* Tipe 53 */}
               <div className="bg-gray-800 rounded-xl shadow-lg border-2 border-yellow-400 flex flex-col items-center p-4">
                 <img
-                  src="/image/bg-hero/2.png"
-                  alt="Tipe 45"
+                  src="/image/proyek/ketanon/4.png"
+                  alt="Tipe 53"
                   className="w-full h-40 object-cover rounded-lg mb-3 border border-yellow-300"
                 />
-                <h3 className="text-xl font-bold text-yellow-300 mb-1">
-                  Tipe 45
-                </h3>
+                <h3 className="text-xl font-bold text-yellow-300 mb-1">Tipe 53</h3>
                 <p className="text-gray-200 text-center text-sm">
-                  Lebih luas, cocok untuk keluarga berkembang. 2-3 Kamar tidur,
-                  2 kamar mandi, taman depan-belakang.
+                  Rumah lebih luas, 2-3 kamar tidur, 2 kamar mandi, carport & taman depan.
                 </p>
               </div>
               {/* Tipe 60 */}
               <div className="bg-gray-800 rounded-xl shadow-lg border-2 border-yellow-400 flex flex-col items-center p-4">
                 <img
-                  src="/image/bg-hero/3.png"
+                  src="/image/proyek/ketanon/5.png"
                   alt="Tipe 60"
                   className="w-full h-40 object-cover rounded-lg mb-3 border border-yellow-300"
                 />
-                <h3 className="text-xl font-bold text-yellow-300 mb-1">
-                  Tipe 60
-                </h3>
+                <h3 className="text-xl font-bold text-yellow-300 mb-1">Tipe 60</h3>
                 <p className="text-gray-200 text-center text-sm">
-                  Rumah keluarga besar, ruang tamu luas, 3 kamar tidur, 2 kamar
-                  mandi, carport & taman lebih besar.
+                  Rumah keluarga besar, ruang tamu luas, 3 kamar tidur, 2 kamar mandi, carport & taman lebih besar.
+                </p>
+              </div>
+              {/* Custom */}
+              <div className="bg-gray-800 rounded-xl shadow-lg border-2 border-yellow-400 flex flex-col items-center p-4">
+                <img
+                  src="/image/proyek/ketanon/1.png"
+                  alt="Custom"
+                  className="w-full h-40 object-cover rounded-lg mb-3 border border-yellow-300"
+                />
+                <h3 className="text-xl font-bold text-yellow-300 mb-1">Custom</h3>
+                <p className="text-gray-200 text-center text-sm">
+                  Desain rumah sesuai kebutuhan & keinginan Anda. Konsultasi gratis dengan tim kami!
                 </p>
               </div>
             </div>
@@ -166,9 +180,14 @@ export default function ProyekKetanonPage() {
               ))}
             </div>
           </div>
-          <button className="mt-8 mb-8 px-6 py-2 bg-yellow-400 text-gray-900 font-bold rounded-full shadow-lg hover:bg-yellow-300 transition-colors duration-200">
-            Download Brosur Ketanon
-          </button>
+          <a
+            href="https://wa.me/6282142991064"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-8 mb-8 px-6 py-2 bg-yellow-400 text-gray-900 font-bold rounded-full shadow-lg hover:bg-yellow-300 transition-colors duration-200 flex items-center justify-center gap-2"
+          >
+            Hubungi Admin
+          </a>
         </div>
         {/* Cinema floor effect */}
         <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-black via-gray-900/80 to-transparent z-0" />

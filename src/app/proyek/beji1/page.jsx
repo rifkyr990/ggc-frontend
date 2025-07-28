@@ -4,10 +4,11 @@ import Navbar from "@/components/ui/navbar";
 import Footer from "@/components/ui/footer";
 
 const brochureImages = [
-  "/image/bg-hero/1.png",
-  "/image/bg-hero/2.png",
-  "/image/bg-hero/3.png",
-  "/image/bg-hero/4.png",
+  "/image/proyek/beji1/1.png",
+  "/image/proyek/beji1/2.png",
+  "/image/proyek/beji1/3.png",
+  "/image/proyek/beji1/4.png",
+  "/image/proyek/beji1/5.png",
 ];
 
 export default function ProyekBeji1Page() {
@@ -68,50 +69,29 @@ export default function ProyekBeji1Page() {
             <h2 className="text-2xl font-bold text-yellow-400 mb-6 text-center">
               Pilihan Tipe Rumah
             </h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {/* Tipe 36 */}
-              <div className="bg-gray-800 rounded-xl shadow-lg border-2 border-yellow-400 flex flex-col items-center p-4">
-                <img
-                  src="/image/bg-hero/1.png"
-                  alt="Tipe 36"
-                  className="w-full h-40 object-cover rounded-lg mb-3 border border-yellow-300"
-                />
-                <h3 className="text-xl font-bold text-yellow-300 mb-1">
-                  Tipe 36
-                </h3>
-                <p className="text-gray-200 text-center text-sm">
-                  Rumah minimalis, cocok untuk keluarga muda. 2 Kamar tidur, 1
-                  kamar mandi, carport.
-                </p>
-              </div>
-              {/* Tipe 45 */}
-              <div className="bg-gray-800 rounded-xl shadow-lg border-2 border-yellow-400 flex flex-col items-center p-4">
-                <img
-                  src="/image/bg-hero/2.png"
-                  alt="Tipe 45"
-                  className="w-full h-40 object-cover rounded-lg mb-3 border border-yellow-300"
-                />
-                <h3 className="text-xl font-bold text-yellow-300 mb-1">
-                  Tipe 45
-                </h3>
-                <p className="text-gray-200 text-center text-sm">
-                  Lebih luas, cocok untuk keluarga berkembang. 2-3 Kamar tidur,
-                  2 kamar mandi, taman depan-belakang.
-                </p>
-              </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               {/* Tipe 60 */}
               <div className="bg-gray-800 rounded-xl shadow-lg border-2 border-yellow-400 flex flex-col items-center p-4">
                 <img
-                  src="/image/bg-hero/3.png"
+                  src="/image/proyek/beji1/3.png"
                   alt="Tipe 60"
                   className="w-full h-40 object-cover rounded-lg mb-3 border border-yellow-300"
                 />
-                <h3 className="text-xl font-bold text-yellow-300 mb-1">
-                  Tipe 60
-                </h3>
+                <h3 className="text-xl font-bold text-yellow-300 mb-1">Tipe 60</h3>
                 <p className="text-gray-200 text-center text-sm">
-                  Rumah keluarga besar, ruang tamu luas, 3 kamar tidur, 2 kamar
-                  mandi, carport & taman lebih besar.
+                  Rumah keluarga besar, ruang tamu luas, 3 kamar tidur, 2 kamar mandi, carport & taman lebih besar.
+                </p>
+              </div>
+              {/* Ruko */}
+              <div className="bg-gray-800 rounded-xl shadow-lg border-2 border-yellow-400 flex flex-col items-center p-4">
+                <img
+                  src="/image/proyek/beji1/5.png"
+                  alt="Ruko"
+                  className="w-full h-40 object-cover rounded-lg mb-3 border border-yellow-300"
+                />
+                <h3 className="text-xl font-bold text-yellow-300 mb-1">Ruko</h3>
+                <p className="text-gray-200 text-center text-sm">
+                  Ruko modern untuk usaha dan tempat tinggal, lokasi strategis di kawasan perumahan.
                 </p>
               </div>
             </div>
@@ -166,9 +146,14 @@ export default function ProyekBeji1Page() {
               ))}
             </div>
           </div>
-          <button className="mt-8 mb-8 px-6 py-2 bg-yellow-400 text-gray-900 font-bold rounded-full shadow-lg hover:bg-yellow-300 transition-colors duration-200">
-            Download Brosur
-          </button>
+          <a
+            href="https://wa.me/6282142991064"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-8 mb-8 px-6 py-2 bg-yellow-400 text-gray-900 font-bold rounded-full shadow-lg hover:bg-yellow-300 transition-colors duration-200 flex items-center justify-center gap-2"
+          >
+            Hubungi Admin
+          </a>
         </div>
         {/* Cinema floor effect */}
         <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-black via-gray-900/80 to-transparent z-0" />
