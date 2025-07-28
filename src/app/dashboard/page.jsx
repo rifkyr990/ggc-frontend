@@ -1,45 +1,120 @@
 "use client";
-import React from "react";
+
+import React, { useEffect, useState } from "react";
 import Sidebar from "./sidebar";
 import Header from "./header";
 import ProtectedRoute from "../auth/ProtectedRouted";
+import { Line } from "react-chartjs-2";
+import api from "../lib/api";
 
-const page = () => {
+import {
+  Chart as ChartJS,
+  LineElement,
+  PointElement,
+  CategoryScale,
+  LinearScale,
+  Title,
+  Tooltip,
+  Legend,
+} from "chart.js";
+
+ChartJS.register(
+  LineElement,
+  PointElement,
+  CategoryScale,
+  LinearScale,
+  Title,
+  Tooltip,
+  Legend
+);
+
+const Page = () => {
+  const [dailyVisitors, setDailyVisitors] = useState([]);
+  const [monthlyVisitors, setMonthlyVisitors] = useState([]);
+
+  useEffect(() => {
+    const fetchVisitors = async () => {
+      try {
+        const dailyRes = await api.get('/visitors/daily');
+        setDailyVisitors(Array.isArray(dailyRes.data) ? dailyRes.data : []);
+
+        const monthlyRes = await api.get('/visitors/monthly');
+        setMonthlyVisitors(Array.isArray(monthlyRes.data) ? monthlyRes.data : []);
+      } catch (error) {
+        console.error("Failed to fetch visitor data", error);
+      }
+    };
+
+    fetchVisitors();
+  }, []);
+
+
+  const dailyChartData = {
+    labels: dailyVisitors.map((d) => d.date),
+    datasets: [
+      {
+        label: "Visitor Harian",
+        data: dailyVisitors.map((d) => d.total),
+        borderColor: "rgba(75,192,192,1)",
+        backgroundColor: "rgba(75,192,192,0.2)",
+        fill: true,
+        tension: 0.3,
+      },
+    ],
+  };
+
+  const monthlyChartData = {
+    labels: monthlyVisitors.map((d) => d.month),
+    datasets: [
+      {
+        label: "Visitor Bulanan",
+        data: monthlyVisitors.map((d) => d.total),
+        borderColor: "rgba(153, 102, 255, 1)",
+        backgroundColor: "rgba(153, 102, 255, 0.2)",
+        fill: true,
+        tension: 0.3,
+      },
+    ],
+  };
+
+  const chartOptions = {
+    responsive: true,
+    plugins: {
+      legend: { position: "top" },
+    },
+  };
+
   return (
     <ProtectedRoute>
       <div>
-        {/* Sidebar */}
         <Sidebar />
-
-        {/* Header */}
         <Header />
 
-        {/* Content */}
         <main className="md:ml-64 p-6 bg-gray-100 min-h-screen z-100">
           {/* Cards */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
             {[
               {
                 label: "Total visitor hari ini",
-                value: "26K",
+                value: "0",
                 change: "-12.4%",
                 color: "bg-purple-500",
               },
               {
                 label: "Total Blog",
-                value: "$6,200",
+                value: "0",
                 change: "+40.9%",
                 color: "bg-blue-500",
               },
               {
                 label: "Total Perum",
-                value: "2.49%",
+                value: "0",
                 change: "+84.7%",
                 color: "bg-yellow-500",
               },
               {
                 label: "Total Carrier",
-                value: "44K",
+                value: "0",
                 change: "-23.6%",
                 color: "bg-red-500",
               },
@@ -55,38 +130,19 @@ const page = () => {
             ))}
           </div>
 
-          {/* Traffic Chart Placeholder */}
-          <div className="bg-white p-6 rounded-lg shadow">
-            <h3 className="text-lg font-semibold mb-4">
-              Traffic (January - July 2023)
-            </h3>
-            <div className="w-full h-64 bg-gradient-to-r from-white via-gray-100 to-white flex items-center justify-center text-gray-400">
-              {/* Ganti bagian ini dengan Chart.js / Recharts nanti */}
-              <span>Chart Placeholder</span>
+          {/* Visitor Harian */}
+          <div className="bg-white p-6 rounded-lg shadow mb-6">
+            <h3 className="text-lg font-semibold mb-4">Grafik Visitor Harian</h3>
+            <div className="w-full h-64">
+              <Line data={dailyChartData} options={{ ...chartOptions, title: { text: "Visitor Harian" } }} />
             </div>
+          </div>
 
-            {/* Traffic Details */}
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mt-6 text-sm text-center">
-              <div>
-                <p className="font-semibold">Visits</p>
-                <p>29,703 Users (40%)</p>
-              </div>
-              <div>
-                <p className="font-semibold">Unique</p>
-                <p>24,093 Users (20%)</p>
-              </div>
-              <div>
-                <p className="font-semibold">Pageviews</p>
-                <p>78,706 Views (60%)</p>
-              </div>
-              <div>
-                <p className="font-semibold">New Users</p>
-                <p>22,123 Users (80%)</p>
-              </div>
-              <div>
-                <p className="font-semibold">Bounce Rate</p>
-                <p>40.15%</p>
-              </div>
+          {/* Visitor Bulanan */}
+          <div className="bg-white p-6 rounded-lg shadow">
+            <h3 className="text-lg font-semibold mb-4">Grafik Visitor Bulanan</h3>
+            <div className="w-full h-64">
+              <Line data={monthlyChartData} options={{ ...chartOptions, title: { text: "Visitor Bulanan" } }} />
             </div>
           </div>
         </main>
@@ -95,4 +151,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;
